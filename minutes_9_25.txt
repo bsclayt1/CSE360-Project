@@ -1,0 +1,45 @@
+Arun Scoria (Scoria)
+ascaria@asu.edu
+Project Manager and Mentor
+
+Keep minute records of meetings
+Track attendance
+
+Cannot fail the project and still pass the class.
+
+Minimum is a terminal-based interface
+Try for joystick
+Or a GUI
+
+0-60
+10 mph max acceleration per second
+200 mph max speed
+
+Set a specific mileage per gallon
+See about making it respond to acceleration using fuzzy logic
+
+Display fuel supply and consumption
+Maybe 50 mpg
+
+Break iterations into smaller chunks
+1-2 week iterations on smaller problems
+
+Do all the steps in each iteration.
+
+Java is the chosen language
+
+UML Diagrams and use cases for the prelim report
+
+Implement unit testing?
+
+Need to make a mockup
+Basically just a drawing of how we want things to look
+
+Consider using a database 
+But we can use a filesystem
+Look up Jason for a Java database
+
+Set up some free license music for radio
+
+
+
