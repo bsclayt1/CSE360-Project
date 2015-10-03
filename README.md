@@ -1,4 +1,5 @@
 # CSE360-Project
-# Blah Blah
+The project is to design a Automotive Model
+
 Currently meets at Noble every Saturday at noon for approximately 1 hour.
 
