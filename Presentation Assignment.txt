@@ -1,0 +1,18 @@
+1.	Problem Overview (Intro) - 1 min
+	(Ben)
+2.	Planning 
+	- Process Model (Robert) - 1 min
+	- Gantt Chart (Robert) - 1 min
+	- Risk Analysis (Ahmed) - 1 min
+3. Requirements
+	- Must Have's (Lloyd) - 2 min
+	- Current Iteration (Ahmed) - 2 min
+4.	Analysis
+	- Use case scenarios/diagrams (Coakley) - 1 min
+	- State Diagrams (Lloyd) - 1 min
+	- GUI (Ben) - 1 min
+5.	Closing (Ben) - 1 min
+6.	Q & A - 2 min
+
+Total Time = 14 min 
+	
