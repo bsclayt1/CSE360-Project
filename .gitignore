@@ -3,3 +3,8 @@
 /CODE/*.metadata
 /CODE/.metadata/**
 **/.metadata/**
+*.dat
+*.xml
+*.ini
+*.metadata
+*.log
