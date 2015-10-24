@@ -1,11 +1,2 @@
-**/CODE/*.metadata
-/CODE/.metadata
-/CODE/*.metadata
 /CODE/.metadata/**
-**/.metadata/**
-*.dat
-*.xml
-*.ini
-*.metadata
-*.log
-*.index
+/CODE/.metadata
