@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;Speed_Manager.java&apos; to &apos;Enigne.java&apos;&#x0D;&#x0A;- Original project: &apos;CSE 360 Auto Project&apos;&#x0D;&#x0A;- Original element: &apos;Speed_Manager.java&apos;&#x0D;&#x0A;- Renamed element: &apos;Enigne.java&apos;" description="Rename compilation unit &apos;Speed_Manager.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src&lt;{Speed_Manager.java" name="Enigne.java" references="false" stamp="1445720583723" version="1.0"/>
+</session>
