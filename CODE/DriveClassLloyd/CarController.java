@@ -5,12 +5,14 @@ public class CarController {
    private double distance;
    private Engine engine;
    private FuelTank fuelTank;
+   private double tankSize;
 
-   public CarController( double fuel ) {
+   public CarController(double fuel, double distance) {
       updateNumb = 0;
-      distance = 0;
+      this.distance = distance;
       engine = new Engine();
       fuelTank = new FuelTank(fuel);
+      tankSize = fuel;
    }
 
    public double getSpeed() {
@@ -22,18 +24,22 @@ public class CarController {
    }
 
    public double getFuel() {
-      return fuelTank.getFuel( distance );
+      return fuelTank.getFule();
    }
 
+   public double getTankSize() {
+	   return tankSize;
+   }
+   
    public double getDuration() {
       return updateNumb*.1;  //assumes .1s updates
    }
 
-   public double updateDistance( int update ) {
+   public void updateEngine(int update) {
       updateNumb++;
-      engine.updateSpeed( update );
+      engine.updateSpeed(update);
       distance += engine.getSpeed() / 36000;
+      fuelTank.updateFuel(distance);
       
-      return distance;
    }
 }

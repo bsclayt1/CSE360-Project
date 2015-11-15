@@ -23,10 +23,7 @@ public class GUIMain extends JFrame {
 
 	private JPanel mainPanel;
 	
-	private double speed;
-	private double fuel;
 	private String drivestate;
-	private double miles;
 
 	/**
 	 * Launch the application.
@@ -49,10 +46,7 @@ public class GUIMain extends JFrame {
 	 */
 	public GUIMain(CarController car) {
 		
-		speed = car.getSpeed();
-		fuel = car.getFuel();
 		drivestate = "Park";
-		miles = car.getDistance();
 				
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
@@ -67,11 +61,11 @@ public class GUIMain extends JFrame {
 		mainPanel.add(indicatorPanel, BorderLayout.NORTH);
 		indicatorPanel.setLayout(new GridLayout(0, 4, 0, 0));
 		
-		JLabel speedLabel = new JLabel("Speed: " + speed);
+		JLabel speedLabel = new JLabel("Speed: " + car.getSpeed());
 		speedLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		indicatorPanel.add(speedLabel);
 		
-		JLabel fuelpercLabel = new JLabel("Fuel: " + fuel * 100 + "%");
+		JLabel fuelpercLabel = new JLabel("Fuel Level: " + String.format("%.0f", car.getFuel() / car.getTankSize() * 100) + "%");
 		fuelpercLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		indicatorPanel.add(fuelpercLabel);
 		
@@ -79,7 +73,7 @@ public class GUIMain extends JFrame {
 		drivestateLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		indicatorPanel.add(drivestateLabel);
 		
-		JLabel odometerLabel = new JLabel("Miles: " + miles);
+		JLabel odometerLabel = new JLabel("Miles: " + car.getDistance());
 		odometerLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		indicatorPanel.add(odometerLabel);
 		
@@ -117,19 +111,20 @@ public class GUIMain extends JFrame {
 		JToggleButton mapwindowToggleButton = new JToggleButton("Map");
 		windowselectrightPanel.add(mapwindowToggleButton);
 		
-		updateSpeed(car, gasButton, brakeButton, speedLabel);
+		speedhandler(car, gasButton, brakeButton, speedLabel);
+		labelupdater(car, speedLabel, odometerLabel, fuelpercLabel);
+		stophandler(car, stopButton);
 	}
 	
-	private void updateSpeed(CarController car, JButton gasButton, JButton brakeButton, JLabel speedLabel) {
+	private void speedhandler(CarController car, JButton gasButton, JButton brakeButton, JLabel speedLabel) {
 		//Handles Acceleration, click & pressed	
 		Timer gastrigger = new Timer(100, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				speed++;
-				speedLabel.setText("Speed: " + speed);
+				car.updateEngine(1);
 			}
 		});
-		gastrigger.setCoalesce(true);
-		gastrigger.setRepeats(true);
+		//gastrigger.setCoalesce(true);
+		//gastrigger.setRepeats(true);
 		gasButton.getModel().addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				if(gasButton.getModel().isPressed())
@@ -140,22 +135,18 @@ public class GUIMain extends JFrame {
 		});
 		gasButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				speed++;
-				speedLabel.setText("Speed: " + speed);
+				car.updateEngine(1);
 			}
 		});
 		
 		//Handles Braking, click & pressed
 		Timer braketrigger = new Timer(100, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(speed > 0){
-					speed--;
-					speedLabel.setText("Speed: " + speed);
-				}
+				car.updateEngine(-1);
 			}
 		});
-		braketrigger.setCoalesce(true);
-		braketrigger.setRepeats(true);
+		//braketrigger.setCoalesce(true);
+		//braketrigger.setRepeats(true);
 		brakeButton.getModel().addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				if(brakeButton.getModel().isPressed())
@@ -166,12 +157,37 @@ public class GUIMain extends JFrame {
 		});
 		brakeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(speed > 0){
-					speed--;
-					speedLabel.setText("Speed: " + speed);
-				}
+				car.updateEngine(-1);
 			}
 		});
-		
+	}
+	
+	private void labelupdater(CarController car, JLabel speedLabel, JLabel odometerLabel, JLabel fuelpercLabel) {
+		Timer interval = new Timer(100, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				car.updateEngine(0);
+				speedLabel.setText("Speed: " + car.getSpeed() + " mph");
+				odometerLabel.setText("Miles: " + String.format("%.1f", car.getDistance()));
+				fuelpercLabel.setText("Fuel Level: " + String.format("%.2f", car.getFuel() / car.getTankSize() * 100) + "%");
+			}
+		});
+		interval.start();
+	}
+	
+	private void stophandler(CarController car, JButton stopButton) {
+		Timer stoptimer = new Timer(100, null); 
+		stoptimer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				car.updateEngine(-1);
+				if(car.getSpeed() == 0)
+					stoptimer.stop();
+			}
+		});
+		stopButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(car.getSpeed() > 0)
+					stoptimer.start();
+			}
+		});
 	}
 }

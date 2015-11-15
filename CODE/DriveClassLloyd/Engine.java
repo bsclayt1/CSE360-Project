@@ -7,8 +7,7 @@ public class Engine {
 
    public Engine() {
       currentSpeed = 0;
-      accelRate = 0.5; 
-      //accelRate = 0.5; //5mph per second (assuming .1s updates)
+      accelRate = 0.5; //5mph per second (assuming .1s updates)
    }
 
    public double getSpeed() {
@@ -16,11 +15,11 @@ public class Engine {
    }
 
    //update: 1 for accelerate, 0 for coast, -1 for decelerate
-   public void updateSpeed( int update ) { 
+   public void updateSpeed(int update) { 
       //If MAXSPEED is reached, speed remains the same
-      if( currentSpeed <= MAXSPEED && update == 1 ) { 
-         currentSpeed = currentSpeed + accelRate*update;
-      }
+      if(currentSpeed < MAXSPEED && update == 1)
+    		  currentSpeed += accelRate;
+	  else if(currentSpeed > 0 && update == -1)
+		  currentSpeed -= accelRate;
    }
-
 }
