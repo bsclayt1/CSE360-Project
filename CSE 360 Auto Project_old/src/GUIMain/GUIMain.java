@@ -191,8 +191,8 @@ public class GUIMain extends JFrame {
 	}
 	
 	private void buttonToggler(JToggleButton radio, JToggleButton phone, JToggleButton manual, JToggleButton, map) {
-		radio.getModel().addChangeListener(new ChangeListener() {
-			public void changePerformed(ChangeEvent e) {
+		radio.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
 				
 			}
 		});
