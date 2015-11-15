@@ -1,5 +1,3 @@
-package cse360.autoproject.gui;
-
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
