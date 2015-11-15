@@ -3,7 +3,6 @@ package GUIMain;
 import DriveClassLloyd.CarController;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -187,6 +186,14 @@ public class GUIMain extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(car.getSpeed() > 0)
 					stoptimer.start();
+			}
+		});
+	}
+	
+	private void buttonToggler(JToggleButton radio, JToggleButton phone, JToggleButton manual, JToggleButton, map) {
+		radio.getModel().addChangeListener(new ChangeListener() {
+			public void changePerformed(ChangeEvent e) {
+				
 			}
 		});
 	}
