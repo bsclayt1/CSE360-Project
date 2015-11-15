@@ -1,9 +1,11 @@
-class Engine {
+package DriveClassLloyd;
+
+public class Engine {
    private final double MAXSPEED = 120;
    private double _currentSpeed;
    private double _accelRate;
 
-   public class Engine() {
+   public Engine() {
       _currentSpeed = 0;
       _accelRate = .5; //5mph per second (assuming .1s updates)
    }

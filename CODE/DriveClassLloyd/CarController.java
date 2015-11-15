@@ -1,4 +1,6 @@
-class CarController {
+package DriveClassLloyd;
+
+public class CarController {
    private int _updateNumb;
    private double _distance;
    private Engine _engine;
@@ -31,5 +33,7 @@ class CarController {
       _updateNumb++;
       _engine.updateSpeed( update );
       _distance += _engine.getSpeed() / 36000;
+      
+      return _distance;
    }
 }
