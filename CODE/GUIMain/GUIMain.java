@@ -1,5 +1,7 @@
 package GUIMain;
 
+import DriveClassLloyd.CarController;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
@@ -21,10 +23,10 @@ public class GUIMain extends JFrame {
 
 	private JPanel mainPanel;
 	
-	private float speed;
-	private float fuel;
+	private double speed;
+	private double fuel;
 	private String drivestate;
-	private int miles;
+	private double miles;
 
 	/**
 	 * Launch the application.
@@ -45,12 +47,12 @@ public class GUIMain extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public GUIMain() {
+	public GUIMain(CarController car) {
 		
-		speed = 0;
-		fuel = 1;
+		speed = car.getSpeed();
+		fuel = car.getFuel();
 		drivestate = "Park";
-		miles = 0;
+		miles = car.getDistance();
 				
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
@@ -115,10 +117,10 @@ public class GUIMain extends JFrame {
 		JToggleButton mapwindowToggleButton = new JToggleButton("Map");
 		windowselectrightPanel.add(mapwindowToggleButton);
 		
-		updateSpeed(gasButton, brakeButton, speedLabel);
+		updateSpeed(car, gasButton, brakeButton, speedLabel);
 	}
 	
-	private void updateSpeed(JButton gasButton, JButton brakeButton, JLabel speedLabel) {
+	private void updateSpeed(CarController car, JButton gasButton, JButton brakeButton, JLabel speedLabel) {
 		//Handles Acceleration, click & pressed	
 		Timer gastrigger = new Timer(100, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
