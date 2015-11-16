@@ -11,7 +11,7 @@ public class Main {
 		
 		car = new CarController(16, 0);
 		
-		MainGUI guiframe = new MainGUI(car);
+		MainFrame guiframe = new MainFrame(car);
 		guiframe.setVisible(true);
 	}
 

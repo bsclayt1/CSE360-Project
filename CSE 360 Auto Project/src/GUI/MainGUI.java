@@ -6,7 +6,6 @@ import GUI.*;
 
 //awt & swing imports
 import java.awt.BorderLayout;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
@@ -23,7 +22,7 @@ import javax.swing.Timer;
 import javax.swing.JRadioButton;
 import java.awt.CardLayout;
 
-public class MainGUI extends JFrame {
+public class MainGUI extends JPanel {
 
 	private JPanel mainPanel;
 	private JPanel manualPanel;
@@ -53,12 +52,17 @@ public class MainGUI extends JFrame {
 	public MainGUI(CarController car) {
 		
 				
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		/*setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
-		mainPanel = new JPanel();
+		
 		mainPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		mainPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		setContentPane(mainPanel);
+		mainPanel.setLayout(new BorderLayout(0, 0));*/
+		
+		mainPanel = new JPanel();
+		mainPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		mainPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		mainPanel.setLayout(new BorderLayout(0, 0));
 		
 		JPanel indicatorPanel = new JPanel();
