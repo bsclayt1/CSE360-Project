@@ -1,13 +1,9 @@
-package helloworld;
+package userClassAhmed;
 
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
+import RadioClassesAhmed.*;
+
 import java.io.FileReader;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.io.File;
-
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -69,7 +65,7 @@ public class user {
 		return false;
 	}
 	
-	public void writeToFile(){
+	/*public void writeToFile(){
 		JSONObject obj = new JSONObject();
 
 	      obj.put("name", "ahmed");
@@ -99,7 +95,8 @@ public class user {
 	    	} catch (IOException ex) {
 	    	    // handle me
 	    	}  
-	}
+	}*/
+	
 	public String getCurrentName() {
 		return currentName;
 	}

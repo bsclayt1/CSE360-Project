@@ -5,7 +5,6 @@ import DriveClassLloyd.CarController;
 import GUI.LoginGUI;
 import GUI.MainGUI;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
 
 import javax.swing.JFrame;
@@ -15,6 +14,7 @@ import javax.swing.Timer;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+@SuppressWarnings("serial")
 public class MainFrame extends JFrame {
 
 	private JPanel mainPanel;
@@ -43,7 +43,7 @@ public class MainFrame extends JFrame {
 		interval.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(loginPanel.getPassed()) {
-					System.out.print("Logged In\n");
+					//System.out.print("Logged In\n");
 					cards.show(main, "Main");
 					interval.stop();
 				}

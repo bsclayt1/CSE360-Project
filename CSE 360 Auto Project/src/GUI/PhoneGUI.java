@@ -3,6 +3,7 @@ package GUI;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 
+@SuppressWarnings("serial")
 public class PhoneGUI extends JPanel {
 
 	/**

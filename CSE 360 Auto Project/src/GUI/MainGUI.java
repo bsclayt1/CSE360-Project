@@ -19,59 +19,43 @@ import javax.swing.event.ChangeListener;
 import javax.swing.Timer;
 import javax.swing.JRadioButton;
 import java.awt.CardLayout;
+import java.awt.Dimension;
 
+@SuppressWarnings("serial")
 public class MainGUI extends JPanel {
 
-	//private JPanel mainPanel;
 	private JPanel manualPanel;
 	private JPanel radioPanel;
 	private JPanel phonePanel;
 	private JPanel mapPanel;
 	
 	public MainGUI(CarController car) {
-				
-		/*setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 600);
-		
-		mainPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		mainPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-		setContentPane(mainPanel);
-		mainPanel.setLayout(new BorderLayout(0, 0));*/
-		
-		//mainPanel = new JPanel();
-		/*mainPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		mainPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-		mainPanel.setLayout(new BorderLayout(0, 0));*/
-		
-		//setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		//setBorder(new EmptyBorder(10, 10, 10, 10));
+		setPreferredSize(new Dimension(750, 550));
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel indicatorPanel = new JPanel();
 		indicatorPanel.setBorder(new EmptyBorder(5, 0, 15, 0));
-		//mainPanel.add(indicatorPanel, BorderLayout.NORTH);
 		add(indicatorPanel, BorderLayout.NORTH);
 		indicatorPanel.setLayout(new GridLayout(0, 4, 0, 0));
 		
-		JLabel speedLabel = new JLabel("Speed: " + car.getSpeed());
+		JLabel speedLabel = new JLabel("Speed: 0.0 mph"); //("Speed: " + car.getSpeed());
 		speedLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		indicatorPanel.add(speedLabel);
 		
-		JLabel fuelpercLabel = new JLabel("Fuel Level: " + String.format("%.0f", car.getFuel() / car.getTankSize() * 100) + "%");
+		JLabel fuelpercLabel = new JLabel("Fuel Level: 100.00%"); //("Fuel Level: " + String.format("%.0f", car.getFuel() / car.getTankSize() * 100) + "%");
 		fuelpercLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		indicatorPanel.add(fuelpercLabel);
 		
-		JLabel drivestateLabel = new JLabel(car.getState());
+		JLabel drivestateLabel = new JLabel("Park"); //(car.getState());
 		drivestateLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		indicatorPanel.add(drivestateLabel);
 		
-		JLabel odometerLabel = new JLabel("Miles: " + car.getDistance());
+		JLabel odometerLabel = new JLabel("Miles: 0.0"); //("Miles: " + car.getDistance());
 		odometerLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		indicatorPanel.add(odometerLabel);
 		
 		JPanel controlsPanel = new JPanel();
 		controlsPanel.setBorder(new EmptyBorder(5, 0, 0, 0));
-		//mainPanel.add(controlsPanel, BorderLayout.SOUTH);
 		add(controlsPanel, BorderLayout.SOUTH);
 		controlsPanel.setLayout(new GridLayout(1, 0, 0, 0));
 		
@@ -85,7 +69,6 @@ public class MainGUI extends JPanel {
 		controlsPanel.add(brakeButton);
 		
 		JPanel windowselectleftPanel = new JPanel();
-		//mainPanel.add(windowselectleftPanel, BorderLayout.WEST);
 		add(windowselectleftPanel, BorderLayout.WEST);
 		windowselectleftPanel.setLayout(new GridLayout(0, 1, 0, 0));
 		
@@ -96,7 +79,6 @@ public class MainGUI extends JPanel {
 		windowselectleftPanel.add(phonewindowToggleButton);
 		
 		JPanel centerPanel = new JPanel();
-		//mainPanel.add(centerPanel, BorderLayout.CENTER);
 		add(centerPanel, BorderLayout.CENTER);
 		CardLayout cards = new CardLayout(0, 0);
 		centerPanel.setLayout(cards);
@@ -112,7 +94,6 @@ public class MainGUI extends JPanel {
 		centerPanel.add(mapPanel, "Map");
 		
 		JPanel windowselectrightPanel = new JPanel();
-		//mainPanel.add(windowselectrightPanel, BorderLayout.EAST);
 		add(windowselectrightPanel, BorderLayout.EAST);
 		windowselectrightPanel.setLayout(new GridLayout(0, 1, 0, 0));
 		
@@ -120,8 +101,6 @@ public class MainGUI extends JPanel {
 		usermanualwindowToggleButton.getModel().setSelected(true);
 		cards.show(centerPanel, manualPanel.getName());
 		windowselectrightPanel.add(usermanualwindowToggleButton);
-		
-		
 		
 		JToggleButton mapwindowToggleButton = new JToggleButton("Map");
 		windowselectrightPanel.add(mapwindowToggleButton);
@@ -144,8 +123,6 @@ public class MainGUI extends JPanel {
 		stophandler(car, stopButton, parkRadioButton, driveRadioButton);
 		buttonToggler(radiowindowToggleButton, phonewindowToggleButton, usermanualwindowToggleButton, mapwindowToggleButton, centerPanel, cards);
 		stateHandler(car, parkRadioButton, driveRadioButton);
-		
-		
 	}
 	
 	private void speedhandler(CarController car, JButton gasButton, JButton brakeButton, JLabel speedLabel) {

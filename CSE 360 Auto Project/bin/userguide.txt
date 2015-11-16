@@ -1,0 +1,19 @@
+User’s Guide
+
+Car Operation:
+The top panel displays the speed, fuel level, car state, odometer, and session duration.
+
+The bottom panel lets you control the movement of the car. Your car needs to be in drive mode to accelerate. 
+
+Radio Operation:
+You may select a station from a list of stations that vary depending on your region from both AM and FM bands, or from your favorites list. 
+
+To add the current station to your favorites list, click the + button next to the favorites list. To remove a station from your favorites list, select it and click the - button.
+
+Phone Operation:
+You may make a call by typing in a number or by selecting a contact from your contacts list. 
+
+Add a new contact (up to 10) by clicking on the + butten next to the contact list. You can remove a contact by selecting it and clicking the - button.
+
+Map Operation:
+Your car is displayed as a dot on the road. 

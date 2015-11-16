@@ -2,9 +2,9 @@ package GUI;
 
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
-import javax.swing.JTextArea;
 import javax.swing.BoxLayout;
 
+@SuppressWarnings("serial")
 public class UserManualGUI extends JPanel {
 
 	/**
