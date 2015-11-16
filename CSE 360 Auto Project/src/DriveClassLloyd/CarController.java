@@ -6,6 +6,7 @@ public class CarController {
    private Engine engine;
    private FuelTank fuelTank;
    private double tankSize;
+   private String state;
 
    public CarController(double fuel, double distance) {
       updateNumb = 0;
@@ -13,6 +14,7 @@ public class CarController {
       engine = new Engine();
       fuelTank = new FuelTank(fuel);
       tankSize = fuel;
+      state = "Park";
    }
 
    public double getSpeed() {
@@ -34,10 +36,22 @@ public class CarController {
    public double getDuration() {
       return updateNumb*.1;  //assumes .1s updates
    }
+   
+   public String getState() {
+	   return state;
+   }
+   
+   public void setDrive() {
+	   this.state = "Drive";
+   }
+   
+   public void setPark() {
+	   this.state = "Park";
+   }
 
    public void updateEngine(int update) {
       updateNumb++;
-      engine.updateSpeed(update);
+      engine.updateSpeed(update, state);
       distance += engine.getSpeed() / 36000;
       fuelTank.updateFuel(distance);
       

@@ -1,5 +1,5 @@
 import DriveClassLloyd.*;
-import GUIMain.*;
+import GUI.*;
 
 public class Main {
 	
@@ -11,7 +11,7 @@ public class Main {
 		
 		car = new CarController(16, 0);
 		
-		GUIMain guiframe = new GUIMain(car);
+		MainGUI guiframe = new MainGUI(car);
 		guiframe.setVisible(true);
 	}
 

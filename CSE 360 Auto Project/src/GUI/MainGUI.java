@@ -1,7 +1,10 @@
-package GUIMain;
+package GUI;
 
+//Car Classes
 import DriveClassLloyd.CarController;
+import GUI.*;
 
+//awt & swing imports
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -17,13 +20,17 @@ import java.awt.event.ActionEvent;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.Timer;
+import javax.swing.JRadioButton;
+import java.awt.CardLayout;
 
-public class GUIMain extends JFrame {
+public class MainGUI extends JFrame {
 
 	private JPanel mainPanel;
+	private JPanel manualPanel;
+	private JPanel radioPanel;
+	private JPanel phonePanel;
+	private JPanel mapPanel;
 	
-	private String drivestate;
-
 	/**
 	 * Launch the application.
 	 */
@@ -43,9 +50,8 @@ public class GUIMain extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public GUIMain(CarController car) {
+	public MainGUI(CarController car) {
 		
-		drivestate = "Park";
 				
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
@@ -68,7 +74,7 @@ public class GUIMain extends JFrame {
 		fuelpercLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		indicatorPanel.add(fuelpercLabel);
 		
-		JLabel drivestateLabel = new JLabel(drivestate);
+		JLabel drivestateLabel = new JLabel(car.getState());
 		drivestateLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		indicatorPanel.add(drivestateLabel);
 		
@@ -100,19 +106,55 @@ public class GUIMain extends JFrame {
 		JToggleButton phonewindowToggleButton = new JToggleButton("Phone");
 		windowselectleftPanel.add(phonewindowToggleButton);
 		
+		JPanel centerPanel = new JPanel();
+		mainPanel.add(centerPanel, BorderLayout.CENTER);
+		CardLayout cards = new CardLayout(0, 0);
+		centerPanel.setLayout(cards);
+		
+		manualPanel = new UserManualGUI();
+		radioPanel = new RadioGUI();
+		phonePanel = new PhoneGUI();
+		mapPanel = new MapGUI();
+		
+		centerPanel.add(manualPanel, "Manual");
+		centerPanel.add(radioPanel, "Radio");
+		centerPanel.add(phonePanel, "Phone");
+		centerPanel.add(mapPanel, "Map");
+		
 		JPanel windowselectrightPanel = new JPanel();
 		mainPanel.add(windowselectrightPanel, BorderLayout.EAST);
 		windowselectrightPanel.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JToggleButton usermanualwindowToggleButton = new JToggleButton("User Manual");
+		usermanualwindowToggleButton.getModel().setSelected(true);
+		cards.show(centerPanel, manualPanel.getName());
 		windowselectrightPanel.add(usermanualwindowToggleButton);
+		
+		
 		
 		JToggleButton mapwindowToggleButton = new JToggleButton("Map");
 		windowselectrightPanel.add(mapwindowToggleButton);
 		
+		JPanel statePanel = new JPanel();
+		controlsPanel.add(statePanel);
+		statePanel.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JRadioButton parkRadioButton = new JRadioButton("Park");
+		parkRadioButton.getModel().setSelected(true);
+		statePanel.add(parkRadioButton);
+		parkRadioButton.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JRadioButton driveRadioButton = new JRadioButton("Drive");
+		statePanel.add(driveRadioButton);
+		driveRadioButton.setHorizontalAlignment(SwingConstants.CENTER);
+		
 		speedhandler(car, gasButton, brakeButton, speedLabel);
-		labelupdater(car, speedLabel, odometerLabel, fuelpercLabel);
-		stophandler(car, stopButton);
+		labelupdater(car, speedLabel, odometerLabel, fuelpercLabel, drivestateLabel, parkRadioButton, driveRadioButton);
+		stophandler(car, stopButton, parkRadioButton, driveRadioButton);
+		buttonToggler(radiowindowToggleButton, phonewindowToggleButton, usermanualwindowToggleButton, mapwindowToggleButton, centerPanel, cards);
+		stateHandler(car, parkRadioButton, driveRadioButton);
+		
+		
 	}
 	
 	private void speedhandler(CarController car, JButton gasButton, JButton brakeButton, JLabel speedLabel) {
@@ -122,8 +164,6 @@ public class GUIMain extends JFrame {
 				car.updateEngine(1);
 			}
 		});
-		//gastrigger.setCoalesce(true);
-		//gastrigger.setRepeats(true);
 		gasButton.getModel().addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				if(gasButton.getModel().isPressed())
@@ -144,8 +184,6 @@ public class GUIMain extends JFrame {
 				car.updateEngine(-1);
 			}
 		});
-		//braketrigger.setCoalesce(true);
-		//braketrigger.setRepeats(true);
 		brakeButton.getModel().addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				if(brakeButton.getModel().isPressed())
@@ -161,25 +199,35 @@ public class GUIMain extends JFrame {
 		});
 	}
 	
-	private void labelupdater(CarController car, JLabel speedLabel, JLabel odometerLabel, JLabel fuelpercLabel) {
+	private void labelupdater(CarController car, JLabel speed, JLabel odometer, JLabel fuelperc, JLabel state, JRadioButton park, JRadioButton drive) {
 		Timer interval = new Timer(100, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				car.updateEngine(0);
-				speedLabel.setText("Speed: " + car.getSpeed() + " mph");
-				odometerLabel.setText("Miles: " + String.format("%.1f", car.getDistance()));
-				fuelpercLabel.setText("Fuel Level: " + String.format("%.2f", car.getFuel() / car.getTankSize() * 100) + "%");
+				speed.setText("Speed: " + car.getSpeed() + " mph");
+				odometer.setText("Miles: " + String.format("%.1f", car.getDistance()));
+				fuelperc.setText("Fuel Level: " + String.format("%.2f", car.getFuel() / car.getTankSize() * 100) + "%");
+				state.setText(car.getState());
+				if(car.getSpeed() > 0)
+					park.getModel().setEnabled(false);
+				else
+					park.getModel().setEnabled(true);
 			}
 		});
 		interval.start();
 	}
 	
-	private void stophandler(CarController car, JButton stopButton) {
+	private void stophandler(CarController car, JButton stopButton, JRadioButton park, JRadioButton drive) {
 		Timer stoptimer = new Timer(100, null); 
 		stoptimer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				car.updateEngine(-1);
-				if(car.getSpeed() == 0)
+				if(car.getSpeed() == 0) {
 					stoptimer.stop();
+					car.setPark();
+					park.getModel().setSelected(true);
+					park.getModel().setEnabled(true);
+					drive.getModel().setSelected(false);
+				}
 			}
 		});
 		stopButton.addActionListener(new ActionListener() {
@@ -190,10 +238,60 @@ public class GUIMain extends JFrame {
 		});
 	}
 	
-	private void buttonToggler(JToggleButton radio, JToggleButton phone, JToggleButton manual, JToggleButton, map) {
+	private void buttonToggler(JToggleButton radio, JToggleButton phone, JToggleButton manual, JToggleButton map, JPanel center, CardLayout cards) {
 		radio.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				
+				if(radio.getModel().isSelected()) {
+					phone.getModel().setSelected(false);
+					manual.getModel().setSelected(false);
+					map.getModel().setSelected(false);
+					cards.show(center, "Radio");
+				}
+			}
+		});
+		phone.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if(phone.getModel().isSelected()) {
+					radio.getModel().setSelected(false);
+					manual.getModel().setSelected(false);
+					map.getModel().setSelected(false);
+					cards.show(center, "Phone");
+				}
+			}
+		});
+		manual.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if(manual.getModel().isSelected()) {
+					radio.getModel().setSelected(false);
+					phone.getModel().setSelected(false);
+					map.getModel().setSelected(false);
+					cards.show(center, "Manual");
+				}
+			}
+		});
+		map.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if(map.getModel().isSelected()) {
+					radio.getModel().setSelected(false);
+					phone.getModel().setSelected(false);
+					manual.getModel().setSelected(false);
+					cards.show(center, "Map");
+				}
+			}
+		});
+	}
+	
+	private void stateHandler(CarController car, JRadioButton park, JRadioButton drive) {
+		park.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				car.setPark();
+				drive.getModel().setSelected(false);
+			}
+		});
+		drive.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				car.setDrive();
+				park.getModel().setSelected(false);
 			}
 		});
 	}
