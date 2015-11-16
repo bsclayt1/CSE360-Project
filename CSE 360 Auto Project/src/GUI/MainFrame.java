@@ -6,6 +6,8 @@ import GUI.LoginGUI;
 import GUI.MainGUI;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -18,38 +20,35 @@ public class MainFrame extends JFrame {
 	private JPanel mainPanel;
 	private LoginGUI loginPanel;
 	private MainGUI mainGUIPanel;
-	private CarController car;
 
 	public MainFrame(CarController car) {
-		this.car = car;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		mainPanel = new JPanel();
+		mainPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		CardLayout cards = new CardLayout(0, 0);
+		mainPanel.setLayout(cards);
+		setContentPane(mainPanel);
 		loginPanel = new LoginGUI();
 		mainGUIPanel = new MainGUI(car);
-		mainPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-		mainPanel.setLayout(new BorderLayout(0, 0));
-		setContentPane(mainPanel);
-		waitForLogin();
+		mainPanel.add(loginPanel, "Login");
+		mainPanel.add(mainGUIPanel, "Main");
+		cards.show(mainPanel, "Login");
+		switchOnLogin(mainPanel, cards);
 		
 	}
 	
-	private void waitForLogin() {
-		Timer interval = new Timer(100, new ActionListener() {
+	private void switchOnLogin(JPanel main, CardLayout cards) {
+		Timer interval = new Timer(100, null);
+		interval.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(loginPanel.getPassed()) {
-					System.out.print("Login Passed");
-					
-					mainGUIPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-					mainGUIPanel.setLayout(new BorderLayout(0, 0));
-					setContentPane(mainGUIPanel);
-					repaint();
+					System.out.print("Logged In\n");
+					cards.show(main, "Main");
+					interval.stop();
 				}
-				else
-					System.out.println("Not Logged in");
 			}
 		});
 		interval.start();
 	}
-
 }

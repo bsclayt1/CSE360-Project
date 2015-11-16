@@ -9,15 +9,15 @@ import java.awt.event.ActionEvent;
 public class LoginGUI extends JPanel {
 	
 	private boolean pass;
+	
 
 	/**
 	 * Create the panel.
 	 */
 	public LoginGUI() {
-		setLayout(null);
-		
 		pass = false;
 		
+		setLayout(null);
 		JLabel lblLogin = new JLabel("Login");
 		lblLogin.setBounds(205, 133, 56, 16);
 		add(lblLogin);

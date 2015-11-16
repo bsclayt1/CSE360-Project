@@ -14,6 +14,7 @@ public class UserManualGUI extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
 		JTextPane manualTextPanel = new JTextPane();
+		manualTextPanel.setEditable(false);
 		manualTextPanel.setText("User Manual\r\n\r\nPut car in Drive to Accelerate\r\n");
 		add(manualTextPanel);
 

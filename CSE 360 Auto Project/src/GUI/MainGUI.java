@@ -2,7 +2,6 @@ package GUI;
 
 //Car Classes
 import DriveClassLloyd.CarController;
-import GUI.*;
 
 //awt & swing imports
 import java.awt.BorderLayout;
@@ -13,7 +12,6 @@ import java.awt.GridLayout;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.JToggleButton;
-import java.awt.Cursor;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.event.ChangeEvent;
@@ -24,33 +22,13 @@ import java.awt.CardLayout;
 
 public class MainGUI extends JPanel {
 
-	private JPanel mainPanel;
+	//private JPanel mainPanel;
 	private JPanel manualPanel;
 	private JPanel radioPanel;
 	private JPanel phonePanel;
 	private JPanel mapPanel;
 	
-	/**
-	 * Launch the application.
-	 */
-	/*public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GUIMain guiframe = new GUIMain();
-					guiframe.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
-
-	/**
-	 * Create the frame.
-	 */
 	public MainGUI(CarController car) {
-		
 				
 		/*setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
@@ -60,14 +38,19 @@ public class MainGUI extends JPanel {
 		setContentPane(mainPanel);
 		mainPanel.setLayout(new BorderLayout(0, 0));*/
 		
-		mainPanel = new JPanel();
-		mainPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		//mainPanel = new JPanel();
+		/*mainPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		mainPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-		mainPanel.setLayout(new BorderLayout(0, 0));
+		mainPanel.setLayout(new BorderLayout(0, 0));*/
+		
+		//setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		//setBorder(new EmptyBorder(10, 10, 10, 10));
+		setLayout(new BorderLayout(0, 0));
 		
 		JPanel indicatorPanel = new JPanel();
 		indicatorPanel.setBorder(new EmptyBorder(5, 0, 15, 0));
-		mainPanel.add(indicatorPanel, BorderLayout.NORTH);
+		//mainPanel.add(indicatorPanel, BorderLayout.NORTH);
+		add(indicatorPanel, BorderLayout.NORTH);
 		indicatorPanel.setLayout(new GridLayout(0, 4, 0, 0));
 		
 		JLabel speedLabel = new JLabel("Speed: " + car.getSpeed());
@@ -88,7 +71,8 @@ public class MainGUI extends JPanel {
 		
 		JPanel controlsPanel = new JPanel();
 		controlsPanel.setBorder(new EmptyBorder(5, 0, 0, 0));
-		mainPanel.add(controlsPanel, BorderLayout.SOUTH);
+		//mainPanel.add(controlsPanel, BorderLayout.SOUTH);
+		add(controlsPanel, BorderLayout.SOUTH);
 		controlsPanel.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JButton stopButton = new JButton("STOP");
@@ -101,7 +85,8 @@ public class MainGUI extends JPanel {
 		controlsPanel.add(brakeButton);
 		
 		JPanel windowselectleftPanel = new JPanel();
-		mainPanel.add(windowselectleftPanel, BorderLayout.WEST);
+		//mainPanel.add(windowselectleftPanel, BorderLayout.WEST);
+		add(windowselectleftPanel, BorderLayout.WEST);
 		windowselectleftPanel.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JToggleButton radiowindowToggleButton = new JToggleButton("Radio");
@@ -111,7 +96,8 @@ public class MainGUI extends JPanel {
 		windowselectleftPanel.add(phonewindowToggleButton);
 		
 		JPanel centerPanel = new JPanel();
-		mainPanel.add(centerPanel, BorderLayout.CENTER);
+		//mainPanel.add(centerPanel, BorderLayout.CENTER);
+		add(centerPanel, BorderLayout.CENTER);
 		CardLayout cards = new CardLayout(0, 0);
 		centerPanel.setLayout(cards);
 		
@@ -126,7 +112,8 @@ public class MainGUI extends JPanel {
 		centerPanel.add(mapPanel, "Map");
 		
 		JPanel windowselectrightPanel = new JPanel();
-		mainPanel.add(windowselectrightPanel, BorderLayout.EAST);
+		//mainPanel.add(windowselectrightPanel, BorderLayout.EAST);
+		add(windowselectrightPanel, BorderLayout.EAST);
 		windowselectrightPanel.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JToggleButton usermanualwindowToggleButton = new JToggleButton("User Manual");
