@@ -113,4 +113,8 @@ public class LoginGUI extends JPanel {
 	public boolean getPassed() {
 		return pass;
 	}
+	
+	public String getUserName() {
+		return usernameTextField.getText();
+	}
 }

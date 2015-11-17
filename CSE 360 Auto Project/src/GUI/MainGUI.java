@@ -20,6 +20,13 @@ import javax.swing.Timer;
 import javax.swing.JRadioButton;
 import java.awt.CardLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Component;
+import java.awt.Insets;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
+import java.awt.Rectangle;
+import javax.swing.border.CompoundBorder;
 
 @SuppressWarnings("serial")
 public class MainGUI extends JPanel {
@@ -29,13 +36,46 @@ public class MainGUI extends JPanel {
 	private JPanel phonePanel;
 	private JPanel mapPanel;
 	
-	public MainGUI(CarController car) {
-		setPreferredSize(new Dimension(750, 550));
-		setLayout(new BorderLayout(0, 0));
+	public MainGUI(CarController car, String user) {
+		setPreferredSize(new Dimension(750, 585));
+		setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+		
+		JPanel userPanel = new JPanel();
+		userPanel.setPreferredSize(new Dimension(750, 35));
+		add(userPanel);
+		userPanel.setLayout(new GridLayout(0, 3, 0, 0));
+		
+		JPanel emptyPanel = new JPanel();
+		userPanel.add(emptyPanel);
+		
+		JLabel userLabel = new JLabel(user);
+		userLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		userPanel.add(userLabel);
+		
+		JPanel exitbuttonPanel = new JPanel();
+		userPanel.add(exitbuttonPanel);
+		exitbuttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 5));
+		
+		JButton logoutButton = new JButton("Logout");
+		logoutButton.setMargin(new Insets(2, 5, 2, 5));
+		logoutButton.setPreferredSize(new Dimension(65, 25));
+		logoutButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		logoutButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		exitbuttonPanel.add(logoutButton);
+		
+		JPanel mainPanel = new JPanel();
+		
+		add(mainPanel);
+		
+		mainPanel.setPreferredSize(new Dimension(750, 550));
+		mainPanel.setLayout(new BorderLayout(0, 0));
 		
 		JPanel indicatorPanel = new JPanel();
-		indicatorPanel.setBorder(new EmptyBorder(5, 0, 15, 0));
-		add(indicatorPanel, BorderLayout.NORTH);
+		indicatorPanel.setBorder(new EmptyBorder(5, 0, 5, 0));
+		mainPanel.add(indicatorPanel, BorderLayout.NORTH);
 		indicatorPanel.setLayout(new GridLayout(0, 4, 0, 0));
 		
 		JLabel speedLabel = new JLabel("Speed: 0.0 mph"); //("Speed: " + car.getSpeed());
@@ -56,8 +96,8 @@ public class MainGUI extends JPanel {
 		
 		JPanel controlsPanel = new JPanel();
 		controlsPanel.setBorder(new EmptyBorder(5, 0, 0, 0));
-		add(controlsPanel, BorderLayout.SOUTH);
-		controlsPanel.setLayout(new GridLayout(1, 0, 0, 0));
+		mainPanel.add(controlsPanel, BorderLayout.SOUTH);
+		controlsPanel.setLayout(new GridLayout(1, 0, 5, 0));
 		
 		JButton stopButton = new JButton("STOP");
 		controlsPanel.add(stopButton);
@@ -69,24 +109,34 @@ public class MainGUI extends JPanel {
 		controlsPanel.add(brakeButton);
 		
 		JPanel windowselectleftPanel = new JPanel();
-		add(windowselectleftPanel, BorderLayout.WEST);
-		windowselectleftPanel.setLayout(new GridLayout(0, 1, 0, 0));
+		windowselectleftPanel.setBorder(new EmptyBorder(0, 0, 0, 5));
+		mainPanel.add(windowselectleftPanel, BorderLayout.WEST);
+		windowselectleftPanel.setLayout(new GridLayout(0, 1, 0, 5));
 		
 		JToggleButton radiowindowToggleButton = new JToggleButton("Radio");
+		radiowindowToggleButton.setMargin(new Insets(2, 14, 2, 5));
 		windowselectleftPanel.add(radiowindowToggleButton);
 		
 		JToggleButton phonewindowToggleButton = new JToggleButton("Phone");
+		phonewindowToggleButton.setMinimumSize(new Dimension(65, 25));
+		phonewindowToggleButton.setMargin(new Insets(2, 5, 2, 5));
+		phonewindowToggleButton.setHorizontalTextPosition(SwingConstants.CENTER);
+		phonewindowToggleButton.setPreferredSize(new Dimension(65, 25));
 		windowselectleftPanel.add(phonewindowToggleButton);
 		
 		JPanel centerPanel = new JPanel();
-		add(centerPanel, BorderLayout.CENTER);
+		mainPanel.add(centerPanel, BorderLayout.CENTER);
 		CardLayout cards = new CardLayout(0, 0);
 		centerPanel.setLayout(cards);
 		
 		manualPanel = new UserManualGUI();
+		manualPanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
 		radioPanel = new RadioGUI();
+		radioPanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
 		phonePanel = new PhoneGUI();
+		phonePanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
 		mapPanel = new MapGUI();
+		mapPanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
 		
 		centerPanel.add(manualPanel, "Manual");
 		centerPanel.add(radioPanel, "Radio");
@@ -94,15 +144,20 @@ public class MainGUI extends JPanel {
 		centerPanel.add(mapPanel, "Map");
 		
 		JPanel windowselectrightPanel = new JPanel();
-		add(windowselectrightPanel, BorderLayout.EAST);
-		windowselectrightPanel.setLayout(new GridLayout(0, 1, 0, 0));
+		windowselectrightPanel.setBorder(new EmptyBorder(0, 5, 0, 0));
+		mainPanel.add(windowselectrightPanel, BorderLayout.EAST);
+		windowselectrightPanel.setLayout(new GridLayout(0, 1, 0, 5));
 		
-		JToggleButton usermanualwindowToggleButton = new JToggleButton("User Manual");
+		JToggleButton usermanualwindowToggleButton = new JToggleButton("Manual");
+		usermanualwindowToggleButton.setMargin(new Insets(2, 5, 2, 5));
+		usermanualwindowToggleButton.setPreferredSize(new Dimension(65, 25));
 		usermanualwindowToggleButton.getModel().setSelected(true);
 		cards.show(centerPanel, manualPanel.getName());
 		windowselectrightPanel.add(usermanualwindowToggleButton);
 		
 		JToggleButton mapwindowToggleButton = new JToggleButton("Map");
+		mapwindowToggleButton.setMargin(new Insets(2, 5, 2, 5));
+		mapwindowToggleButton.setPreferredSize(new Dimension(65, 25));
 		windowselectrightPanel.add(mapwindowToggleButton);
 		
 		JPanel statePanel = new JPanel();
