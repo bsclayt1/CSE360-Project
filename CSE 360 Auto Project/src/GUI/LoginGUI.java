@@ -22,6 +22,7 @@ public class LoginGUI extends JPanel {
 	private boolean pass;
 	private JTextField usernameTextField;
 	private JTextField passwordTextField;
+	private JButton loginButton;
 	
 
 	/**
@@ -85,26 +86,23 @@ public class LoginGUI extends JPanel {
 		buttonPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		validatePanel.add(buttonPanel);
 		
-		JButton btnLogin = new JButton("Login");
-		buttonPanel.add(btnLogin);
-		btnLogin.setPreferredSize(new Dimension(70, 20));
-		btnLogin.addActionListener(new ActionListener() {
+		loginButton = new JButton("Login");
+		buttonPanel.add(loginButton);
+		loginButton.setPreferredSize(new Dimension(70, 20));
+		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				getRootPane().setDefaultButton(loginButton);
 				String name = usernameTextField.getText();
 				String passw = passwordTextField.getText();
 				//System.out.print("Entered Username: " + name + "\n");
 				//System.out.print("Entered Password: " + passw + "\n");
-				
 				if(name.equals("robert") && passw.equals("1234")) {
 					pass = true;
 				}
 				else {
 					pass = false;
 					logintextLabel.setText("login/password incorrect - Try again");
-					
 				}
-				
-				
 			}
 		});
 
@@ -116,5 +114,9 @@ public class LoginGUI extends JPanel {
 	
 	public String getUserName() {
 		return usernameTextField.getText();
+	}
+	
+	public JButton getLoginButton() {
+		return loginButton;
 	}
 }

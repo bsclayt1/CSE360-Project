@@ -25,8 +25,8 @@ import java.awt.Component;
 import java.awt.Insets;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
-import java.awt.Rectangle;
 import javax.swing.border.CompoundBorder;
+import java.awt.Font;
 
 @SuppressWarnings("serial")
 public class MainGUI extends JPanel {
@@ -35,6 +35,7 @@ public class MainGUI extends JPanel {
 	private JPanel radioPanel;
 	private JPanel phonePanel;
 	private JPanel mapPanel;
+	private boolean logout;
 	
 	public MainGUI(CarController car, String user) {
 		setPreferredSize(new Dimension(750, 585));
@@ -46,7 +47,15 @@ public class MainGUI extends JPanel {
 		userPanel.setLayout(new GridLayout(0, 3, 0, 0));
 		
 		JPanel emptyPanel = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) emptyPanel.getLayout();
+		flowLayout.setHgap(0);
+		flowLayout.setAlignment(FlowLayout.LEFT);
 		userPanel.add(emptyPanel);
+		
+		JButton statsButton = new JButton("Stats");
+		statsButton.setMargin(new Insets(2, 5, 2, 5));
+		statsButton.setPreferredSize(new Dimension(65, 25));
+		emptyPanel.add(statsButton);
 		
 		JLabel userLabel = new JLabel(user);
 		userLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -57,6 +66,7 @@ public class MainGUI extends JPanel {
 		exitbuttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 5));
 		
 		JButton logoutButton = new JButton("Logout");
+		logout = false;
 		logoutButton.setMargin(new Insets(2, 5, 2, 5));
 		logoutButton.setPreferredSize(new Dimension(65, 25));
 		logoutButton.addActionListener(new ActionListener() {
@@ -100,6 +110,11 @@ public class MainGUI extends JPanel {
 		controlsPanel.setLayout(new GridLayout(1, 0, 5, 0));
 		
 		JButton stopButton = new JButton("STOP");
+		stopButton.setForeground(Color.RED);
+		stopButton.setFont(new Font("Tahoma", Font.BOLD, 16));
+		stopButton.setPreferredSize(new Dimension(70, 25));
+		stopButton.setHorizontalTextPosition(SwingConstants.CENTER);
+		stopButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		controlsPanel.add(stopButton);
 		
 		JButton gasButton = new JButton("Accelerate");
@@ -114,7 +129,7 @@ public class MainGUI extends JPanel {
 		windowselectleftPanel.setLayout(new GridLayout(0, 1, 0, 5));
 		
 		JToggleButton radiowindowToggleButton = new JToggleButton("Radio");
-		radiowindowToggleButton.setMargin(new Insets(2, 14, 2, 5));
+		radiowindowToggleButton.setMargin(new Insets(2, 5, 2, 5));
 		windowselectleftPanel.add(radiowindowToggleButton);
 		
 		JToggleButton phonewindowToggleButton = new JToggleButton("Phone");
@@ -125,6 +140,7 @@ public class MainGUI extends JPanel {
 		windowselectleftPanel.add(phonewindowToggleButton);
 		
 		JPanel centerPanel = new JPanel();
+		centerPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
 		mainPanel.add(centerPanel, BorderLayout.CENTER);
 		CardLayout cards = new CardLayout(0, 0);
 		centerPanel.setLayout(cards);
@@ -162,15 +178,15 @@ public class MainGUI extends JPanel {
 		
 		JPanel statePanel = new JPanel();
 		controlsPanel.add(statePanel);
-		statePanel.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JRadioButton parkRadioButton = new JRadioButton("Park");
 		parkRadioButton.getModel().setSelected(true);
-		statePanel.add(parkRadioButton);
+		statePanel.setLayout(new BorderLayout(0, 0));
+		statePanel.add(parkRadioButton, BorderLayout.NORTH);
 		parkRadioButton.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		JRadioButton driveRadioButton = new JRadioButton("Drive");
-		statePanel.add(driveRadioButton);
+		statePanel.add(driveRadioButton, BorderLayout.SOUTH);
 		driveRadioButton.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		speedhandler(car, gasButton, brakeButton, speedLabel);
@@ -178,6 +194,7 @@ public class MainGUI extends JPanel {
 		stophandler(car, stopButton, parkRadioButton, driveRadioButton);
 		buttonToggler(radiowindowToggleButton, phonewindowToggleButton, usermanualwindowToggleButton, mapwindowToggleButton, centerPanel, cards);
 		stateHandler(car, parkRadioButton, driveRadioButton);
+		logoutHandler(logoutButton);
 	}
 	
 	private void speedhandler(CarController car, JButton gasButton, JButton brakeButton, JLabel speedLabel) {
@@ -317,5 +334,17 @@ public class MainGUI extends JPanel {
 				park.getModel().setSelected(false);
 			}
 		});
+	}
+	
+	private void logoutHandler(JButton logoutbutton) {
+		logoutbutton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				logout = true;
+			}
+		});
+	}
+	
+	public boolean getLogout() {
+		return logout;
 	}
 }
