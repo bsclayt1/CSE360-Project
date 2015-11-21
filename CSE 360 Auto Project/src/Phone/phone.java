@@ -1,126 +1,71 @@
-package Phone;
+package phone;
 
-public class phone {
-	int phoneNum = 0;
-	int volSpeaker = 0;
-	int volMic = 0;
-	int[] contactList = new int[10];
-	int callDuration = 0;
-	final int maxVol = 10;
-	final int minVol = 0;
-	int arrayLength = 0;
+import user.*;
+
+import java.util.ArrayList;
+
+public class Phone {
+	private final float MAX_VOL = 10;
+	private final float MIN_VOL = 0;
 	
-	public int getPhoneNum() {
-		return phoneNum;
+	private String phoneNumber;
+	private float speakerVol;
+	private float micVol;
+	private ArrayList<Contact> contactList;
+	private long callStartTime;
+	private long callEndTime;
+	
+	public Phone(User user) {
+		phoneNumber = user.getPhoneNumber();
+		speakerVol = MAX_VOL / 2;
+		micVol = MAX_VOL / 2;
+		contactList = user.getContacts();
+		callStartTime = 0;
+		callEndTime = 0;
+	}
+	
+	public String getPhoneNum() {
+		return phoneNumber;
 	}
 
-	public void setPhoneNum(int phoneNum) {
-		this.phoneNum = phoneNum;
+	public float getSpeakerVol() {
+		return speakerVol;
 	}
-
-	public int getVolSpeaker() {
-		return volSpeaker;
+	
+	public float getMicVol() {
+		return micVol;
 	}
-
-	public void setVolSpeaker(int volSpeaker) {
-		this.volSpeaker = volSpeaker;
-	}
-
-	public int[] getContactList() {
+	
+	public ArrayList<Contact> getContactList() {
 		return contactList;
 	}
 
-	public void setContactList(int[] contactList) {
-		this.contactList = contactList;
+	public void incSpeakerVol() {
+		if(speakerVol < MAX_VOL)
+			speakerVol += 0.5;
 	}
 	
-	private String makeCall(int newPhoneNum){
-		
-		phoneNum = newPhoneNum;	
-		
-		return "Calling " + phoneNum;
+	public void decSpeakerVol() {
+		if(speakerVol > MIN_VOL)
+			speakerVol -= 0.5;
 	}
 	
-	private int incMicVol(){
-		if(volMic == maxVol)
-		{
-			return volMic;
-			
-		}
-		else
-		{
-			volMic++;
-			return volMic;
-		}
+	public void incMicVol() {
+		if(micVol < MAX_VOL)
+			micVol += 0.5;
 	}
 	
-	private int decMicVol(){
-		if(volMic == minVol)
-		{
-			return volMic;
-			
-		}
-		else
-		{
-			volMic--;
-			return volMic;
-		}
-	}
-
-	private int incSpeakVol(){
-		if(volSpeaker == maxVol)
-		{
-			return volSpeaker;
-		}
-		else
-		{
-			volSpeaker++;
-			return volSpeaker;
-		}
-	
+	public void decMicVol() {
+		if(micVol > MIN_VOL)
+			micVol -= 0.5;
 	}
 	
-	private int decSpeakVol(){
+	private String makeCall(String newPhoneNum){
+		//this needs to validate a number and start the timer.
+		//timer may not work in this class
+		//timer may need to be in phone GUI
+		phoneNumber = newPhoneNum;	
 		
-		if(volSpeaker == minVol)
-		{
-			return volSpeaker;
-		}
-		else
-		{
-			volSpeaker--;
-			return volSpeaker;
-		}
-		
+		return "Calling " + phoneNumber;
 	}
-	
-	public int[] contacts(){
-		
-		return contactList;
-	}
-	
-	private void addContact(int addNumber){
-		
-		contactList[arrayLength] = addNumber;
-		arrayLength++;		
-		
-	}
-	
-	private void delContact(int delNumber){ 
-		
-		for(int i = 0; i <= arrayLength; i++)
-		{
-			if(contactList[i] == delNumber)
-			{
-				contactList[i]= contactList[arrayLength];
-				arrayLength--;				
-			}
-		}	
-	}
-	
-	private int endCall(){
-		return callDuration;
-		
-	}
-
-}
+}	

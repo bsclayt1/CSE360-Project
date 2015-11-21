@@ -1,4 +1,4 @@
-package Login;
+package login;
 
 import java.io.FileReader;
 import java.io.File;
@@ -8,7 +8,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 public class LoginValidator {
-	
 	private File fin;
 	private JSONArray logs;
 	
@@ -24,14 +23,14 @@ public class LoginValidator {
 			}
 		}
 		else
-			System.out.println("File not Found!");
+			System.out.println("Login file not found!");
 	}
 	
 	public boolean validate(String name, String pass) {
 		String fname = "";
 		String fpass = "";
 		for(int i = 0; i < logs.size(); i++) {
-			fname = (String) ((JSONObject) logs.get(i)).get("user");
+			fname = (String) ((JSONObject) logs.get(i)).get("username");
 			fpass = (String) ((JSONObject) logs.get(i)).get("password");
 			if(name.equals(fname) && pass.equals(fpass)) {
 				return true;

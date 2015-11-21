@@ -1,5 +1,8 @@
 package GUI;
 
+import login.*;
+import user.*;
+
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -11,30 +14,23 @@ import java.awt.GridLayout;
 import javax.swing.JTextField;
 import java.awt.Dimension;
 import javax.swing.border.EmptyBorder;
-
-import login.*;
-
 import java.awt.FlowLayout;
 import java.awt.Component;
 
 @SuppressWarnings("serial")
 public class LoginGUI extends JPanel {
 	
-	private String username;
+	private User user;
 	private boolean passflag;
 	private JTextField usernameTextField;
 	private JTextField passwordTextField;
 	private JButton loginButton;
 	
-
-	/**
-	 * Create the panel.
-	 */
 	public LoginGUI() {
-		setPreferredSize(new Dimension(650, 550));
-		
-		username = "";
+		user = null;
 		passflag = false;
+		
+		setPreferredSize(new Dimension(650, 550));
 		setLayout(new BorderLayout(0, 0));
 		JLabel lblLogin = new JLabel("Login");
 		lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
@@ -96,29 +92,25 @@ public class LoginGUI extends JPanel {
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//getRootPane().setDefaultButton(loginButton);
-				String name = usernameTextField.getText();
-				String pass = passwordTextField.getText();
+				String username = usernameTextField.getText();
+				String password = passwordTextField.getText();
 				LoginValidator logger = new LoginValidator();
-				passflag = logger.validate(name, pass);
+				passflag = logger.validate(username, password);
 				if(!passflag)
 					logintextLabel.setText("login/password incorrect - Try again");
-				else
-					username = capitalize(name);
+				else {
+					user = new User(username);
+				}
 			}
 		});
-
-	}
-	
-	private String capitalize(String name) {
-		return Character.toUpperCase(name.charAt(0)) + name.substring(1);
 	}
 	
 	public boolean getPassed() {
 		return passflag;
 	}
 	
-	public String getUserName() {
-		return username;
+	public User getUser() {
+		return user;
 	}
 	
 	public JButton getLoginButton() {

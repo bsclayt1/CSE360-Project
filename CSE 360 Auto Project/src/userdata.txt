@@ -1,0 +1,14 @@
+[
+	{
+		"username":"robert",
+		"phonenumber":"480-555-1111",
+		"contacts": [
+			{"name":"Ahmed", "phonenumber":"480-555-2222"},
+			{"name":"Coakley", "phonenumber":"480-555-3333"},
+			{"name":"Ben", "phonenumber":"480-555-4444"}]
+		"stations": [
+			{"name":"Awesome Rock", "frequency":"97.9", "band":"FM", "location":"1"},
+			{"name":"Sports Talk", "frequency":"1070", "band":"AM", "location":"3"},
+			{"name":"Political Chat", "frequency":"87.3", "band":"FM", "location":"2"}]
+	}
+]

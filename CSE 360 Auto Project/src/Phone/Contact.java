@@ -16,5 +16,12 @@ public class Contact {
 	public String getNumber() {
 		return number;
 	}
+	
+	public String toString() {
+		String s = "";
+		s += "Contact Name: " + name + '\n';
+		s += "Phone Number: " + number + '\n';
+		return s;
+	}
 
 }

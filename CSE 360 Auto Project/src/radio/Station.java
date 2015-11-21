@@ -2,11 +2,11 @@ package radio;
 
 public class Station {
 	private String name;
-	private double freq;
+	private float freq;
 	private String band;//FM or AM
-	private int location;//1:3 specifies which route the station works at
+	private long location;//1:3 specifies which route the station works at
 	
-	public Station(String name, float freq, String band, int location) {
+	public Station(String name, float freq, String band, long location) {
 		this.name = name;
 		this.freq = freq;
 		this.band = band;
@@ -17,14 +17,15 @@ public class Station {
 		return name;
 	}
 	
-	public double getFreq(){
+	public float getFreq(){
 		return freq;
-	}
-	public int getLocation(){
-		return location;
 	}
 	
 	public String getBand(){
 		return band;
+	}
+	
+	public long getLocation(){
+		return location;
 	}
 }

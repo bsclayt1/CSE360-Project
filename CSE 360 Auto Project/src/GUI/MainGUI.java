@@ -1,6 +1,8 @@
 package GUI;
 
-//awt & swing imports
+import car.CarController;
+import user.*;
+
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -13,9 +15,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
-import car.CarController;
-
 import javax.swing.Timer;
 import javax.swing.JRadioButton;
 import java.awt.CardLayout;
@@ -37,7 +36,8 @@ public class MainGUI extends JPanel {
 	private JPanel mapPanel;
 	private boolean logout;
 	
-	public MainGUI(CarController car, String user) {
+	public MainGUI(CarController car, User user) {
+		System.out.println(user);
 		setPreferredSize(new Dimension(750, 585));
 		setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 		
@@ -57,7 +57,7 @@ public class MainGUI extends JPanel {
 		statsButton.setPreferredSize(new Dimension(65, 25));
 		emptyPanel.add(statsButton);
 		
-		JLabel userLabel = new JLabel(user);
+		JLabel userLabel = new JLabel(capitalize(user.getUserName()));
 		userLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		userPanel.add(userLabel);
 		
@@ -195,6 +195,10 @@ public class MainGUI extends JPanel {
 		buttonToggler(radiowindowToggleButton, phonewindowToggleButton, usermanualwindowToggleButton, mapwindowToggleButton, centerPanel, cards);
 		stateHandler(car, parkRadioButton, driveRadioButton);
 		logoutHandler(logoutButton);
+	}
+	
+	private String capitalize(String name) {
+		return Character.toUpperCase(name.charAt(0)) + name.substring(1);
 	}
 	
 	private void speedhandler(CarController car, JButton gasButton, JButton brakeButton, JLabel speedLabel) {
