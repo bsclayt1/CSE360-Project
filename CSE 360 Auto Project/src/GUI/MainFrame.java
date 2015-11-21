@@ -45,7 +45,7 @@ public class MainFrame extends JFrame {
 		interval.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(loginPanel.getPassed()) {
-					mainGUIPanel = new MainGUI(car, "Robert");
+					mainGUIPanel = new MainGUI(car, loginPanel.getUserName());
 					mainGUIPanel.setPreferredSize(new Dimension(750, 590));
 					getContentPane().removeAll();
 					getContentPane().add(mainGUIPanel);

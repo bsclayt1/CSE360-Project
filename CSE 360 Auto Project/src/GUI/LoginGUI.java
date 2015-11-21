@@ -1,6 +1,6 @@
 package GUI;
 
-//import userClassAhmed.*;
+import Login.*;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -19,7 +19,8 @@ import java.awt.Component;
 @SuppressWarnings("serial")
 public class LoginGUI extends JPanel {
 	
-	private boolean pass;
+	private String username;
+	private boolean passflag;
 	private JTextField usernameTextField;
 	private JTextField passwordTextField;
 	private JButton loginButton;
@@ -30,7 +31,9 @@ public class LoginGUI extends JPanel {
 	 */
 	public LoginGUI() {
 		setPreferredSize(new Dimension(650, 550));
-		pass = false;
+		
+		username = "";
+		passflag = false;
 		setLayout(new BorderLayout(0, 0));
 		JLabel lblLogin = new JLabel("Login");
 		lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
@@ -91,29 +94,30 @@ public class LoginGUI extends JPanel {
 		loginButton.setPreferredSize(new Dimension(70, 20));
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				getRootPane().setDefaultButton(loginButton);
+				//getRootPane().setDefaultButton(loginButton);
 				String name = usernameTextField.getText();
-				String passw = passwordTextField.getText();
-				//System.out.print("Entered Username: " + name + "\n");
-				//System.out.print("Entered Password: " + passw + "\n");
-				if(name.equals("robert") && passw.equals("1234")) {
-					pass = true;
-				}
-				else {
-					pass = false;
+				String pass = passwordTextField.getText();
+				LoginValidator logger = new LoginValidator();
+				passflag = logger.validate(name, pass);
+				if(!passflag)
 					logintextLabel.setText("login/password incorrect - Try again");
-				}
+				else
+					username = capitalize(name);
 			}
 		});
 
 	}
 	
+	private String capitalize(String name) {
+		return Character.toUpperCase(name.charAt(0)) + name.substring(1);
+	}
+	
 	public boolean getPassed() {
-		return pass;
+		return passflag;
 	}
 	
 	public String getUserName() {
-		return usernameTextField.getText();
+		return username;
 	}
 	
 	public JButton getLoginButton() {

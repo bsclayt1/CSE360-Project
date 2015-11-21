@@ -9,34 +9,30 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-public class user {
+public class UserAhmed_Old {
 	String currentName;
 	String names[];
 	String passwords[];//4 digits?
 	station stations[][];
 	
 	
-	public user(){
-		
+	public UserAhmed_Old(){
 		JSONParser parser = new JSONParser();
 		File f = new File("myFile.txt");
-  	  if(f.exists()){
-	      try {
-	    	  
-	    	  Object obj = parser.parse(new FileReader(f));
-	    	  JSONArray root = (JSONArray) obj;
-
-	  		passwords = new String[root.size()];
-	  		names = new String[root.size()];
-	  		
-	    	  for(int i = 0 ; i < root.size(); i++){
+  	  	if(f.exists()){
+  	  		try {
+		    	Object obj = parser.parse(new FileReader(f));
+		    	JSONArray root = (JSONArray) obj;
+		    	passwords = new String[root.size()];
+		    	names = new String[root.size()];
+	    	  	for(int i = 0 ; i < root.size(); i++){
 	    		  names[i] = (String) ((JSONObject) root.get(i)).get("name");
 	    		  System.out.println((String) ((JSONObject) root.get(i)).get("name"));
 	    		  //System.out.println((String) ((JSONObject) root.get(i)).get("pswd"));
 	    		  passwords[i] =  (String) ((JSONObject) root.get(i)).get("pswd");
 	    		  
 	    	  }
-	        } catch (Exception ex) {
+  	  		} catch (Exception ex) {
 	            ex.printStackTrace();
 	        }
 	      }else{
