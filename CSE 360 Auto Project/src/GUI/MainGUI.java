@@ -1,8 +1,5 @@
 package GUI;
 
-//Car Classes
-import DriveClassLloyd.CarController;
-
 //awt & swing imports
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
@@ -16,6 +13,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import car.CarController;
+
 import javax.swing.Timer;
 import javax.swing.JRadioButton;
 import java.awt.CardLayout;

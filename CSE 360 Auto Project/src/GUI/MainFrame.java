@@ -1,9 +1,8 @@
 package GUI;
 
-import DriveClassLloyd.CarController;
-
 import GUI.LoginGUI;
 import GUI.MainGUI;
+import car.CarController;
 
 import javax.swing.JFrame;
 import javax.swing.border.EmptyBorder;

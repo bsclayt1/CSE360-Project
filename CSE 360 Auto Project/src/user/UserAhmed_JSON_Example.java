@@ -1,6 +1,4 @@
-package userClassAhmed;
-
-import RadioClassesAhmed.*;
+package user;
 
 import java.io.FileReader;
 import java.io.File;
@@ -9,14 +7,16 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-public class UserAhmed_Old {
+import radio.*;
+
+public class UserAhmed_JSON_Example {
 	String currentName;
 	String names[];
 	String passwords[];//4 digits?
-	station stations[][];
+	Station stations[][];
 	
 	
-	public UserAhmed_Old(){
+	public UserAhmed_JSON_Example(){
 		JSONParser parser = new JSONParser();
 		File f = new File("myFile.txt");
   	  	if(f.exists()){
@@ -123,12 +123,12 @@ public class UserAhmed_Old {
 	}
 
 
-	public station[][] getStations() {
+	public Station[][] getStations() {
 		return stations;
 	}
 
 
-	public void setStations(station[][] stations) {
+	public void setStations(Station[][] stations) {
 		this.stations = stations;
 	}
 

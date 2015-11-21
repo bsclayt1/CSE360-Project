@@ -1,7 +1,5 @@
 package GUI;
 
-import Login.*;
-
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -13,6 +11,9 @@ import java.awt.GridLayout;
 import javax.swing.JTextField;
 import java.awt.Dimension;
 import javax.swing.border.EmptyBorder;
+
+import login.*;
+
 import java.awt.FlowLayout;
 import java.awt.Component;
 

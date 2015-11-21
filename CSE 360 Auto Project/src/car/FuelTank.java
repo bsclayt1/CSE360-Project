@@ -1,4 +1,4 @@
-package DriveClassLloyd;
+package car;
 
 public class FuelTank {
    private final double CONSUME = 20; //consumption in mpg
