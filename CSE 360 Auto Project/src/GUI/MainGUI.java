@@ -2,6 +2,8 @@ package GUI;
 
 import car.CarController;
 import user.*;
+import phone.*;
+import radio.*;
 
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
@@ -37,7 +39,8 @@ public class MainGUI extends JPanel {
 	private boolean logout;
 	
 	public MainGUI(CarController car, User user) {
-		System.out.println(user);
+		Phone phone = new Phone(user);
+		Radio radio = new Radio(user);
 		setPreferredSize(new Dimension(750, 585));
 		setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 		
@@ -146,10 +149,11 @@ public class MainGUI extends JPanel {
 		centerPanel.setLayout(cards);
 		
 		manualPanel = new UserManualGUI();
+		manualPanel.setPreferredSize(new Dimension(0, 0));
 		manualPanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
 		radioPanel = new RadioGUI();
 		radioPanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
-		phonePanel = new PhoneGUI();
+		phonePanel = new PhoneGUI(phone);
 		phonePanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
 		mapPanel = new MapGUI();
 		mapPanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
@@ -167,14 +171,18 @@ public class MainGUI extends JPanel {
 		JToggleButton usermanualwindowToggleButton = new JToggleButton("Manual");
 		usermanualwindowToggleButton.setMargin(new Insets(2, 5, 2, 5));
 		usermanualwindowToggleButton.setPreferredSize(new Dimension(65, 25));
-		usermanualwindowToggleButton.getModel().setSelected(true);
-		cards.show(centerPanel, manualPanel.getName());
 		windowselectrightPanel.add(usermanualwindowToggleButton);
 		
 		JToggleButton mapwindowToggleButton = new JToggleButton("Map");
 		mapwindowToggleButton.setMargin(new Insets(2, 5, 2, 5));
 		mapwindowToggleButton.setPreferredSize(new Dimension(65, 25));
 		windowselectrightPanel.add(mapwindowToggleButton);
+		
+		//usermanualwindowToggleButton.getModel().setSelected(true);
+		//cards.show(centerPanel, "Manual");
+		
+		phonewindowToggleButton.getModel().setSelected(true);
+		cards.show(centerPanel, "Phone");
 		
 		JPanel statePanel = new JPanel();
 		controlsPanel.add(statePanel);

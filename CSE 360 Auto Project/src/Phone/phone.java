@@ -11,6 +11,8 @@ public class Phone {
 	private String phoneNumber;
 	private float speakerVol;
 	private float micVol;
+	private boolean isSpeakerMute;
+	private boolean isMicMute;
 	private ArrayList<Contact> contactList;
 	private long callStartTime;
 	private long callEndTime;
@@ -19,6 +21,8 @@ public class Phone {
 		phoneNumber = user.getPhoneNumber();
 		speakerVol = MAX_VOL / 2;
 		micVol = MAX_VOL / 2;
+		isSpeakerMute = false;
+		isMicMute = false;
 		contactList = user.getContacts();
 		callStartTime = 0;
 		callEndTime = 0;
@@ -28,12 +32,28 @@ public class Phone {
 		return phoneNumber;
 	}
 
-	public float getSpeakerVol() {
-		return speakerVol;
+	public String getSpeakerVol() {
+		if(!isSpeakerMute) {
+			if(speakerVol == MAX_VOL)
+				return "MAX";
+			if(speakerVol == MIN_VOL)
+				return "MIN";
+			return String.format("%.1f", speakerVol);
+		}
+		else
+			return "MUTE";
 	}
 	
-	public float getMicVol() {
-		return micVol;
+	public String getMicVol() {
+		if(!isMicMute) {
+			if(micVol == MAX_VOL)
+				return "MAX";
+			if(micVol == MIN_VOL)
+				return "MIN";
+			return String.format("%.1f", micVol);
+		}
+		else
+			return "MUTE";
 	}
 	
 	public ArrayList<Contact> getContactList() {
@@ -58,6 +78,22 @@ public class Phone {
 	public void decMicVol() {
 		if(micVol > MIN_VOL)
 			micVol -= 0.5;
+	}
+	
+	public void speakerMute() {
+		isSpeakerMute = true;
+	}
+	
+	public void speakerUnmute() {
+		isSpeakerMute = false;
+	}
+	
+	public void micMute() {
+		isMicMute = true;
+	}
+	
+	public void micUnmute() {
+		isMicMute = false;
 	}
 	
 	private String makeCall(String newPhoneNum){

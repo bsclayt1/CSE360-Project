@@ -4,9 +4,9 @@ public class Station {
 	private String name;
 	private float freq;
 	private String band;//FM or AM
-	private long location;//1:3 specifies which route the station works at
+	private int location;//1:3 specifies which route the station works at
 	
-	public Station(String name, float freq, String band, long location) {
+	public Station(String name, float freq, String band, int location) {
 		this.name = name;
 		this.freq = freq;
 		this.band = band;
@@ -25,7 +25,11 @@ public class Station {
 		return band;
 	}
 	
-	public long getLocation(){
+	public String getFreqBand() {
+		return freq + band;
+	}
+	
+	public int getLocation(){
 		return location;
 	}
 }

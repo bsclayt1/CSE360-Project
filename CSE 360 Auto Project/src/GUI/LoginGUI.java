@@ -16,6 +16,7 @@ import java.awt.Dimension;
 import javax.swing.border.EmptyBorder;
 import java.awt.FlowLayout;
 import java.awt.Component;
+import javax.swing.JPasswordField;
 
 @SuppressWarnings("serial")
 public class LoginGUI extends JPanel {
@@ -23,7 +24,7 @@ public class LoginGUI extends JPanel {
 	private User user;
 	private boolean passflag;
 	private JTextField usernameTextField;
-	private JTextField passwordTextField;
+	private JPasswordField passwordTextField;
 	private JButton loginButton;
 	
 	public LoginGUI() {
@@ -68,7 +69,7 @@ public class LoginGUI extends JPanel {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		passwordPanel.add(lblNewLabel);
 		
-		passwordTextField = new JTextField();
+		passwordTextField = new JPasswordField();
 		passwordPanel.add(passwordTextField);
 		passwordTextField.setColumns(10);
 		
@@ -93,6 +94,7 @@ public class LoginGUI extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				//getRootPane().setDefaultButton(loginButton);
 				String username = usernameTextField.getText();
+				@SuppressWarnings("deprecation")
 				String password = passwordTextField.getText();
 				LoginValidator logger = new LoginValidator();
 				passflag = logger.validate(username, password);
