@@ -22,6 +22,9 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JToggleButton;
+import java.awt.CardLayout;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 @SuppressWarnings("serial")
 public class PhoneGUI extends JPanel {
@@ -30,26 +33,146 @@ public class PhoneGUI extends JPanel {
 	
 	public PhoneGUI(Phone phone) {
 		this.phone = phone;
+		
+		//Test with setting to Contact instead of String
+		DefaultListModel<String> listModel = new DefaultListModel<String>();
+		for(Contact contact : phone.getContactList()) {
+			listModel.addElement(contact.getName());
+		}
+		
 		setPreferredSize(new Dimension(605, 467));
 		setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		
+		JPanel phonePanel = new JPanel();
+		add(phonePanel);
+		phonePanel.setLayout(new CardLayout(0, 0));
+		
 		JPanel dialerPanel = new JPanel();
-		dialerPanel.setBorder(new EmptyBorder(30, 0, 0, 0));
-		FlowLayout flowLayout = (FlowLayout) dialerPanel.getLayout();
-		flowLayout.setVgap(0);
-		flowLayout.setHgap(0);
+		phonePanel.add(dialerPanel, "Dialer");
 		dialerPanel.setPreferredSize(new Dimension(354, 467));
-		add(dialerPanel);
+		dialerPanel.setLayout(new BorderLayout(0, 0));
+		
+		JPanel dialerDisplayPanel = new JPanel();
+		dialerDisplayPanel.setBorder(new EmptyBorder(30, 0, 0, 0));
+		dialerPanel.add(dialerDisplayPanel, BorderLayout.NORTH);
 		
 		JLabel numberLabel = new JLabel();
+		dialerDisplayPanel.add(numberLabel);
 		numberLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		numberLabel.setPreferredSize(new Dimension(74, 30));
 		numberLabel.setText("Number: ");
-		dialerPanel.add(numberLabel);
 		JTextField numberTextField = new JTextField();
+		numberTextField.setHorizontalAlignment(SwingConstants.CENTER);
+		numberTextField.setBorder(new LineBorder(Color.BLACK));
+		numberTextField.setEditable(false);
+		dialerDisplayPanel.add(numberTextField);
 		numberTextField.setPreferredSize(new Dimension(200, 30));
 		numberTextField.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		dialerPanel.add(numberTextField);
+		
+		JPanel dialpadPanel = new JPanel();
+		FlowLayout flowLayout_3 = (FlowLayout) dialpadPanel.getLayout();
+		flowLayout_3.setVgap(0);
+		flowLayout_3.setHgap(0);
+		dialpadPanel.setBorder(new EmptyBorder(5, 0, 0, 0));
+		dialerPanel.add(dialpadPanel, BorderLayout.CENTER);
+		
+		JPanel dialpadButtonsPanel = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) dialpadButtonsPanel.getLayout();
+		flowLayout.setVgap(15);
+		flowLayout.setHgap(15);
+		dialpadButtonsPanel.setPreferredSize(new Dimension(200, 250));
+		dialpadPanel.add(dialpadButtonsPanel);
+		
+		JButton oneButton = new JButton("1");
+		oneButton.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		oneButton.setPreferredSize(new Dimension(45, 45));
+		oneButton.setMargin(new Insets(0, 0, 0, 0));
+		dialpadButtonsPanel.add(oneButton);
+		
+		JButton twoButton = new JButton("2");
+		twoButton.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		twoButton.setPreferredSize(new Dimension(45, 45));
+		twoButton.setMargin(new Insets(0, 0, 0, 0));
+		dialpadButtonsPanel.add(twoButton);
+		
+		JButton threeButton = new JButton("3");
+		threeButton.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		threeButton.setPreferredSize(new Dimension(45, 45));
+		threeButton.setMargin(new Insets(0, 0, 0, 0));
+		dialpadButtonsPanel.add(threeButton);
+		
+		JButton fourButton = new JButton("4");
+		fourButton.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		fourButton.setPreferredSize(new Dimension(45, 45));
+		fourButton.setMargin(new Insets(0, 0, 0, 0));
+		dialpadButtonsPanel.add(fourButton);
+		
+		JButton fiveButton = new JButton("5");
+		fiveButton.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		fiveButton.setPreferredSize(new Dimension(45, 45));
+		fiveButton.setMargin(new Insets(0, 0, 0, 0));
+		dialpadButtonsPanel.add(fiveButton);
+		
+		JButton sixButton = new JButton("6");
+		sixButton.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		sixButton.setPreferredSize(new Dimension(45, 45));
+		sixButton.setMargin(new Insets(0, 0, 0, 0));
+		dialpadButtonsPanel.add(sixButton);
+		
+		JButton sevenButton = new JButton("7");
+		sevenButton.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		sevenButton.setPreferredSize(new Dimension(45, 45));
+		sevenButton.setMargin(new Insets(0, 0, 0, 0));
+		dialpadButtonsPanel.add(sevenButton);
+		
+		JButton eightButton = new JButton("8");
+		eightButton.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		eightButton.setPreferredSize(new Dimension(45, 45));
+		eightButton.setMargin(new Insets(0, 0, 0, 0));
+		dialpadButtonsPanel.add(eightButton);
+		
+		JButton nineButton = new JButton("9");
+		nineButton.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		nineButton.setPreferredSize(new Dimension(45, 45));
+		nineButton.setMargin(new Insets(0, 0, 0, 0));
+		dialpadButtonsPanel.add(nineButton);
+		
+		JButton starButton = new JButton("*");
+		starButton.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		starButton.setPreferredSize(new Dimension(45, 45));
+		starButton.setMargin(new Insets(6, 0, 0, 0));
+		dialpadButtonsPanel.add(starButton);
+		
+		JButton zeroButton = new JButton("0");
+		zeroButton.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		zeroButton.setPreferredSize(new Dimension(45, 45));
+		zeroButton.setMargin(new Insets(0, 0, 0, 0));
+		dialpadButtonsPanel.add(zeroButton);
+		
+		JButton poundButton = new JButton("#");
+		poundButton.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		poundButton.setPreferredSize(new Dimension(45, 45));
+		poundButton.setMargin(new Insets(0, 0, 0, 0));
+		dialpadButtonsPanel.add(poundButton);
+		
+		JPanel dialerControlsPanel = new JPanel();
+		dialerControlsPanel.setPreferredSize(new Dimension(354, 110));
+		dialerPanel.add(dialerControlsPanel, BorderLayout.SOUTH);
+		
+		JButton callButton = new JButton("Call");
+		callButton.setMargin(new Insets(0, 0, 0, 0));
+		callButton.setPreferredSize(new Dimension(60, 35));
+		callButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		dialerControlsPanel.add(callButton);
+		
+		JButton clearButton = new JButton("Clear");
+		clearButton.setPreferredSize(new Dimension(60, 35));
+		clearButton.setMargin(new Insets(0, 0, 0, 0));
+		clearButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		dialerControlsPanel.add(clearButton);
+		
+		JPanel onCallPanel = new JPanel();
+		phonePanel.add(onCallPanel, "OnCall");
 		
 		JPanel controlsPanel = new JPanel();
 		controlsPanel.setPreferredSize(new Dimension(250, 467));
@@ -168,18 +291,22 @@ public class PhoneGUI extends JPanel {
 		contactListPanel.add(contactsScrollPane);
 		contactsScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		contactsScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		
-		//Test with setting to Contact instead of String
-		DefaultListModel<String> listModel = new DefaultListModel<String>();
-		for(Contact contact : phone.getContactList()) {
-			listModel.addElement(contact.getName());
-		}
 		JList<String> contactsList = new JList<String>(listModel);
-		contactsList.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		contactsList.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		contactsScrollPane.setViewportView(contactsList);
+		
+		JPanel contactControlsPanel = new JPanel();
+		contactControlsPanel.setPreferredSize(new Dimension(250, 35));
+		contactsPanel.add(contactControlsPanel, BorderLayout.SOUTH);
+		
+		JButton[] dialpad = {zeroButton, oneButton, twoButton, 
+				 threeButton, fourButton, fiveButton, 
+				 sixButton, sevenButton, eightButton, 
+				 nineButton, starButton, poundButton};
 		
 		labelUpdater(spVolLabel, micVolLabel);
 		volumeHandler(spVolUpButton, spVolDownButton, spVolMuteButton, micVolUpButton, micVolDownButton, micVolMuteButton);
+		dialpadHandler(numberTextField, dialpad, clearButton);
 	}
 	
 	private void labelUpdater(JLabel spVol, JLabel micVol) {
@@ -207,8 +334,8 @@ public class PhoneGUI extends JPanel {
 		});
 		spMute.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(micMute.getModel().isSelected()) {
-					phone.micMute();
+				if(spMute.getModel().isSelected()) {
+					phone.speakerMute();
 					spMute.setText("Unmute");
 				}
 				else {
@@ -241,5 +368,162 @@ public class PhoneGUI extends JPanel {
 				}
 			}
 		});
+	}
+	
+	private void dialpadHandler(JTextField number, JButton[] numberpad, JButton clear) {
+		//All numbers correspond, '*' = index 10, '#' = index 11
+		numberpad[0].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String phonenumber = number.getText();
+				if(phonenumber.length() == 3)
+					phonenumber += "-" + numberpad[0].getText();
+				else if(phonenumber.length() == 7)
+					phonenumber += "-" + numberpad[0].getText();
+				else
+					phonenumber += numberpad[0].getText();
+				number.setText(phonenumber);
+			}
+		});
+		numberpad[1].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String phonenumber = number.getText();
+				if(phonenumber.length() == 3)
+					phonenumber += "-" + numberpad[1].getText();
+				else if(phonenumber.length() == 7)
+					phonenumber += "-" + numberpad[1].getText();
+				else
+					phonenumber += numberpad[1].getText();
+				number.setText(phonenumber);
+			}
+		});
+		numberpad[2].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String phonenumber = number.getText();
+				if(phonenumber.length() == 3)
+					phonenumber += "-" + numberpad[2].getText();
+				else if(phonenumber.length() == 7)
+					phonenumber += "-" + numberpad[2].getText();
+				else
+					phonenumber += numberpad[2].getText();
+				number.setText(phonenumber);
+			}
+		});
+		numberpad[3].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String phonenumber = number.getText();
+				if(phonenumber.length() == 3)
+					phonenumber += "-" + numberpad[3].getText();
+				else if(phonenumber.length() == 7)
+					phonenumber += "-" + numberpad[3].getText();
+				else
+					phonenumber += numberpad[3].getText();
+				number.setText(phonenumber);
+			}
+		});
+		numberpad[4].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String phonenumber = number.getText();
+				if(phonenumber.length() == 3)
+					phonenumber += "-" + numberpad[4].getText();
+				else if(phonenumber.length() == 7)
+					phonenumber += "-" + numberpad[4].getText();
+				else
+					phonenumber += numberpad[4].getText();
+				number.setText(phonenumber);
+			}
+		});
+		numberpad[5].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String phonenumber = number.getText();
+				if(phonenumber.length() == 3)
+					phonenumber += "-" + numberpad[5].getText();
+				else if(phonenumber.length() == 7)
+					phonenumber += "-" + numberpad[5].getText();
+				else
+					phonenumber += numberpad[5].getText();
+				number.setText(phonenumber);
+			}
+		});
+		numberpad[6].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String phonenumber = number.getText();
+				if(phonenumber.length() == 3)
+					phonenumber += "-" + numberpad[6].getText();
+				else if(phonenumber.length() == 7)
+					phonenumber += "-" + numberpad[6].getText();
+				else
+					phonenumber += numberpad[6].getText();
+				number.setText(phonenumber);
+			}
+		});
+		numberpad[7].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String phonenumber = number.getText();
+				if(phonenumber.length() == 3)
+					phonenumber += "-" + numberpad[7].getText();
+				else if(phonenumber.length() == 7)
+					phonenumber += "-" + numberpad[7].getText();
+				else
+					phonenumber += numberpad[7].getText();
+				number.setText(phonenumber);
+			}
+		});
+		numberpad[8].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String phonenumber = number.getText();
+				if(phonenumber.length() == 3)
+					phonenumber += "-" + numberpad[8].getText();
+				else if(phonenumber.length() == 7)
+					phonenumber += "-" + numberpad[8].getText();
+				else
+					phonenumber += numberpad[8].getText();
+				number.setText(phonenumber);
+			}
+		});
+		numberpad[9].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String phonenumber = number.getText();
+				if(phonenumber.length() == 3)
+					phonenumber += "-" + numberpad[9].getText();
+				else if(phonenumber.length() == 7)
+					phonenumber += "-" + numberpad[9].getText();
+				else
+					phonenumber += numberpad[9].getText();
+				number.setText(phonenumber);
+			}
+		});
+		numberpad[10].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String phonenumber = number.getText();
+				if(phonenumber.length() == 3)
+					phonenumber += "-" + numberpad[10].getText();
+				else if(phonenumber.length() == 7)
+					phonenumber += "-" + numberpad[10].getText();
+				else
+					phonenumber += numberpad[10].getText();
+				number.setText(phonenumber);
+			}
+		});
+		numberpad[11].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String phonenumber = number.getText();
+				if(phonenumber.length() == 3)
+					phonenumber += "-" + numberpad[11].getText();
+				else if(phonenumber.length() == 7)
+					phonenumber += "-" + numberpad[11].getText();
+				else
+					phonenumber += numberpad[11].getText();
+				number.setText(phonenumber);
+			}
+		});
+		clear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				number.setText("");
+			}
+		});
+	}
+
+	private void callHandler(JButton call) {
+		
 	}
 }
