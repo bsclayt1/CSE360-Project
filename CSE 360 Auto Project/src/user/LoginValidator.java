@@ -1,4 +1,4 @@
-package login;
+package user;
 
 import java.io.FileReader;
 import java.io.File;

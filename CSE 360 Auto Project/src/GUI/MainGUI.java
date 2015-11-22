@@ -36,6 +36,7 @@ public class MainGUI extends JPanel {
 	private JPanel radioPanel;
 	private JPanel phonePanel;
 	private JPanel mapPanel;
+	private JPanel statsPanel;
 	private boolean logout;
 	
 	public MainGUI(CarController car, User user) {
@@ -55,10 +56,10 @@ public class MainGUI extends JPanel {
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		userPanel.add(emptyPanel);
 		
-		JButton statsButton = new JButton("Stats");
-		statsButton.setMargin(new Insets(2, 5, 2, 5));
-		statsButton.setPreferredSize(new Dimension(65, 25));
-		emptyPanel.add(statsButton);
+		JToggleButton statswindowToggleButton = new JToggleButton("Stats");
+		statswindowToggleButton.setMargin(new Insets(2, 5, 2, 5));
+		statswindowToggleButton.setPreferredSize(new Dimension(65, 25));
+		emptyPanel.add(statswindowToggleButton);
 		
 		JLabel userLabel = new JLabel(capitalize(user.getUserName()));
 		userLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -157,11 +158,14 @@ public class MainGUI extends JPanel {
 		phonePanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
 		mapPanel = new MapGUI();
 		mapPanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
+		statsPanel = new StatsGUI(user);
+		statsPanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
 		
 		centerPanel.add(manualPanel, "Manual");
 		centerPanel.add(radioPanel, "Radio");
 		centerPanel.add(phonePanel, "Phone");
 		centerPanel.add(mapPanel, "Map");
+		centerPanel.add(statsPanel, "Stats");
 		
 		JPanel windowselectrightPanel = new JPanel();
 		windowselectrightPanel.setBorder(new EmptyBorder(0, 5, 0, 0));
@@ -200,7 +204,7 @@ public class MainGUI extends JPanel {
 		speedhandler(car, gasButton, brakeButton, speedLabel);
 		labelupdater(car, speedLabel, odometerLabel, fuelpercLabel, drivestateLabel, parkRadioButton, driveRadioButton);
 		stophandler(car, stopButton, parkRadioButton, driveRadioButton);
-		buttonToggler(radiowindowToggleButton, phonewindowToggleButton, usermanualwindowToggleButton, mapwindowToggleButton, centerPanel, cards);
+		buttonToggler(radiowindowToggleButton, phonewindowToggleButton, usermanualwindowToggleButton, mapwindowToggleButton, statswindowToggleButton, centerPanel, cards);
 		stateHandler(car, parkRadioButton, driveRadioButton);
 		logoutHandler(logoutButton);
 	}
@@ -290,13 +294,14 @@ public class MainGUI extends JPanel {
 		});
 	}
 	
-	private void buttonToggler(JToggleButton radio, JToggleButton phone, JToggleButton manual, JToggleButton map, JPanel center, CardLayout cards) {
+	private void buttonToggler(JToggleButton radio, JToggleButton phone, JToggleButton manual, JToggleButton map, JToggleButton stats, JPanel center, CardLayout cards) {
 		radio.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				if(radio.getModel().isSelected()) {
 					phone.getModel().setSelected(false);
 					manual.getModel().setSelected(false);
 					map.getModel().setSelected(false);
+					stats.getModel().setSelected(false);
 					cards.show(center, "Radio");
 				}
 			}
@@ -307,6 +312,7 @@ public class MainGUI extends JPanel {
 					radio.getModel().setSelected(false);
 					manual.getModel().setSelected(false);
 					map.getModel().setSelected(false);
+					stats.getModel().setSelected(false);
 					cards.show(center, "Phone");
 				}
 			}
@@ -317,6 +323,7 @@ public class MainGUI extends JPanel {
 					radio.getModel().setSelected(false);
 					phone.getModel().setSelected(false);
 					map.getModel().setSelected(false);
+					stats.getModel().setSelected(false);
 					cards.show(center, "Manual");
 				}
 			}
@@ -327,7 +334,19 @@ public class MainGUI extends JPanel {
 					radio.getModel().setSelected(false);
 					phone.getModel().setSelected(false);
 					manual.getModel().setSelected(false);
+					stats.getModel().setSelected(false);
 					cards.show(center, "Map");
+				}
+			}
+		});
+		stats.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if(stats.getModel().isSelected()) {
+					radio.getModel().setSelected(false);
+					phone.getModel().setSelected(false);
+					manual.getModel().setSelected(false);
+					map.getModel().setSelected(false);
+					cards.show(center, "Stats");
 				}
 			}
 		});

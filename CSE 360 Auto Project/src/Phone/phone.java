@@ -1,14 +1,17 @@
 package phone;
 
 import user.*;
+import logging.CallLog;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
+import java.util.Date;
 
 public class Phone {
 	private final float MAX_VOL = 10;
 	private final float MIN_VOL = 0;
 	
+	private User user;
 	private String phoneNumber;
 	private String numberCalled;
 	private boolean onCall;
@@ -18,9 +21,9 @@ public class Phone {
 	private boolean isMicMute;
 	private ArrayList<Contact> contactList;
 	private long callStartTime;
-	private long callEndTime;
 	
 	public Phone(User user) {
+		this.user = user;
 		phoneNumber = user.getPhoneNumber();
 		numberCalled = "";
 		onCall = false;
@@ -30,7 +33,6 @@ public class Phone {
 		isMicMute = false;
 		contactList = user.getContacts();
 		callStartTime = 0;
-		callEndTime = 0;
 	}
 	
 	public String getPhoneNum() {
@@ -120,7 +122,7 @@ public class Phone {
 			long millis = System.currentTimeMillis() - callStartTime;
 			String durration = String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(millis),
 					TimeUnit.MILLISECONDS.toSeconds(millis)
-							- TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
+					- TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
 			return durration;
 		}
 		else
@@ -129,9 +131,10 @@ public class Phone {
 	
 	public void endCall() {
 		if(onCall) {
+			long durration = System.currentTimeMillis() - callStartTime;
+			user.addCallLog(new CallLog(numberCalled, new Date(), durration));
 			numberCalled = "";
 			onCall = false;
-			callEndTime = System.currentTimeMillis();
 		}
 	}
 }	

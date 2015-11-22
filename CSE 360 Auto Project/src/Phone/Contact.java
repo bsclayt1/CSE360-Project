@@ -18,10 +18,7 @@ public class Contact {
 	}
 	
 	public String toString() {
-		String s = "";
-		s += "Contact Name: " + name + '\n';
-		s += "Phone Number: " + number + '\n';
-		return s;
+		return name;
 	}
 
 }

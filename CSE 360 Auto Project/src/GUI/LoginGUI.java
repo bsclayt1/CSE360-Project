@@ -1,6 +1,5 @@
 package GUI;
 
-import login.*;
 import user.*;
 
 import javax.swing.JPanel;

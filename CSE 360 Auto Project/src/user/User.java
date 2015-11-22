@@ -2,10 +2,13 @@ package user;
 
 import phone.Contact;
 import radio.Station;
+import logging.*;
 
 import java.util.ArrayList;
 import java.io.FileReader;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -16,17 +19,21 @@ public class User {
 	private String phoneNumber;
 	private ArrayList<Contact> contacts;
 	private ArrayList<Station> stations;
+	private ArrayList<String> callLogs;
+	private int userloc;
+	private JSONArray users;
+	private JSONObject userdata;
 	
 	public User(String username) {
 		JSONParser parse = new JSONParser();
 		File fin = new File("src/userdata.txt");
 		if(fin.exists()) {
 			try {
-				JSONArray users = (JSONArray) parse.parse(new FileReader(fin));
-				int i = 0;
+				users = (JSONArray) parse.parse(new FileReader(fin));
+				userloc = 0;
 				boolean found = false;
 				do {
-					JSONObject userdata = (JSONObject) users.get(i);
+					userdata = (JSONObject) users.get(userloc);
 					String fname = (String) userdata.get("username");
 					if(username.equals(fname)) {
 						found = true;
@@ -54,9 +61,21 @@ public class User {
 							Station station = new Station(stationname, stationfreq, stationband, stationloc);
 							this.stations.add(station);
 						}
+						
+						this.callLogs = new ArrayList<String>();
+						JSONArray callLogs = (JSONArray) userdata.get("calllogs");
+						for(int j = 0; j < callLogs.size(); j++) {
+							JSONObject callLogData = (JSONObject) callLogs.get(j);
+							String number = (String) callLogData.get("numbercalled");
+							String date = (String) callLogData.get("date");
+							String durration = (String) callLogData.get("durration");
+							String callLog = "Called Number: " + number + " on " + date + " for " + durration;
+							this.callLogs.add(callLog);
+						}
 					}
-					i++;
-				} while(i < users.size() && !found);
+					else
+						userloc++;
+				} while(userloc < users.size() && !found);
 			}
 			catch(Exception e) {
 				e.printStackTrace();
@@ -80,6 +99,28 @@ public class User {
 	
 	public ArrayList<Station> getStations() {
 		return stations;
+	}
+	
+	public ArrayList<String> getCallLogs() {
+		return callLogs;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void addCallLog(CallLog callLog) {
+		JSONArray callLogsJSON = (JSONArray) userdata.get("calllogs");
+		callLogsJSON.add(callLog.getJSONCallLog());
+		callLogs.add(callLog.toString());
+		updateUserData();
+	}
+	
+	private void updateUserData() {
+		try {
+			FileWriter fout = new FileWriter("src/userdata.txt");
+			fout.write(users.toString());
+			fout.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public String toString() {

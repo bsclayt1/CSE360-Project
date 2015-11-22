@@ -1,14 +1,1 @@
-[
-	{
-		"username":"robert",
-		"phonenumber":"480-555-1111",
-		"contacts": [
-			{"name":"Ahmed", "phonenumber":"480-555-2222"},
-			{"name":"Coakley", "phonenumber":"480-555-3333"},
-			{"name":"Ben", "phonenumber":"480-555-4444"}]
-		"stations": [
-			{"name":"Awesome Rock", "frequency":"97.9", "band":"FM", "location":"1"},
-			{"name":"Sports Talk", "frequency":"1070", "band":"AM", "location":"3"},
-			{"name":"Political Chat", "frequency":"87.3", "band":"FM", "location":"2"}]
-	}
-]
+[{"phonenumber":"480-555-1111","stations":[{"name":"Awesome Rock","location":"1","band":"FM","frequency":"97.9"},{"name":"Sports Talk","location":"3","band":"AM","frequency":"1070"},{"name":"Political Chat","location":"2","band":"FM","frequency":"87.3"}],"calllogs":[{"date":"11.22.2016 14:18:57","durration":"00 min:06 sec","numbercalled":"480-555-2222"},{"date":"11.22.2016 14:20:31","durration":"00 min:04 sec","numbercalled":"480-555-4444"},{"numbercalled":"480-555-2222","date":"11.22.2016 14:22:06","durration":"00 min:04 sec"}],"contacts":[{"name":"Ahmed","phonenumber":"480-555-2222"},{"name":"Coakley","phonenumber":"480-555-3333"},{"name":"Ben","phonenumber":"480-555-4444"}],"username":"robert"}]

@@ -41,9 +41,9 @@ public class PhoneGUI extends JPanel {
 		this.phone = phone;
 		
 		//Test with setting to Contact instead of String
-		DefaultListModel<String> listModel = new DefaultListModel<String>();
+		DefaultListModel<Contact> listModel = new DefaultListModel<Contact>();
 		for(Contact contact : phone.getContactList()) {
-			listModel.addElement(contact.getName());
+			listModel.addElement(contact);
 		}
 		
 		setPreferredSize(new Dimension(605, 467));
@@ -342,13 +342,19 @@ public class PhoneGUI extends JPanel {
 		contactListPanel.add(contactsScrollPane);
 		contactsScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		contactsScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		JList<String> contactsList = new JList<String>(listModel);
-		contactsList.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		contactsScrollPane.setViewportView(contactsList);
+		JList<Contact> contactsJList = new JList<Contact>(listModel);
+		contactsJList.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		contactsScrollPane.setViewportView(contactsJList);
 		
 		JPanel contactControlsPanel = new JPanel();
-		contactControlsPanel.setPreferredSize(new Dimension(250, 35));
+		contactControlsPanel.setPreferredSize(new Dimension(250, 45));
 		contactsPanel.add(contactControlsPanel, BorderLayout.SOUTH);
+		
+		JButton callContactButton = new JButton("Call Contact");
+		callContactButton.setPreferredSize(new Dimension(140, 35));
+		callContactButton.setMargin(new Insets(0, 0, 0, 0));
+		callContactButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		contactControlsPanel.add(callContactButton);
 		
 		JButton[] dialpad = {zeroButton, oneButton, twoButton, 
 				 threeButton, fourButton, fiveButton, 
@@ -359,6 +365,7 @@ public class PhoneGUI extends JPanel {
 		volumeHandler(spVolUpButton, spVolDownButton, spVolMuteButton, micVolUpButton, micVolDownButton, micVolMuteButton);
 		dialpadHandler(numberTextField, dialpad, clearButton);
 		callHandler(callButton, endCallButton, numberTextField, callLabel, phonePanel, cards);
+		callSavedHandler(contactsJList, callContactButton, endCallButton, callLabel, phonePanel, cards);
 	}
 	
 	private void labelUpdater(JLabel spVol, JLabel micVol, JLabel durration) {
@@ -595,5 +602,25 @@ public class PhoneGUI extends JPanel {
 				cards.show(dialer, "Dialer");
 			}
 		});
+	}
+	
+	public void callSavedHandler(JList<Contact> contacts, JButton call, JButton endcall, JLabel callingNumber, JPanel dialer, CardLayout cards) {
+		call.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(!phone.getOnCall()) {
+					String number = contacts.getSelectedValue().getNumber();
+					phone.makeCall(number);
+					callingNumber.setText("Calling: " + phone.getNumberCalled());
+					cards.show(dialer, "OnCall");
+				}
+			}
+		});
+		endcall.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				phone.endCall();
+				cards.show(dialer, "Dialer");
+			}
+		});
+		
 	}
 }
