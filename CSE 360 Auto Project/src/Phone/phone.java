@@ -3,12 +3,15 @@ package phone;
 import user.*;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class Phone {
 	private final float MAX_VOL = 10;
 	private final float MIN_VOL = 0;
 	
 	private String phoneNumber;
+	private String numberCalled;
+	private boolean onCall;
 	private float speakerVol;
 	private float micVol;
 	private boolean isSpeakerMute;
@@ -19,6 +22,8 @@ public class Phone {
 	
 	public Phone(User user) {
 		phoneNumber = user.getPhoneNumber();
+		numberCalled = "";
+		onCall = false;
 		speakerVol = MAX_VOL / 2;
 		micVol = MAX_VOL / 2;
 		isSpeakerMute = false;
@@ -30,6 +35,14 @@ public class Phone {
 	
 	public String getPhoneNum() {
 		return phoneNumber;
+	}
+	
+	public String getNumberCalled() {
+		return numberCalled;
+	}
+	
+	public boolean getOnCall() {
+		return onCall;
 	}
 
 	public String getSpeakerVol() {
@@ -96,12 +109,29 @@ public class Phone {
 		isMicMute = false;
 	}
 	
-	private String makeCall(String newPhoneNum){
-		//this needs to validate a number and start the timer.
-		//timer may not work in this class
-		//timer may need to be in phone GUI
-		phoneNumber = newPhoneNum;	
-		
-		return "Calling " + phoneNumber;
+	public void makeCall(String numberCalled) {
+		this.numberCalled = numberCalled;
+		callStartTime = System.currentTimeMillis();
+		onCall = true;
+	}
+	
+	public String getCallDuration() {
+		if (onCall) {
+			long millis = System.currentTimeMillis() - callStartTime;
+			String durration = String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(millis),
+					TimeUnit.MILLISECONDS.toSeconds(millis)
+							- TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
+			return durration;
+		}
+		else
+			return "N/A";
+	}
+	
+	public void endCall() {
+		if(onCall) {
+			numberCalled = "";
+			onCall = false;
+			callEndTime = System.currentTimeMillis();
+		}
 	}
 }	

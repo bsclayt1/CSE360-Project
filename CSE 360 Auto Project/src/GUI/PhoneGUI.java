@@ -4,6 +4,7 @@ import phone.*;
 
 import javax.swing.JPanel;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.awt.Dimension;
 import java.awt.BorderLayout;
@@ -15,6 +16,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import java.awt.GridLayout;
+import java.awt.Image;
+
 import javax.swing.border.EmptyBorder;
 import java.awt.Font;
 import javax.swing.JButton;
@@ -25,6 +28,9 @@ import javax.swing.JToggleButton;
 import java.awt.CardLayout;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
 
 @SuppressWarnings("serial")
 public class PhoneGUI extends JPanel {
@@ -45,7 +51,8 @@ public class PhoneGUI extends JPanel {
 		
 		JPanel phonePanel = new JPanel();
 		add(phonePanel);
-		phonePanel.setLayout(new CardLayout(0, 0));
+		CardLayout cards = new CardLayout(0, 0);
+		phonePanel.setLayout(cards);
 		
 		JPanel dialerPanel = new JPanel();
 		phonePanel.add(dialerPanel, "Dialer");
@@ -156,6 +163,8 @@ public class PhoneGUI extends JPanel {
 		dialpadButtonsPanel.add(poundButton);
 		
 		JPanel dialerControlsPanel = new JPanel();
+		FlowLayout flowLayout_4 = (FlowLayout) dialerControlsPanel.getLayout();
+		flowLayout_4.setHgap(25);
 		dialerControlsPanel.setPreferredSize(new Dimension(354, 110));
 		dialerPanel.add(dialerControlsPanel, BorderLayout.SOUTH);
 		
@@ -172,7 +181,49 @@ public class PhoneGUI extends JPanel {
 		dialerControlsPanel.add(clearButton);
 		
 		JPanel onCallPanel = new JPanel();
+		onCallPanel.setPreferredSize(new Dimension(354, 467));
 		phonePanel.add(onCallPanel, "OnCall");
+		
+		JLabel callLabel = new JLabel("Calling: N/A");
+		callLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		onCallPanel.add(callLabel);
+		
+		JPanel imagePanel = new JPanel();
+		imagePanel.setPreferredSize(new Dimension(300, 300));
+		onCallPanel.add(imagePanel);
+		imagePanel.setLayout(new BorderLayout(0, 0));
+		
+		BufferedImage phoneicon = null;
+		ImageIcon icon = null;
+		JLabel iconLabel;
+		File picin = new File("src/phone_icon.png");
+		if(picin.exists()) {
+			try {
+				phoneicon = ImageIO.read(picin);
+				icon = new ImageIcon(phoneicon.getScaledInstance(200, 200, Image.SCALE_SMOOTH));
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			iconLabel = new JLabel(icon);
+		}
+		else
+			iconLabel = new JLabel("");
+		
+		iconLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		imagePanel.add(iconLabel, BorderLayout.CENTER);
+		
+		JButton endCallButton = new JButton("End Call");
+		endCallButton.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		onCallPanel.add(endCallButton);
+		
+		JPanel emptyPanel = new JPanel();
+		emptyPanel.setPreferredSize(new Dimension(300, 5));
+		onCallPanel.add(emptyPanel);
+		
+		JLabel durrationLabel = new JLabel("Durration: N/A");
+		durrationLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		onCallPanel.add(durrationLabel);
 		
 		JPanel controlsPanel = new JPanel();
 		controlsPanel.setPreferredSize(new Dimension(250, 467));
@@ -304,16 +355,20 @@ public class PhoneGUI extends JPanel {
 				 sixButton, sevenButton, eightButton, 
 				 nineButton, starButton, poundButton};
 		
-		labelUpdater(spVolLabel, micVolLabel);
+		labelUpdater(spVolLabel, micVolLabel, durrationLabel);
 		volumeHandler(spVolUpButton, spVolDownButton, spVolMuteButton, micVolUpButton, micVolDownButton, micVolMuteButton);
 		dialpadHandler(numberTextField, dialpad, clearButton);
+		callHandler(callButton, endCallButton, numberTextField, callLabel, phonePanel, cards);
 	}
 	
-	private void labelUpdater(JLabel spVol, JLabel micVol) {
+	private void labelUpdater(JLabel spVol, JLabel micVol, JLabel durration) {
 		Timer interval = new Timer(100, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				spVol.setText("Volume: " + phone.getSpeakerVol());
 				micVol.setText("Volume: " + phone.getMicVol());
+				if(phone.getOnCall()) {
+					durration.setText("Durration: " + phone.getCallDuration());
+				}
 			}
 		});
 		interval.start();
@@ -523,7 +578,22 @@ public class PhoneGUI extends JPanel {
 		});
 	}
 
-	private void callHandler(JButton call) {
-		
+	private void callHandler(JButton call, JButton endcall, JTextField numberCalled, JLabel callingNumber, JPanel dialer, CardLayout cards) {
+		call.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String number = numberCalled.getText();
+				if(!number.isEmpty()) {
+					phone.makeCall(number);
+					callingNumber.setText("Calling: " + phone.getNumberCalled());
+					cards.show(dialer, "OnCall");
+				}
+			}
+		});
+		endcall.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				phone.endCall();
+				cards.show(dialer, "Dialer");
+			}
+		});
 	}
 }
