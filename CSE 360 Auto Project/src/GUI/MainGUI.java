@@ -38,11 +38,11 @@ import org.json.simple.JSONObject;
 public class MainGUI extends JPanel {
 	private User user;
 	private String carState;
-	private JPanel manualPanel;
-	private JPanel radioPanel;
-	private JPanel phonePanel;
-	private JPanel statsPanel;
-	private JPanel mapPanel;
+	private UserManualGUI manualPanel;
+	private RadioGUI radioPanel;
+	private PhoneGUI phonePanel;
+	private StatsGUI statsPanel;
+	private MapGUI mapPanel;
 	private boolean logout;
 	private JSONArray carLogsJSON;
 	private JSONArray routesJSON;
@@ -295,6 +295,7 @@ public class MainGUI extends JPanel {
 					park.getModel().setEnabled(false);
 				else
 					park.getModel().setEnabled(true);
+				
 			}
 		});
 		interval.start();
@@ -433,5 +434,9 @@ public class MainGUI extends JPanel {
 			Route routeList = new Route(name, location, distance, traveled);
 			routes.add(routeList);
 		}
+	}
+	
+	public JSONArray getRoutesJSON() {
+		return mapPanel.getRoutesJSON();
 	}
 }

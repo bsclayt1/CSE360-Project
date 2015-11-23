@@ -1,5 +1,7 @@
 package car;
 
+import map.Route;
+
 public class CarController {
    private int updateNumb;
    private double distance;
@@ -9,6 +11,7 @@ public class CarController {
    private double accuspeed;
    private double avgspeed;
    private double maxspeed;
+   private Route currentRoute;
 
    public CarController(double tanksize, double fuel, double distance) {
       updateNumb = 0;
@@ -19,6 +22,7 @@ public class CarController {
       accuspeed = 0;
       avgspeed = 0;
       maxspeed = 0;
+      currentRoute = null;
    }
 
    public double getSpeed() {
@@ -77,5 +81,13 @@ public class CarController {
       distance += engine.getSpeed() / 36000;
       fuelTank.updateFuel(distance);
       avgspeed = accuspeed / (double) updateNumb;
+   }
+   
+   public void setRoute(Route newRoute) {
+	   currentRoute = newRoute;
+   }
+   
+   public Route getRoute() {
+	   return currentRoute;
    }
 }

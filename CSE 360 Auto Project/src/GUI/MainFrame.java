@@ -110,6 +110,7 @@ public class MainFrame extends JFrame {
 		carLogs.add(carLog.getJSONCarLog());
 		cardata.replace("fuellevel", Double.toString(car.getFuel()));
 		cardata.replace("distance", Double.toString(car.getDistance()));
+		cardata.replace("routes", mainGUIPanel.getRoutesJSON());
 		try {
 			FileWriter fout = new FileWriter("src/cardata.txt");
 			fout.write(cardata.toString());

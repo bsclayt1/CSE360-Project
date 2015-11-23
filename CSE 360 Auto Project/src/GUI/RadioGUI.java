@@ -45,6 +45,70 @@ public class RadioGUI extends JPanel {
 		JPanel radioPanel = new JPanel();
 		radioPanel.setPreferredSize(new Dimension(324, 467));
 		add(radioPanel);
+		radioPanel.setLayout(new BorderLayout(0, 0));
+		
+		JPanel powerPanel = new JPanel();
+		radioPanel.add(powerPanel, BorderLayout.NORTH);
+		
+		JToggleButton powerToggleButton = new JToggleButton("Power");
+		powerToggleButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		powerPanel.add(powerToggleButton);
+		
+		JPanel displayPanel = new JPanel();
+		radioPanel.add(displayPanel, BorderLayout.CENTER);
+		displayPanel.setLayout(new BorderLayout(0, 0));
+		
+		JPanel stationLabelPanel = new JPanel();
+		stationLabelPanel.setBorder(new EmptyBorder(25, 0, 0, 0));
+		displayPanel.add(stationLabelPanel, BorderLayout.NORTH);
+		
+		JLabel stationLabel = new JLabel("Station Name");
+		stationLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		stationLabelPanel.add(stationLabel);
+		
+		JPanel seekPanel = new JPanel();
+		seekPanel.setBorder(new EmptyBorder(30, 0, 30, 0));
+		FlowLayout flowLayout_3 = (FlowLayout) seekPanel.getLayout();
+		flowLayout_3.setHgap(60);
+		displayPanel.add(seekPanel, BorderLayout.CENTER);
+		
+		JButton seekDownPanel = new JButton("<");
+		seekDownPanel.setPreferredSize(new Dimension(45, 45));
+		seekDownPanel.setMargin(new Insets(0, 0, 0, 0));
+		seekDownPanel.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		seekPanel.add(seekDownPanel);
+		
+		JButton seekUpPanel = new JButton(">");
+		seekUpPanel.setPreferredSize(new Dimension(45, 45));
+		seekUpPanel.setMargin(new Insets(0, 0, 0, 0));
+		seekUpPanel.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		seekPanel.add(seekUpPanel);
+		
+		JPanel bandSwitchPanel = new JPanel();
+		bandSwitchPanel.setBorder(new EmptyBorder(0, 0, 50, 0));
+		FlowLayout flowLayout_4 = (FlowLayout) bandSwitchPanel.getLayout();
+		flowLayout_4.setHgap(20);
+		displayPanel.add(bandSwitchPanel, BorderLayout.SOUTH);
+		
+		JToggleButton tglbtnFm = new JToggleButton("FM");
+		tglbtnFm.setPreferredSize(new Dimension(45, 45));
+		tglbtnFm.setMargin(new Insets(0, 0, 0, 0));
+		tglbtnFm.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		bandSwitchPanel.add(tglbtnFm);
+		
+		JToggleButton tglbtnAm = new JToggleButton("AM");
+		tglbtnAm.setPreferredSize(new Dimension(45, 45));
+		tglbtnAm.setMargin(new Insets(0, 0, 0, 0));
+		tglbtnAm.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		bandSwitchPanel.add(tglbtnAm);
+		
+		JPanel feedbackPanel = new JPanel();
+		feedbackPanel.setBorder(new EmptyBorder(0, 0, 120, 0));
+		radioPanel.add(feedbackPanel, BorderLayout.SOUTH);
+		
+		JLabel feedbackLabel = new JLabel("Feedback");
+		feedbackLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		feedbackPanel.add(feedbackLabel);
 		
 		JPanel controlsPanel = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) controlsPanel.getLayout();
@@ -131,6 +195,11 @@ public class RadioGUI extends JPanel {
 		
 		JPanel stationsControlPanel = new JPanel();
 		stationsPanel.add(stationsControlPanel, BorderLayout.SOUTH);
+		
+		JButton selectButton = new JButton("Select Station");
+		selectButton.setMargin(new Insets(2, 5, 2, 5));
+		selectButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		stationsControlPanel.add(selectButton);
 		
 		volumeHandler(spVolUpButton, spVolDownButton, spVolMuteButton);
 		labelUpdater(spVolLabel);

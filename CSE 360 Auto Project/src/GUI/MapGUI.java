@@ -22,6 +22,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 
+import org.json.simple.JSONArray;
+
 @SuppressWarnings("serial")
 public class MapGUI extends JPanel {
 	private ArrayList<Route> routes;
@@ -37,6 +39,7 @@ public class MapGUI extends JPanel {
 		this.routes = routes;
 		this.car = car;
 		currentRoute = this.routes.get(0);
+		this.car.setRoute(currentRoute);
 		setPreferredSize(new Dimension(605, 467));
 		setLayout(new BorderLayout(0, 0));
 		
@@ -97,7 +100,7 @@ public class MapGUI extends JPanel {
 		selectRoute();
 	}
 	
-	public void updateRoute() {
+	private void updateRoute() {
 		Timer interval = new Timer(100, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				currentRoute.updateTravled(car.getSpeed());
@@ -109,12 +112,21 @@ public class MapGUI extends JPanel {
 		interval.start();
 	}
 	
-	public void selectRoute() {
+	private void selectRoute() {
 		selectButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				currentRoute = routesJList.getSelectedValue();
+				car.setRoute(currentRoute);
 			}
 		});
 	}
-
+	
+	@SuppressWarnings("unchecked")
+	public JSONArray getRoutesJSON() {
+		JSONArray routesJSON = new JSONArray();
+		for(Route route : routes) {
+			routesJSON.add(route.getJSONRoute());
+		}
+		return routesJSON;
+	}
 }
