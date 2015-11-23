@@ -3,7 +3,6 @@ package logging;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-@SuppressWarnings("deprecation")
 public abstract class Log {
 	private Date date;
 	private long durration;
@@ -13,6 +12,7 @@ public abstract class Log {
 		this.durration = durration;
 	}
 	
+	@SuppressWarnings("deprecation")
 	public String getDate() {
 		int month = 1 + date.getMonth();
 		int day = date.getDate();

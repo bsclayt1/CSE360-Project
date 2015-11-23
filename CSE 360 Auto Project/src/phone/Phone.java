@@ -1,11 +1,12 @@
 package phone;
 
 import user.*;
-import logging.CallLog;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
+import logging.CallLog;
 
 public class Phone {
 	private final float MAX_VOL = 10;
@@ -20,6 +21,7 @@ public class Phone {
 	private boolean isSpeakerMute;
 	private boolean isMicMute;
 	private ArrayList<Contact> contactList;
+	private Date startDate;
 	private long callStartTime;
 	
 	public Phone(User user) {
@@ -32,6 +34,7 @@ public class Phone {
 		isSpeakerMute = false;
 		isMicMute = false;
 		contactList = user.getContacts();
+		startDate = null;
 		callStartTime = 0;
 	}
 	
@@ -113,6 +116,7 @@ public class Phone {
 	
 	public void makeCall(String numberCalled) {
 		this.numberCalled = numberCalled;
+		startDate = new Date();
 		callStartTime = System.currentTimeMillis();
 		onCall = true;
 	}
@@ -122,7 +126,7 @@ public class Phone {
 			long millis = System.currentTimeMillis() - callStartTime;
 			String durration = String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(millis),
 					TimeUnit.MILLISECONDS.toSeconds(millis)
-					- TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
+							- TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
 			return durration;
 		}
 		else
@@ -132,9 +136,11 @@ public class Phone {
 	public void endCall() {
 		if(onCall) {
 			long durration = System.currentTimeMillis() - callStartTime;
-			user.addCallLog(new CallLog(numberCalled, new Date(), durration));
+			user.addCallLog(new CallLog(numberCalled, startDate, durration));
 			numberCalled = "";
 			onCall = false;
+			startDate = null;
+			callStartTime = 0;
 		}
 	}
 }	

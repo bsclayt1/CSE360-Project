@@ -2,17 +2,18 @@ package user;
 
 import phone.Contact;
 import radio.Station;
-import logging.*;
 
 import java.util.ArrayList;
 import java.io.FileReader;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.File;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+
+import logging.CallLog;
 
 public class User {
 	private String username;
@@ -73,8 +74,7 @@ public class User {
 							this.callLogs.add(callLog);
 						}
 					}
-					else
-						userloc++;
+					userloc++;
 				} while(userloc < users.size() && !found);
 			}
 			catch(Exception e) {

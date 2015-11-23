@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.JToggleButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -29,19 +30,31 @@ import java.awt.Color;
 import javax.swing.border.CompoundBorder;
 import java.awt.Font;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 @SuppressWarnings("serial")
 public class MainGUI extends JPanel {
-
+	private User user;
+	private String carState;
 	private JPanel manualPanel;
 	private JPanel radioPanel;
 	private JPanel phonePanel;
-	private JPanel mapPanel;
 	private JPanel statsPanel;
+	private JPanel mapPanel;
 	private boolean logout;
+	private JSONArray carLogsJSON;
+	private ArrayList<String> carLogs;
 	
-	public MainGUI(CarController car, User user) {
+	public MainGUI(CarController car, User user, JSONArray carLogsJSON) {
+		this.user = user;
+		carState = car.getState();
+		this.carLogsJSON = carLogsJSON;
+		carLogs = new ArrayList<String>();
+		fillCarLogs();
 		Phone phone = new Phone(user);
 		Radio radio = new Radio(user);
+		
 		setPreferredSize(new Dimension(750, 585));
 		setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 		
@@ -152,13 +165,13 @@ public class MainGUI extends JPanel {
 		manualPanel = new UserManualGUI();
 		manualPanel.setPreferredSize(new Dimension(0, 0));
 		manualPanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
-		radioPanel = new RadioGUI();
+		radioPanel = new RadioGUI(radio);
 		radioPanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
 		phonePanel = new PhoneGUI(phone);
 		phonePanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
 		mapPanel = new MapGUI();
 		mapPanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
-		statsPanel = new StatsGUI(user);
+		statsPanel = new StatsGUI(user, carLogs);
 		statsPanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
 		
 		centerPanel.add(manualPanel, "Manual");
@@ -182,11 +195,8 @@ public class MainGUI extends JPanel {
 		mapwindowToggleButton.setPreferredSize(new Dimension(65, 25));
 		windowselectrightPanel.add(mapwindowToggleButton);
 		
-		//usermanualwindowToggleButton.getModel().setSelected(true);
-		//cards.show(centerPanel, "Manual");
-		
-		phonewindowToggleButton.getModel().setSelected(true);
-		cards.show(centerPanel, "Phone");
+		radiowindowToggleButton.getModel().setSelected(true);
+		cards.show(centerPanel, "Radio");
 		
 		JPanel statePanel = new JPanel();
 		controlsPanel.add(statePanel);
@@ -207,6 +217,10 @@ public class MainGUI extends JPanel {
 		buttonToggler(radiowindowToggleButton, phonewindowToggleButton, usermanualwindowToggleButton, mapwindowToggleButton, statswindowToggleButton, centerPanel, cards);
 		stateHandler(car, parkRadioButton, driveRadioButton);
 		logoutHandler(logoutButton);
+	}
+	
+	public String getUser() {
+		return user.getUserName();
 	}
 	
 	private String capitalize(String name) {
@@ -259,6 +273,7 @@ public class MainGUI extends JPanel {
 		Timer interval = new Timer(100, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				car.updateEngine(0);
+				carState = car.getState();
 				speed.setText("Speed: " + car.getSpeed() + " mph");
 				odometer.setText("Miles: " + String.format("%.1f", car.getDistance()));
 				fuelperc.setText("Fuel Level: " + String.format("%.2f", car.getFuel() / car.getTankSize() * 100) + "%");
@@ -376,6 +391,22 @@ public class MainGUI extends JPanel {
 	}
 	
 	public boolean getLogout() {
+		if(carState.equals("Drive"))
+				logout = false;
 		return logout;
+	}
+	
+	private void fillCarLogs() {
+		for(int i = 0; i < carLogsJSON.size(); i++) {
+			JSONObject carlog = (JSONObject) carLogsJSON.get(i);
+			String user = (String) carlog.get("user");
+			String maxspeed = (String) carlog.get("maxspeed");
+			String avgspeed = (String) carlog.get("avgspeed");
+			String date = (String) carlog.get("date");
+			String durration = (String) carlog.get("durration");
+			String carlogString = "User: " + user + ", Start Time: " + date + " for " + durration
+			+ ", Max Speed: " + maxspeed + ", Average Speed: " + avgspeed;
+			carLogs.add(carlogString);
+		}
 	}
 }

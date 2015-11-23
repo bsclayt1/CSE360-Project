@@ -5,13 +5,17 @@ public class FuelTank {
    private double tankSize;
    private double fuelLevel; //initial fuel level in gallons
    
-   public FuelTank(double fuel) {
+   public FuelTank(double tanksize, double fuel) {
       fuelLevel = fuel;
-      tankSize = fuel;
+      this.tankSize = tanksize;
    }
    
-   public double getFule() {
+   public double getFuel() {
 	   return fuelLevel;
+   }
+   
+   public double getTankSize() {
+	   return tankSize;
    }
    
    public void updateFuel(double distance) {

@@ -3,40 +3,51 @@ package GUI;
 import GUI.LoginGUI;
 import GUI.MainGUI;
 import car.CarController;
+import logging.CarLog;
 
 import javax.swing.JFrame;
 import javax.swing.border.EmptyBorder;
 import javax.swing.Timer;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 import java.awt.Dimension;
+import java.util.Date;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
-
-	//private JPanel mainPanel;
 	private LoginGUI loginPanel;
 	private MainGUI mainGUIPanel;
 	private CarController car;
+	private Date startDate;
+	private long carStartTime;
+	private JSONObject cardata;
+	private JSONArray carLogs;
 
 	public MainFrame(CarController car) {
 		setResizable(false);
 		this.car = car;
+		parseCarData();
+		carLogs = (JSONArray) cardata.get("carlogs");
+		startDate = null;
+		carStartTime = 0;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 780, 640);
 		loginPanel = new LoginGUI();
 		loginPanel.setPreferredSize(new Dimension(750, 590));
 		loginPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		//CardLayout cards = new CardLayout(0, 0);
-		//mainPanel.setLayout(cards);
-		getContentPane().add(loginPanel);
-		//loginPanel = new LoginGUI();
-		//loginPanel.setPreferredSize(new Dimension(750, 590));
-		//mainPanel.add(loginPanel, "Login");
-		//mainPanel.add(mainGUIPanel, "Main");
-		//cards.show(mainPanel, "Login");
-		switchOnLogin();
 		
+		getContentPane().add(loginPanel);
+		switchOnLogin();
 	}
 	
 	private void switchOnLogin() {
@@ -44,13 +55,16 @@ public class MainFrame extends JFrame {
 		interval.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(loginPanel.getPassed()) {
-					mainGUIPanel = new MainGUI(car, loginPanel.getUser());
+					startDate = new Date();
+					carStartTime = System.currentTimeMillis();
+					mainGUIPanel = new MainGUI(car, loginPanel.getUser(), carLogs);
 					mainGUIPanel.setPreferredSize(new Dimension(750, 590));
 					getContentPane().removeAll();
 					getContentPane().add(mainGUIPanel);
 					revalidate();
 					interval.stop();
 					switchOnLogout();
+					exitTask();
 				}
 			}
 		});
@@ -61,7 +75,8 @@ public class MainFrame extends JFrame {
 		Timer interval = new Timer(100, null);
 		interval.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(mainGUIPanel.getLogout()) {
+				if(mainGUIPanel.getLogout() && car.getState().equals("Park")) {
+					logoutTask();
 					loginPanel = new LoginGUI();
 					loginPanel.setPreferredSize(new Dimension(750, 590));
 					getContentPane().removeAll();
@@ -73,5 +88,49 @@ public class MainFrame extends JFrame {
 			}
 		});
 		interval.start();
+	}
+	
+	private void exitTask() {
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				//System.out.println("Exit Task Performed");
+				if(!mainGUIPanel.getLogout()) {
+					logoutTask();
+				}
+			}
+		});
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void logoutTask() {
+		long durration = System.currentTimeMillis() - carStartTime;
+		CarLog carLog = new CarLog(mainGUIPanel.getUser(), car.getMaxSpeed(), car.getAvgSpeed(), startDate, durration);
+		carLogs.add(carLog.getJSONCarLog());
+		cardata.replace("fuellevel", Double.toString(car.getFuel()));
+		cardata.replace("distance", Double.toString(car.getDistance()));
+		try {
+			FileWriter fout = new FileWriter("src/cardata.txt");
+			fout.write(cardata.toString());
+			fout.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		parseCarData();
+		startDate = null;
+		carStartTime = 0;
+		car.loginReset();
+	}
+	
+	private void parseCarData() {
+		try {
+			File fin = new File("src/cardata.txt");
+			JSONParser parse = new JSONParser();
+			cardata = (JSONObject) parse.parse(new FileReader(fin));
+			carLogs = (JSONArray) cardata.get("carlogs");
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 }

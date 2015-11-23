@@ -41,9 +41,9 @@ public class PhoneGUI extends JPanel {
 		this.phone = phone;
 		
 		//Test with setting to Contact instead of String
-		DefaultListModel<Contact> listModel = new DefaultListModel<Contact>();
+		DefaultListModel<Contact> contactListModel = new DefaultListModel<Contact>();
 		for(Contact contact : phone.getContactList()) {
-			listModel.addElement(contact);
+			contactListModel.addElement(contact);
 		}
 		
 		setPreferredSize(new Dimension(605, 467));
@@ -342,7 +342,7 @@ public class PhoneGUI extends JPanel {
 		contactListPanel.add(contactsScrollPane);
 		contactsScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		contactsScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		JList<Contact> contactsJList = new JList<Contact>(listModel);
+		JList<Contact> contactsJList = new JList<Contact>(contactListModel);
 		contactsJList.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		contactsScrollPane.setViewportView(contactsJList);
 		

@@ -11,19 +11,15 @@ public class CallLog extends Log {
 		numberCalled = number;
 	}
 	
-	public String getNumberCalled() {
-		return numberCalled;
-	}
-	
 	public LinkedHashMap<String, String> getJSONCallLog() {
 		LinkedHashMap<String, String> callLog = new LinkedHashMap<String, String>();
-		callLog.put("numbercalled", getNumberCalled());
+		callLog.put("numbercalled", numberCalled);
 		callLog.put("date", getDate());
 		callLog.put("durration", getDurration());
 		return callLog;
 	}
 	
 	public String toString() {
-		return "Called Number: " + getNumberCalled() + " on " + getDate() + " for " + getDurration();
+		return "Called Number: " + numberCalled + " on " + getDate() + " for " + getDurration();
 	}
 }
