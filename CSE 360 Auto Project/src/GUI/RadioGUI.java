@@ -6,10 +6,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
 import javax.swing.ScrollPaneConstants;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -21,19 +19,15 @@ import java.awt.Font;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
 import javax.swing.DefaultListModel;
 
 @SuppressWarnings("serial")
 public class RadioGUI extends JPanel {
 	
 	private Radio radio;
-	private ArrayList<Station> availStations;
 
 	public RadioGUI(Radio radio) {
 		this.radio = radio;
-		availStations = radio.getStationList();
 		setPreferredSize(new Dimension(605, 467));
 		setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 		
@@ -72,17 +66,17 @@ public class RadioGUI extends JPanel {
 		flowLayout_3.setHgap(60);
 		displayPanel.add(seekPanel, BorderLayout.CENTER);
 		
-		JButton seekDownPanel = new JButton("<");
-		seekDownPanel.setPreferredSize(new Dimension(45, 45));
-		seekDownPanel.setMargin(new Insets(0, 0, 0, 0));
-		seekDownPanel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		seekPanel.add(seekDownPanel);
+		JButton seekDownButton = new JButton("<");
+		seekDownButton.setPreferredSize(new Dimension(45, 45));
+		seekDownButton.setMargin(new Insets(0, 0, 0, 0));
+		seekDownButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		seekPanel.add(seekDownButton);
 		
-		JButton seekUpPanel = new JButton(">");
-		seekUpPanel.setPreferredSize(new Dimension(45, 45));
-		seekUpPanel.setMargin(new Insets(0, 0, 0, 0));
-		seekUpPanel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		seekPanel.add(seekUpPanel);
+		JButton seekUpButton = new JButton(">");
+		seekUpButton.setPreferredSize(new Dimension(45, 45));
+		seekUpButton.setMargin(new Insets(0, 0, 0, 0));
+		seekUpButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		seekPanel.add(seekUpButton);
 		
 		JPanel bandSwitchPanel = new JPanel();
 		bandSwitchPanel.setBorder(new EmptyBorder(0, 0, 50, 0));
@@ -90,25 +84,23 @@ public class RadioGUI extends JPanel {
 		flowLayout_4.setHgap(20);
 		displayPanel.add(bandSwitchPanel, BorderLayout.SOUTH);
 		
-		JToggleButton tglbtnFm = new JToggleButton("FM");
-		tglbtnFm.setPreferredSize(new Dimension(45, 45));
-		tglbtnFm.setMargin(new Insets(0, 0, 0, 0));
-		tglbtnFm.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		bandSwitchPanel.add(tglbtnFm);
+		JToggleButton fmToggleButton = new JToggleButton("FM");
+		fmToggleButton.setPreferredSize(new Dimension(45, 45));
+		fmToggleButton.setMargin(new Insets(0, 0, 0, 0));
+		fmToggleButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		bandSwitchPanel.add(fmToggleButton);
+		fmToggleButton.getModel().setSelected(true);
 		
-		JToggleButton tglbtnAm = new JToggleButton("AM");
-		tglbtnAm.setPreferredSize(new Dimension(45, 45));
-		tglbtnAm.setMargin(new Insets(0, 0, 0, 0));
-		tglbtnAm.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		bandSwitchPanel.add(tglbtnAm);
+		
+		JToggleButton amToggleButton = new JToggleButton("AM");
+		amToggleButton.setPreferredSize(new Dimension(45, 45));
+		amToggleButton.setMargin(new Insets(0, 0, 0, 0));
+		amToggleButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		bandSwitchPanel.add(amToggleButton);
 		
 		JPanel feedbackPanel = new JPanel();
 		feedbackPanel.setBorder(new EmptyBorder(0, 0, 120, 0));
 		radioPanel.add(feedbackPanel, BorderLayout.SOUTH);
-		
-		JLabel feedbackLabel = new JLabel("Feedback");
-		feedbackLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		feedbackPanel.add(feedbackLabel);
 		
 		JPanel controlsPanel = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) controlsPanel.getLayout();
@@ -151,17 +143,17 @@ public class RadioGUI extends JPanel {
 		flowLayout_1.setHgap(20);
 		spVolSubPanel.add(spVolButtonsPanel, BorderLayout.CENTER);
 		
-		JButton spVolUpButton = new JButton("+");
-		spVolUpButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		spVolUpButton.setMargin(new Insets(0, 0, 0, 0));
-		spVolUpButton.setPreferredSize(new Dimension(35, 35));
-		spVolButtonsPanel.add(spVolUpButton);
-		
 		JButton spVolDownButton = new JButton("-");
 		spVolDownButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		spVolDownButton.setPreferredSize(new Dimension(35, 35));
 		spVolDownButton.setMargin(new Insets(0, 0, 0, 0));
 		spVolButtonsPanel.add(spVolDownButton);
+		
+		JButton spVolUpButton = new JButton("+");
+		spVolUpButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		spVolUpButton.setMargin(new Insets(0, 0, 0, 0));
+		spVolUpButton.setPreferredSize(new Dimension(35, 35));
+		spVolButtonsPanel.add(spVolUpButton);
 		
 		JToggleButton spVolMuteButton = new JToggleButton("Mute");
 		spVolMuteButton.setPreferredSize(new Dimension(70, 35));
@@ -186,12 +178,12 @@ public class RadioGUI extends JPanel {
 		stationsPanel.add(stationsListPanel, BorderLayout.CENTER);
 		stationsListPanel.setLayout(new BorderLayout(0, 0));
 		
-		JScrollPane contactsScrollPane = new JScrollPane();
-		stationsListPanel.add(contactsScrollPane);
-		contactsScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		JList<Station> contactsJList = new JList<Station>(stationListModel);
-		contactsJList.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		contactsScrollPane.setViewportView(contactsJList);
+		JScrollPane stationScrollPane = new JScrollPane();
+		stationsListPanel.add(stationScrollPane);
+		stationScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		JList<Station> stationsJList = new JList<Station>(stationListModel);
+		stationsJList.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		stationScrollPane.setViewportView(stationsJList);
 		
 		JPanel stationsControlPanel = new JPanel();
 		stationsPanel.add(stationsControlPanel, BorderLayout.SOUTH);
@@ -200,15 +192,26 @@ public class RadioGUI extends JPanel {
 		selectButton.setMargin(new Insets(2, 5, 2, 5));
 		selectButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		stationsControlPanel.add(selectButton);
-		
 		volumeHandler(spVolUpButton, spVolDownButton, spVolMuteButton);
-		labelUpdater(spVolLabel);
+		seekbandHandler(seekDownButton, seekUpButton, fmToggleButton, amToggleButton);
+		favoriteStationHandler(stationsJList, selectButton);
+		powerHandler(powerToggleButton);
 	}
 	
-	private void labelUpdater(JLabel spVol) {
+	private void labelUpdater(JLabel spVol, JLabel station, JLabel feedback) {
 		Timer interval = new Timer(100, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				spVol.setText("Volume: " + radio.getSpeakerVol());
+				radio.validateCurrentStation();
+				radio.updateLocation();
+				if(!radio.isOn())
+					station.setText("Off");
+				else {
+					if(radio.getCurrentStation() == null)
+						station.setText("Station Not Available");
+					else
+						station.setText(radio.getCurrentStation().toString());
+				}
 			}
 		});
 		interval.start();
@@ -237,6 +240,61 @@ public class RadioGUI extends JPanel {
 					radio.speakerUnmute();
 					spMute.setText("Mute");
 				}
+			}
+		});
+	}
+	
+	private void seekbandHandler(JButton seekDown, JButton seekUp, JToggleButton fm, JToggleButton am) {
+		seekDown.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(radio.isOn())
+					radio.setPrevStation();
+			}
+		});
+		seekUp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(radio.isOn())
+					radio.setNextStation();
+			}
+		});
+		fm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(radio.isOn()) {
+					am.getModel().setSelected(false);
+					am.getModel().setEnabled(true);
+					fm.getModel().setEnabled(false);
+					radio.setBand("FM");
+				}
+			}
+		});
+		am.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(radio.isOn()) {
+					fm.getModel().setSelected(false);
+					fm.getModel().setEnabled(true);
+					am.getModel().setEnabled(false);
+					radio.setBand("AM");
+				}
+			}
+		});
+	}
+	
+	private void favoriteStationHandler(JList<Station> favStations, JButton select) {
+		select.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(radio.isOn())
+					radio.setStation(favStations.getSelectedValue());
+			}
+		});
+	}
+	
+	private void powerHandler(JToggleButton power) {
+		power.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(power.isSelected())
+					radio.setPower(true);
+				else
+					radio.setPower(false);
 			}
 		});
 	}

@@ -59,7 +59,7 @@ public class MainGUI extends JPanel {
 		fillCarLogs();
 		fillRoutes();
 		Phone phone = new Phone(user);
-		Radio radio = new Radio(user);
+		Radio radio = new Radio(user, car);
 		
 		setPreferredSize(new Dimension(750, 600));
 		setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
@@ -215,6 +215,7 @@ public class MainGUI extends JPanel {
 		parkRadioButton.setMargin(new Insets(2, 2, 2, 9));
 		parkRadioButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 		parkRadioButton.getModel().setSelected(true);
+		parkRadioButton.getModel().setEnabled(false);
 		statePanel.setLayout(new BorderLayout(0, 0));
 		statePanel.add(parkRadioButton, BorderLayout.NORTH);
 		parkRadioButton.setHorizontalAlignment(SwingConstants.CENTER);
@@ -293,9 +294,12 @@ public class MainGUI extends JPanel {
 				state.setText(car.getState());
 				if(car.getSpeed() > 0)
 					park.getModel().setEnabled(false);
-				else
-					park.getModel().setEnabled(true);
-				
+				else {
+					if(park.getModel().isSelected())
+						park.getModel().setEnabled(false);
+					else
+						park.getModel().setEnabled(true);
+				}
 			}
 		});
 		interval.start();
@@ -331,6 +335,13 @@ public class MainGUI extends JPanel {
 					manual.getModel().setSelected(false);
 					map.getModel().setSelected(false);
 					stats.getModel().setSelected(false);
+					
+					phone.getModel().setEnabled(true);
+					manual.getModel().setEnabled(true);
+					map.getModel().setEnabled(true);
+					stats.getModel().setEnabled(true);
+					
+					radio.getModel().setEnabled(false);
 					cards.show(center, "Radio");
 				}
 			}
@@ -342,6 +353,13 @@ public class MainGUI extends JPanel {
 					manual.getModel().setSelected(false);
 					map.getModel().setSelected(false);
 					stats.getModel().setSelected(false);
+					
+					radio.getModel().setEnabled(true);
+					manual.getModel().setEnabled(true);
+					map.getModel().setEnabled(true);
+					stats.getModel().setEnabled(true);
+					
+					phone.getModel().setEnabled(false);
 					cards.show(center, "Phone");
 				}
 			}
@@ -353,6 +371,13 @@ public class MainGUI extends JPanel {
 					phone.getModel().setSelected(false);
 					map.getModel().setSelected(false);
 					stats.getModel().setSelected(false);
+					
+					radio.getModel().setEnabled(true);
+					phone.getModel().setEnabled(true);
+					map.getModel().setEnabled(true);
+					stats.getModel().setEnabled(true);
+					
+					manual.getModel().setEnabled(false);
 					cards.show(center, "Manual");
 				}
 			}
@@ -364,6 +389,13 @@ public class MainGUI extends JPanel {
 					phone.getModel().setSelected(false);
 					manual.getModel().setSelected(false);
 					stats.getModel().setSelected(false);
+					
+					radio.getModel().setEnabled(true);
+					phone.getModel().setEnabled(true);
+					manual.getModel().setEnabled(true);
+					stats.getModel().setEnabled(true);
+					
+					map.getModel().setEnabled(false);
 					cards.show(center, "Map");
 				}
 			}
@@ -375,6 +407,13 @@ public class MainGUI extends JPanel {
 					phone.getModel().setSelected(false);
 					manual.getModel().setSelected(false);
 					map.getModel().setSelected(false);
+					
+					radio.getModel().setEnabled(true);
+					phone.getModel().setEnabled(true);
+					manual.getModel().setEnabled(true);
+					map.getModel().setEnabled(true);
+					
+					stats.getModel().setEnabled(false);
 					cards.show(center, "Stats");
 				}
 			}
@@ -386,12 +425,18 @@ public class MainGUI extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				car.setPark();
 				drive.getModel().setSelected(false);
+				
+				//drive.getModel().setEnabled(true);
+				
+				//park.getModel().setEnabled(false);
 			}
 		});
 		drive.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				car.setDrive();
 				park.getModel().setSelected(false);
+				
+				//park.getModel().setEnabled(true);
 			}
 		});
 	}

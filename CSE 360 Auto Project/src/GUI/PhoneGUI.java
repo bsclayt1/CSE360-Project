@@ -260,17 +260,17 @@ public class PhoneGUI extends JPanel {
 		flowLayout_1.setHgap(20);
 		spVolSubPanel.add(spVolButtonsPanel, BorderLayout.CENTER);
 		
-		JButton spVolUpButton = new JButton("+");
-		spVolUpButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		spVolUpButton.setMargin(new Insets(0, 0, 0, 0));
-		spVolUpButton.setPreferredSize(new Dimension(35, 35));
-		spVolButtonsPanel.add(spVolUpButton);
-		
 		JButton spVolDownButton = new JButton("-");
 		spVolDownButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		spVolDownButton.setPreferredSize(new Dimension(35, 35));
 		spVolDownButton.setMargin(new Insets(0, 0, 0, 0));
 		spVolButtonsPanel.add(spVolDownButton);
+		
+		JButton spVolUpButton = new JButton("+");
+		spVolUpButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		spVolUpButton.setMargin(new Insets(0, 0, 0, 0));
+		spVolUpButton.setPreferredSize(new Dimension(35, 35));
+		spVolButtonsPanel.add(spVolUpButton);
 		
 		JToggleButton spVolMuteButton = new JToggleButton("Mute");
 		spVolMuteButton.setPreferredSize(new Dimension(70, 35));
@@ -302,18 +302,18 @@ public class PhoneGUI extends JPanel {
 		flowLayout_2.setVgap(15);
 		flowLayout_2.setHgap(20);
 		micVolSubPanel.add(micVolButtonsPanel, BorderLayout.CENTER);
+		
+		JButton micVolDownButton = new JButton("-");
+		micVolDownButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		micVolDownButton.setPreferredSize(new Dimension(35, 35));
+		micVolDownButton.setMargin(new Insets(0, 0, 0, 0));
+		micVolButtonsPanel.add(micVolDownButton);
 
 		JButton micVolUpButton = new JButton("+");
 		micVolUpButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		micVolUpButton.setMargin(new Insets(0, 0, 0, 0));
 		micVolUpButton.setPreferredSize(new Dimension(35, 35));
 		micVolButtonsPanel.add(micVolUpButton);
-
-		JButton micVolDownButton = new JButton("-");
-		micVolDownButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		micVolDownButton.setPreferredSize(new Dimension(35, 35));
-		micVolDownButton.setMargin(new Insets(0, 0, 0, 0));
-		micVolButtonsPanel.add(micVolDownButton);
 
 		JToggleButton micVolMuteButton = new JToggleButton("Mute");
 		micVolMuteButton.setPreferredSize(new Dimension(70, 35));
@@ -361,8 +361,8 @@ public class PhoneGUI extends JPanel {
 				 sixButton, sevenButton, eightButton, 
 				 nineButton, starButton, poundButton};
 		
-		labelUpdater(spVolLabel, micVolLabel, durrationLabel);
 		volumeHandler(spVolUpButton, spVolDownButton, spVolMuteButton, micVolUpButton, micVolDownButton, micVolMuteButton);
+		labelUpdater(spVolLabel, micVolLabel, durrationLabel);
 		dialpadHandler(numberTextField, dialpad, clearButton);
 		callHandler(callButton, endCallButton, numberTextField, callLabel, phonePanel, cards);
 		callSavedHandler(contactsJList, callContactButton, endCallButton, callLabel, phonePanel, cards);

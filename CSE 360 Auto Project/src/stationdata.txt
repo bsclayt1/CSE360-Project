@@ -1,5 +1,5 @@
 [
-	{"name":"Awesome Rock","location":"1","band":"FM","frequency":"97.19"},
+	{"name":"Awesome Rock","location":"1","band":"FM","frequency":"97.8"},
 	{"name":"Tech Talk","location":"3","band":"AM","frequency":"1080"}, 
 	{"name":"Hip Hop","location":"1","band":"FM","frequency":"99.1"}, 
 	{"name":"Traffic","location":"2","band":"AM","frequency":"690"}, 

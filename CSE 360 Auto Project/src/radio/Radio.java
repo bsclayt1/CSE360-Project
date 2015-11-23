@@ -11,6 +11,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import car.CarController;
+
 public class Radio {
 	private final float MAX_VOL = 10;
 	private final float MIN_VOL = 0;
@@ -21,14 +23,20 @@ public class Radio {
 	private Station currentStation;
 	private ArrayList<Station> availableStationList;
 	private ArrayList<Station> favStationList;
+	private String band;
+	private int location;
+	private CarController car;
 	
-	public Radio(User user){
-		radioOn = true;
+	public Radio(User user, CarController car){
+		radioOn = false;
 		speakerVol = MAX_VOL / 2;
 		isSpeakerMute = false;
 		currentStation = null;
+		band = "FM";
 		favStationList = user.getStations();
 		availableStationList = new ArrayList<Station>();
+		this.car = car;
+		location = 0;
 		populateStations();
 	}
 	
@@ -99,5 +107,72 @@ public class Radio {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void setBand(String band) {
+		this.band = band;
+	}
+	
+	public void setNextStation() {
+		int loc;
+		if(currentStation != null)
+			loc = availableStationList.indexOf(currentStation);
+		else
+			loc = 0;		
+		for(int i = 1; i <= availableStationList.size(); i++) {
+			if(isValidStation(availableStationList.get((loc + i) % availableStationList.size()))) {
+				currentStation = availableStationList.get((loc + i) % availableStationList.size());
+				return;
+			}
+		}
+		currentStation = null;
+	}
+	
+	public void setPrevStation() {
+		int loc;
+		if(currentStation != null)
+			loc = availableStationList.indexOf(currentStation) + availableStationList.size();
+		else
+			loc = 0 + availableStationList.size();
+		for(int i = 1; i <= availableStationList.size(); i++) {
+			if(isValidStation(availableStationList.get((loc - i) % availableStationList.size()))) {
+				currentStation = availableStationList.get((loc - i) % availableStationList.size());
+				return;
+			}
+		}
+		currentStation = null;
+	}
+	
+	private boolean isValidStation(Station station) {
+		if(station != null)
+			return (station.getLocation() == location) && (station.getBand().equals(band));
+		else
+			return false;
+	}
+	
+	public void updateLocation() {
+		location = car.getRoute().getLocation();
+	}
+	
+	public void setStation(Station station) {
+		if(isValidStation(station))
+			currentStation = station;
+		else
+			currentStation = null;
+	}
+	
+	public boolean isOn() {
+		return radioOn;
+	}
+	
+	public void validateCurrentStation() {
+		if(!isValidStation(currentStation))
+			currentStation = null;
+	}
+	
+	public void setPower(boolean power) {
+		if(power && (currentStation == null))
+			setNextStation();
+		radioOn = power;
 	}
 }

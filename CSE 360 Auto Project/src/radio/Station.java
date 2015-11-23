@@ -35,9 +35,9 @@ public class Station {
 	
 	public String toString() {
 		if(band.equals("FM"))
-			return name + ", " + String.format("%.1f", freq) + band;
+			return name + " - " + String.format("%.1f", freq) + band;
 		else
-			return name + ", " + String.format("%.0f", freq) + band;
+			return name + " - " + String.format("%.0f", freq) + band;
 	}
 	
 	public boolean equals(Station eq) {
