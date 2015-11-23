@@ -1,0 +1,22 @@
+[
+	{"name":"Awesome Rock","location":"1","band":"FM","frequency":"97.19"},
+	{"name":"Tech Talk","location":"3","band":"AM","frequency":"1080"}, 
+	{"name":"Hip Hop","location":"1","band":"FM","frequency":"99.1"}, 
+	{"name":"Traffic","location":"2","band":"AM","frequency":"690"}, 
+	{"name":"The News","location":"1","band":"AM","frequency":"1020"}, 
+	{"name":"EDM","location":"1","band":"FM","frequency":"104.7"}, 
+	{"name":"Jazz","location":"3","band":"FM","frequency":"96.1"},
+	{"name":"Sports Talk","location":"3","band":"AM","frequency":"1070"},
+	{"name":"Political Chat","location":"2","band":"FM","frequency":"87.3"},
+	{"name":"NPR","location":"1","band":"AM","frequency":"680"}
+]
+
+
+
+
+
+
+
+
+
+
