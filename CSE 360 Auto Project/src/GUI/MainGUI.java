@@ -46,7 +46,7 @@ public class MainGUI extends JPanel {
 	private JSONArray carLogsJSON;
 	private ArrayList<String> carLogs;
 	
-	public MainGUI(CarController car, User user, JSONArray carLogsJSON) {
+	public MainGUI(CarController car, User user, JSONArray carLogsJSON, JSONArray routesJSON) {
 		this.user = user;
 		carState = car.getState();
 		this.carLogsJSON = carLogsJSON;

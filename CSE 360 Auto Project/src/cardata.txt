@@ -1,1 +1,15 @@
-{"routes":[{"distance":"55","location":"1","traveled":"0"},{"distance":"130","location":"2","traveled":"0"},{"distance":"200","location":"3","traveled":"0"}],"distance":"6.874833333333503","tanksize":"16","carlogs":[{"date":"11.22.2016 20:28:21","durration":"00 min:12 sec","maxspeed":"0.0","avgspeed":"0.0","user":"robert"},{"date":"11.22.2016 20:29:31","durration":"00 min:13 sec","maxspeed":"0.0","avgspeed":"0.0","user":"robert"},{"date":"11.22.2016 20:31:41","durration":"00 min:44 sec","maxspeed":"0.0","avgspeed":"0.0","user":"robert"},{"date":"11.22.2016 20:33:09","durration":"00 min:09 sec","maxspeed":"0.0","avgspeed":"0.0","user":"robert"},{"user":"robert","maxspeed":"35.5","avgspeed":"28.21498371335505","date":"11.22.2016 21:02:10","durration":"00 min:47 sec"}],"fuellevel":"15.656258333333325"}
+{
+	"routes":[
+		{"name":"Short Route","distance":"55","location":"1","traveled":"0"},
+		{"name":"Scenic Route","distance":"130","location":"2","traveled":"0"},
+		{"name":"Interstate","distance":"200","location":"3","traveled":"0"}],
+	"distance":"6.874833333333503",
+	"tanksize":"16",
+	"carlogs":[
+		{"date":"11.22.2016 20:28:21","durration":"00 min:12 sec","maxspeed":"0.0","avgspeed":"0.0","user":"robert"},
+		{"date":"11.22.2016 20:29:31","durration":"00 min:13 sec","maxspeed":"0.0","avgspeed":"0.0","user":"robert"},
+		{"date":"11.22.2016 20:31:41","durration":"00 min:44 sec","maxspeed":"0.0","avgspeed":"0.0","user":"robert"},
+		{"date":"11.22.2016 20:33:09","durration":"00 min:09 sec","maxspeed":"0.0","avgspeed":"0.0","user":"robert"},
+		{"user":"robert","maxspeed":"35.5","avgspeed":"28.21498371335505","date":"11.22.2016 21:02:10","durration":"00 min:47 sec"}],
+	"fuellevel":"15.656258333333325"
+}

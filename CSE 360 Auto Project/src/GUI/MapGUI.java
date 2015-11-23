@@ -1,19 +1,28 @@
 package GUI;
 
+import map.*;
+
 import javax.swing.JPanel;
+import java.util.ArrayList;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+
 import javax.swing.JLabel;
+import java.awt.BorderLayout;
+import javax.swing.SwingConstants;
 
 @SuppressWarnings("serial")
 public class MapGUI extends JPanel {
+	private ArrayList<Route> routes;
+	
 
-	/**
-	 * Create the panel.
-	 */
+	
 	public MapGUI() {
-		setLayout(null);
+		setPreferredSize(new Dimension(605, 467));
+		setLayout(new BorderLayout(0, 0));
 		
 		JLabel lblMap = new JLabel("Map");
-		lblMap.setBounds(192, 138, 56, 16);
+		lblMap.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblMap);
 
 	}

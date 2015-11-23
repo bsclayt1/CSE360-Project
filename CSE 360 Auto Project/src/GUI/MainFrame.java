@@ -32,12 +32,14 @@ public class MainFrame extends JFrame {
 	private long carStartTime;
 	private JSONObject cardata;
 	private JSONArray carLogs;
+	private JSONArray routes;
 
 	public MainFrame(CarController car) {
 		setResizable(false);
 		this.car = car;
 		parseCarData();
 		carLogs = (JSONArray) cardata.get("carlogs");
+		routes = (JSONArray) cardata.get("routes");
 		startDate = null;
 		carStartTime = 0;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -127,6 +129,7 @@ public class MainFrame extends JFrame {
 			JSONParser parse = new JSONParser();
 			cardata = (JSONObject) parse.parse(new FileReader(fin));
 			carLogs = (JSONArray) cardata.get("carlogs");
+			routes = (JSONArray) cardata.get("routes");
 		}
 		catch(Exception e) {
 			e.printStackTrace();
