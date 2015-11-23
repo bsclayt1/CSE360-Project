@@ -36,4 +36,8 @@ public class Route {
 	public void updateTravled(double speed) {
 		traveled += speed / 36000;
 	}
+	
+	public String toString() {
+		return name;
+	}
 }

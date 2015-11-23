@@ -4,6 +4,7 @@ import car.CarController;
 import user.*;
 import phone.*;
 import radio.*;
+import map.*;
 
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
@@ -44,18 +45,23 @@ public class MainGUI extends JPanel {
 	private JPanel mapPanel;
 	private boolean logout;
 	private JSONArray carLogsJSON;
+	private JSONArray routesJSON;
 	private ArrayList<String> carLogs;
+	private ArrayList<Route> routes;
 	
 	public MainGUI(CarController car, User user, JSONArray carLogsJSON, JSONArray routesJSON) {
 		this.user = user;
 		carState = car.getState();
 		this.carLogsJSON = carLogsJSON;
+		this.routesJSON = routesJSON;
 		carLogs = new ArrayList<String>();
+		routes = new ArrayList<Route>();
 		fillCarLogs();
+		fillRoutes();
 		Phone phone = new Phone(user);
 		Radio radio = new Radio(user);
 		
-		setPreferredSize(new Dimension(750, 585));
+		setPreferredSize(new Dimension(750, 600));
 		setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 		
 		JPanel userPanel = new JPanel();
@@ -97,7 +103,7 @@ public class MainGUI extends JPanel {
 		
 		add(mainPanel);
 		
-		mainPanel.setPreferredSize(new Dimension(750, 550));
+		mainPanel.setPreferredSize(new Dimension(750, 565));
 		mainPanel.setLayout(new BorderLayout(0, 0));
 		
 		JPanel indicatorPanel = new JPanel();
@@ -106,18 +112,22 @@ public class MainGUI extends JPanel {
 		indicatorPanel.setLayout(new GridLayout(0, 4, 0, 0));
 		
 		JLabel speedLabel = new JLabel("Speed: 0.0 mph"); //("Speed: " + car.getSpeed());
+		speedLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		speedLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		indicatorPanel.add(speedLabel);
 		
 		JLabel fuelpercLabel = new JLabel("Fuel Level: 100.00%"); //("Fuel Level: " + String.format("%.0f", car.getFuel() / car.getTankSize() * 100) + "%");
+		fuelpercLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		fuelpercLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		indicatorPanel.add(fuelpercLabel);
 		
 		JLabel drivestateLabel = new JLabel("Park"); //(car.getState());
+		drivestateLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		drivestateLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		indicatorPanel.add(drivestateLabel);
 		
 		JLabel odometerLabel = new JLabel("Miles: 0.0"); //("Miles: " + car.getDistance());
+		odometerLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		odometerLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		indicatorPanel.add(odometerLabel);
 		
@@ -169,7 +179,7 @@ public class MainGUI extends JPanel {
 		radioPanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
 		phonePanel = new PhoneGUI(phone);
 		phonePanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
-		mapPanel = new MapGUI();
+		mapPanel = new MapGUI(car, routes);
 		mapPanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
 		statsPanel = new StatsGUI(user, carLogs);
 		statsPanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
@@ -202,12 +212,15 @@ public class MainGUI extends JPanel {
 		controlsPanel.add(statePanel);
 		
 		JRadioButton parkRadioButton = new JRadioButton("Park");
+		parkRadioButton.setMargin(new Insets(2, 2, 2, 9));
+		parkRadioButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 		parkRadioButton.getModel().setSelected(true);
 		statePanel.setLayout(new BorderLayout(0, 0));
 		statePanel.add(parkRadioButton, BorderLayout.NORTH);
 		parkRadioButton.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		JRadioButton driveRadioButton = new JRadioButton("Drive");
+		driveRadioButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 		statePanel.add(driveRadioButton, BorderLayout.SOUTH);
 		driveRadioButton.setHorizontalAlignment(SwingConstants.CENTER);
 		
@@ -407,6 +420,18 @@ public class MainGUI extends JPanel {
 			String carlogString = "User: " + user + ", Start Time: " + date + " for " + durration
 			+ ", Max Speed: " + maxspeed + ", Average Speed: " + avgspeed;
 			carLogs.add(carlogString);
+		}
+	}
+	
+	private void fillRoutes() {
+		for(int i = 0; i < routesJSON.size(); i++) {
+			JSONObject route = (JSONObject) routesJSON.get(i);
+			String name = (String) route.get("name");
+			int location = new Integer((String) route.get("location"));
+			double distance = new Double((String) route.get("distance"));
+			double traveled = new Double((String) route.get("traveled"));
+			Route routeList = new Route(name, location, distance, traveled);
+			routes.add(routeList);
 		}
 	}
 }

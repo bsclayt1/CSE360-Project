@@ -59,7 +59,7 @@ public class MainFrame extends JFrame {
 				if(loginPanel.getPassed()) {
 					startDate = new Date();
 					carStartTime = System.currentTimeMillis();
-					mainGUIPanel = new MainGUI(car, loginPanel.getUser(), carLogs);
+					mainGUIPanel = new MainGUI(car, loginPanel.getUser(), carLogs, routes);
 					mainGUIPanel.setPreferredSize(new Dimension(750, 590));
 					getContentPane().removeAll();
 					getContentPane().add(mainGUIPanel);

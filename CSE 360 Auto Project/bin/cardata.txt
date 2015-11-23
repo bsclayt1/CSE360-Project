@@ -1,15 +1,1 @@
-{
-	"routes":[
-		{"name":"Short Route","distance":"55","location":"1","traveled":"0"},
-		{"name":"Scenic Route","distance":"130","location":"2","traveled":"0"},
-		{"name":"Interstate","distance":"200","location":"3","traveled":"0"}],
-	"distance":"6.874833333333503",
-	"tanksize":"16",
-	"carlogs":[
-		{"date":"11.22.2016 20:28:21","durration":"00 min:12 sec","maxspeed":"0.0","avgspeed":"0.0","user":"robert"},
-		{"date":"11.22.2016 20:29:31","durration":"00 min:13 sec","maxspeed":"0.0","avgspeed":"0.0","user":"robert"},
-		{"date":"11.22.2016 20:31:41","durration":"00 min:44 sec","maxspeed":"0.0","avgspeed":"0.0","user":"robert"},
-		{"date":"11.22.2016 20:33:09","durration":"00 min:09 sec","maxspeed":"0.0","avgspeed":"0.0","user":"robert"},
-		{"user":"robert","maxspeed":"35.5","avgspeed":"28.21498371335505","date":"11.22.2016 21:02:10","durration":"00 min:47 sec"}],
-	"fuellevel":"15.656258333333325"
-}
+{"routes":[{"distance":"55","name":"Short Route","location":"1","traveled":"0"},{"distance":"130","name":"Scenic Route","location":"2","traveled":"0"},{"distance":"200","name":"Interstate","location":"3","traveled":"0"}],"distance":"8.66050000000052","tanksize":"16","carlogs":[{"date":"11.22.2016 20:28:21","durration":"00 min:12 sec","maxspeed":"0.0","avgspeed":"0.0","user":"robert"},{"date":"11.22.2016 20:29:31","durration":"00 min:13 sec","maxspeed":"0.0","avgspeed":"0.0","user":"robert"},{"date":"11.22.2016 20:31:41","durration":"00 min:44 sec","maxspeed":"0.0","avgspeed":"0.0","user":"robert"},{"date":"11.22.2016 20:33:09","durration":"00 min:09 sec","maxspeed":"0.0","avgspeed":"0.0","user":"robert"},{"date":"11.22.2016 21:02:10","durration":"00 min:47 sec","maxspeed":"35.5","avgspeed":"28.21498371335505","user":"robert"},{"date":"11.22.2016 22:02:06","durration":"01 min:07 sec","maxspeed":"0.0","avgspeed":"0.0","user":"robert"},{"date":"11.22.2016 22:03:27","durration":"00 min:32 sec","maxspeed":"0.0","avgspeed":"0.0","user":"robert"},{"date":"11.22.2016 22:04:05","durration":"01 min:06 sec","maxspeed":"57.0","avgspeed":"65.2431906614786","user":"robert"},{"date":"11.22.2016 22:05:35","durration":"00 min:11 sec","maxspeed":"0.0","avgspeed":"0.0","user":"robert"},{"date":"11.22.2016 22:06:26","durration":"01 min:02 sec","maxspeed":"0.0","avgspeed":"0.0","user":"robert"},{"date":"11.22.2016 22:07:48","durration":"00 min:20 sec","maxspeed":"0.0","avgspeed":"0.0","user":"robert"},{"date":"11.22.2016 22:11:01","durration":"00 min:14 sec","maxspeed":"0.0","avgspeed":"0.0","user":"robert"},{"date":"11.22.2016 22:11:21","durration":"02 min:07 sec","maxspeed":"39.5","avgspeed":"95.64670658682634","user":"robert"},{"date":"11.22.2016 22:13:34","durration":"02 min:05 sec","maxspeed":"0.0","avgspeed":"0.0","user":"robert"},{"date":"11.22.2016 22:15:45","durration":"00 min:03 sec","maxspeed":"0.0","avgspeed":"0.0","user":"robert"},{"date":"11.22.2016 22:15:58","durration":"00 min:01 sec","maxspeed":"0.0","avgspeed":"0.0","user":"robert"},{"date":"11.22.2016 22:17:15","durration":"00 min:12 sec","maxspeed":"0.0","avgspeed":"0.0","user":"robert"},{"user":"robert","maxspeed":"0.0","avgspeed":"0.0","date":"11.22.2016 22:18:36","durration":"00 min:27 sec"}],"fuellevel":"15.566974999999974"}
