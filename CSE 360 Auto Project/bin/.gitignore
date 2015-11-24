@@ -1,7 +1,5 @@
-/GUI/
-/logging/
-/phone/
-/user/
-/map/
 /car/
+/GUI/
 /radio/
+/user/
+/cardata.txt
