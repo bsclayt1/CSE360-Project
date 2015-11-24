@@ -1,4 +1,4 @@
-Users Guide
+User’s Guide
 
 Car Operation:
 The top panel displays the speed, fuel level, car state, odometer, and session duration.

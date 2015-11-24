@@ -192,15 +192,13 @@ public class RadioGUI extends JPanel {
 		selectButton.setMargin(new Insets(2, 5, 2, 5));
 		selectButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		stationsControlPanel.add(selectButton);
-		
-		labelUpdater(spVolLabel, stationLabel);
 		volumeHandler(spVolUpButton, spVolDownButton, spVolMuteButton);
 		seekbandHandler(seekDownButton, seekUpButton, fmToggleButton, amToggleButton);
 		favoriteStationHandler(stationsJList, selectButton);
 		powerHandler(powerToggleButton);
 	}
 	
-	private void labelUpdater(JLabel spVol, JLabel station) {
+	private void labelUpdater(JLabel spVol, JLabel station, JLabel feedback) {
 		Timer interval = new Timer(100, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				spVol.setText("Volume: " + radio.getSpeakerVol());

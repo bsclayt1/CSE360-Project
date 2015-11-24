@@ -3,7 +3,6 @@ package radio;
 import user.*;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.io.FileReader;
 import java.io.File;
 //import java.io.IOException;
@@ -27,8 +26,6 @@ public class Radio {
 	private String band;
 	private int location;
 	private CarController car;
-	private Date startDate;
-	private long radioStartTime;
 	
 	public Radio(User user, CarController car){
 		radioOn = false;
@@ -40,8 +37,6 @@ public class Radio {
 		availableStationList = new ArrayList<Station>();
 		this.car = car;
 		location = 0;
-		startDate = null;
-		radioStartTime = 0;
 		populateStations();
 	}
 	
@@ -116,7 +111,6 @@ public class Radio {
 	
 	public void setBand(String band) {
 		this.band = band;
-		setNextStation();
 	}
 	
 	public void setNextStation() {
@@ -177,16 +171,8 @@ public class Radio {
 	}
 	
 	public void setPower(boolean power) {
-		if(power) {
-			if(currentStation == null)
-				setNextStation();
-			startDate = new Date();
-			radioStartTime = System.currentTimeMillis();
-		}
-		else {
-			startDate = null;
-			radioStartTime = 0;
-		}
+		if(power && (currentStation == null))
+			setNextStation();
 		radioOn = power;
 	}
 }
