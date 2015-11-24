@@ -5,13 +5,12 @@ import user.*;
 import java.util.ArrayList;
 import java.io.FileReader;
 import java.io.File;
-//import java.io.IOException;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import car.CarController;
+import logging.RadioLog;
 
 public class Radio {
 	private final float MAX_VOL = 10;
@@ -23,11 +22,12 @@ public class Radio {
 	private Station currentStation;
 	private ArrayList<Station> availableStationList;
 	private ArrayList<Station> favStationList;
+	private ArrayList<String> radioLogs;
 	private String band;
 	private int location;
-	private CarController car;
+	private JSONObject cardata;
 	
-	public Radio(User user, CarController car){
+	public Radio(User user, CarController car, ArrayList<String> radioLogs, JSONObject cardata) {
 		radioOn = false;
 		speakerVol = MAX_VOL / 2;
 		isSpeakerMute = false;
@@ -35,9 +35,10 @@ public class Radio {
 		band = "FM";
 		favStationList = user.getStations();
 		availableStationList = new ArrayList<Station>();
-		this.car = car;
+		this.radioLogs = radioLogs;
 		location = 0;
 		populateStations();
+		this.cardata = cardata;
 	}
 	
 	public String getSpeakerVol() {
@@ -174,5 +175,12 @@ public class Radio {
 		if(power && (currentStation == null))
 			setNextStation();
 		radioOn = power;
+	}
+	
+	private void addRadioLog(RadioLog radioLog) {
+		JSONArray radioLogsJSON = (JSONArray) cardata.get("radiologs");
+		radioLogsJSON.add(radioLog.getJSONRadioLog());
+		radioLogs.add(radioLog.toString());
+		//updateRadioLogs();
 	}
 }

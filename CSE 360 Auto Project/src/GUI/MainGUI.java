@@ -44,22 +44,29 @@ public class MainGUI extends JPanel {
 	private StatsGUI statsPanel;
 	private MapGUI mapPanel;
 	private boolean logout;
+	private JSONObject cardata;
 	private JSONArray carLogsJSON;
 	private JSONArray routesJSON;
+	private JSONArray radioLogsJSON;
 	private ArrayList<String> carLogs;
 	private ArrayList<Route> routes;
+	private ArrayList<String> radioLogs;
 	
-	public MainGUI(CarController car, User user, JSONArray carLogsJSON, JSONArray routesJSON) {
+	public MainGUI(CarController car, User user, JSONArray carLogsJSON, JSONArray routesJSON, JSONArray radioLogsJSON, JSONObject cardata) {
 		this.user = user;
 		carState = car.getState();
 		this.carLogsJSON = carLogsJSON;
 		this.routesJSON = routesJSON;
+		this.radioLogsJSON = radioLogsJSON;
+		this.cardata = cardata;
 		carLogs = new ArrayList<String>();
 		routes = new ArrayList<Route>();
+		radioLogs = new ArrayList<String>();
 		fillCarLogs();
 		fillRoutes();
+		fillRadioLogs();
 		Phone phone = new Phone(user);
-		Radio radio = new Radio(user, car);
+		Radio radio = new Radio(user, car, radioLogs, cardata);
 		
 		setPreferredSize(new Dimension(750, 600));
 		setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
@@ -478,6 +485,17 @@ public class MainGUI extends JPanel {
 			double traveled = new Double((String) route.get("traveled"));
 			Route routeList = new Route(name, location, distance, traveled);
 			routes.add(routeList);
+		}
+	}
+	
+	private void fillRadioLogs() {
+		for(int i = 0; i < radioLogsJSON.size(); i++) {
+			JSONObject radioLog = (JSONObject) radioLogsJSON.get(i);
+			String user = (String) radioLog.get("user");
+			String date = (String) radioLog.get("date");
+			String durration = (String) radioLog.get("durration");
+			String radioLogString = "User: " + user + " turned on radio at " + date + " for " + durration;
+			radioLogs.add(radioLogString);
 		}
 	}
 	
