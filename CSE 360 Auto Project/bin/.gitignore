@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 /cardata.txt
 /logging/
 /logins.txt
@@ -13,3 +14,12 @@
 /user/
 /cardata.txt
 >>>>>>> refs/remotes/origin/FIle-Testing
+=======
+/GUI/
+/logging/
+/phone/
+/user/
+/map/
+/car/
+/radio/
+>>>>>>> parent of 20bb4eb... class changes
