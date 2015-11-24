@@ -2,9 +2,12 @@ import GUI.*;
 import car.*;
 
 import java.io.FileReader;
-import java.io.File;
-import java.io.IOException;
 
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
+import java.io.File;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -24,10 +27,25 @@ public class Main {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		
+		changeLook();
 		car = new CarController(tanksize, fuellevel, distance);
 		MainFrame guiframe = new MainFrame(car);
+		SwingUtilities.updateComponentTreeUI(guiframe);
 		guiframe.setVisible(true);
+	}
+	
+	private static void changeLook() {
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

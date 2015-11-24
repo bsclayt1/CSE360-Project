@@ -18,7 +18,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -33,6 +32,7 @@ public class MainFrame extends JFrame {
 	private JSONObject cardata;
 	private JSONArray carLogs;
 	private JSONArray routes;
+	private JSONArray radioLogs;
 
 	public MainFrame(CarController car) {
 		setResizable(false);
@@ -40,6 +40,7 @@ public class MainFrame extends JFrame {
 		parseCarData();
 		carLogs = (JSONArray) cardata.get("carlogs");
 		routes = (JSONArray) cardata.get("routes");
+		radioLogs = (JSONArray) cardata.get("radiologs");
 		startDate = null;
 		carStartTime = 0;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,6 +48,15 @@ public class MainFrame extends JFrame {
 		loginPanel = new LoginGUI();
 		loginPanel.setPreferredSize(new Dimension(750, 590));
 		loginPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				//System.out.println("Exit Task Performed");
+				if(!mainGUIPanel.getLogout()) {
+					logoutTask();
+				}
+			}
+		});
 		
 		getContentPane().add(loginPanel);
 		switchOnLogin();
@@ -59,14 +69,13 @@ public class MainFrame extends JFrame {
 				if(loginPanel.getPassed()) {
 					startDate = new Date();
 					carStartTime = System.currentTimeMillis();
-					mainGUIPanel = new MainGUI(car, loginPanel.getUser(), carLogs, routes, cardata);
+					mainGUIPanel = new MainGUI(car, loginPanel.getUser(), carLogs, routes, radioLogs, cardata);
 					mainGUIPanel.setPreferredSize(new Dimension(750, 590));
 					getContentPane().removeAll();
 					getContentPane().add(mainGUIPanel);
 					revalidate();
 					interval.stop();
 					switchOnLogout();
-					exitTask();
 				}
 			}
 		});
@@ -92,24 +101,13 @@ public class MainFrame extends JFrame {
 		interval.start();
 	}
 	
-	private void exitTask() {
-		addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				//System.out.println("Exit Task Performed");
-				if(!mainGUIPanel.getLogout()) {
-					logoutTask();
-				}
-			}
-		});
-	}
-	
 	@SuppressWarnings("unchecked")
 	private void logoutTask() {
 		long durration = System.currentTimeMillis() - carStartTime;
 		CarLog carLog = new CarLog(mainGUIPanel.getUser(), car.getMaxSpeed(), car.getAvgSpeed(), startDate, durration);
 		carLogs.add(carLog.getJSONCarLog());
-		cardata.replace("fuellevel", Double.toString(car.getFuel()));
-		cardata.replace("distance", Double.toString(car.getDistance()));
+		cardata.replace("fuellevel", String.format("%.02f", car.getFuel()));
+		cardata.replace("distance", String.format("%.02f", car.getDistance()));
 		cardata.replace("routes", mainGUIPanel.getRoutesJSON());
 		try {
 			FileWriter fout = new FileWriter("src/cardata.txt");
@@ -131,10 +129,18 @@ public class MainFrame extends JFrame {
 			cardata = (JSONObject) parse.parse(new FileReader(fin));
 			carLogs = (JSONArray) cardata.get("carlogs");
 			routes = (JSONArray) cardata.get("routes");
+			radioLogs = (JSONArray) cardata.get("radiologs");
+			//clearLogs();
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	@SuppressWarnings("unused")
+	private void clearLogs() {
+		carLogs.clear();
+		radioLogs.clear();
 	}
 }

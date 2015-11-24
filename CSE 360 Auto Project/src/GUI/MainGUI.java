@@ -44,7 +44,6 @@ public class MainGUI extends JPanel {
 	private StatsGUI statsPanel;
 	private MapGUI mapPanel;
 	private boolean logout;
-	private JSONObject cardata;
 	private JSONArray carLogsJSON;
 	private JSONArray routesJSON;
 	private JSONArray radioLogsJSON;
@@ -58,7 +57,6 @@ public class MainGUI extends JPanel {
 		this.carLogsJSON = carLogsJSON;
 		this.routesJSON = routesJSON;
 		this.radioLogsJSON = radioLogsJSON;
-		this.cardata = cardata;
 		carLogs = new ArrayList<String>();
 		routes = new ArrayList<Route>();
 		radioLogs = new ArrayList<String>();
@@ -188,7 +186,7 @@ public class MainGUI extends JPanel {
 		phonePanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
 		mapPanel = new MapGUI(car, routes);
 		mapPanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
-		statsPanel = new StatsGUI(user, carLogs);
+		statsPanel = new StatsGUI(user, carLogs, radioLogs);
 		statsPanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
 		
 		centerPanel.add(manualPanel, "Manual");

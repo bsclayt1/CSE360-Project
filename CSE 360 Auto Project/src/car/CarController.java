@@ -27,7 +27,6 @@ public class CarController {
 
    public double getSpeed() {
 	   double speed = engine.getSpeed();
-	   accuspeed += speed;
 	   if(speed > maxspeed)
 		   maxspeed = speed;
 	   return engine.getSpeed();
@@ -79,6 +78,7 @@ public class CarController {
       updateNumb++;
       engine.updateSpeed(update, state);
       distance += engine.getSpeed() / 36000;
+      accuspeed += engine.getSpeed();
       fuelTank.updateFuel(distance);
       avgspeed = accuspeed / (double) updateNumb;
    }

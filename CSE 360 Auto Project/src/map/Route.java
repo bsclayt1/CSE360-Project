@@ -43,8 +43,8 @@ public class Route {
 		LinkedHashMap<String, String> route = new LinkedHashMap<String, String>();
 		route.put("name", name);
 		route.put("location", Integer.toString(location));
-		route.put("distance", Double.toString(distance));
-		route.put("traveled", Double.toString(traveled));
+		route.put("distance", String.format("%.02f", distance));
+		route.put("traveled", String.format("%.02f", traveled));
 		return route;
 	}
 	

@@ -65,6 +65,7 @@ public class User {
 						
 						this.callLogs = new ArrayList<String>();
 						JSONArray callLogs = (JSONArray) userdata.get("calllogs");
+						//callLogs.clear();
 						for(int j = 0; j < callLogs.size(); j++) {
 							JSONObject callLogData = (JSONObject) callLogs.get(j);
 							String number = (String) callLogData.get("numbercalled");
