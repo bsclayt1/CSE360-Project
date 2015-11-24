@@ -110,7 +110,7 @@ public class MainFrame extends JFrame {
 		cardata.replace("distance", String.format("%.02f", car.getDistance()));
 		cardata.replace("routes", mainGUIPanel.getRoutesJSON());
 		try {
-			FileWriter fout = new FileWriter("src/cardata.txt");
+			FileWriter fout = new FileWriter("./cardata.txt");
 			fout.write(cardata.toString());
 			fout.close();
 		} catch (IOException e) {

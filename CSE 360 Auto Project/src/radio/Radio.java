@@ -209,7 +209,7 @@ public class Radio {
 	
 	private void updateRadioLogs() {
 		try {
-			FileWriter fout = new FileWriter("src/cardata.txt");
+			FileWriter fout = new FileWriter("./cardata.txt");
 			fout.write(cardata.toString());
 			fout.close();
 		} catch (IOException e) {

@@ -112,7 +112,7 @@ public class User {
 	
 	private void updateUserData() {
 		try {
-			FileWriter fout = new FileWriter("src/userdata.txt");
+			FileWriter fout = new FileWriter("./userdata.txt");
 			fout.write(users.toString());
 			fout.close();
 		} catch (IOException e) {
