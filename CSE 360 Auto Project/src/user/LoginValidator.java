@@ -13,7 +13,7 @@ public class LoginValidator {
 	
 	public LoginValidator() {
 		JSONParser parse = new JSONParser();
-		fin = new File("src/logins.txt");
+		fin = new File("./logins.txt");
 		if(fin.exists()) {
 			try {
 				logs = (JSONArray) parse.parse(new FileReader(fin));

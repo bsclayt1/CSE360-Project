@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /cardata.txt
 /logging/
 /logins.txt
@@ -5,3 +6,10 @@
 /stationdata.txt
 /userdata.txt
 /userguide.txt
+=======
+/car/
+/GUI/
+/radio/
+/user/
+/cardata.txt
+>>>>>>> refs/remotes/origin/FIle-Testing
