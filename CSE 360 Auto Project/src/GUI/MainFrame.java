@@ -33,6 +33,7 @@ public class MainFrame extends JFrame {
 	private JSONObject cardata;
 	private JSONArray carLogs;
 	private JSONArray routes;
+	private JSONArray radioLogs;
 
 	public MainFrame(CarController car) {
 		setResizable(false);
@@ -40,6 +41,7 @@ public class MainFrame extends JFrame {
 		parseCarData();
 		carLogs = (JSONArray) cardata.get("carlogs");
 		routes = (JSONArray) cardata.get("routes");
+		radioLogs = (JSONArray) cardata.get("radiologs");
 		startDate = null;
 		carStartTime = 0;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,6 +49,16 @@ public class MainFrame extends JFrame {
 		loginPanel = new LoginGUI();
 		loginPanel.setPreferredSize(new Dimension(750, 590));
 		loginPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				
+				if(!mainGUIPanel.getLogout()) {
+					logoutTask();
+					//return;
+				}
+			}
+		});
 		
 		getContentPane().add(loginPanel);
 		switchOnLogin();
@@ -59,14 +71,13 @@ public class MainFrame extends JFrame {
 				if(loginPanel.getPassed()) {
 					startDate = new Date();
 					carStartTime = System.currentTimeMillis();
-					mainGUIPanel = new MainGUI(car, loginPanel.getUser(), carLogs, routes);
+					mainGUIPanel = new MainGUI(car, loginPanel.getUser(), carLogs, routes, radioLogs);
 					mainGUIPanel.setPreferredSize(new Dimension(750, 590));
 					getContentPane().removeAll();
 					getContentPane().add(mainGUIPanel);
 					revalidate();
 					interval.stop();
 					switchOnLogout();
-					exitTask();
 				}
 			}
 		});
@@ -90,17 +101,6 @@ public class MainFrame extends JFrame {
 			}
 		});
 		interval.start();
-	}
-	
-	private void exitTask() {
-		addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				//System.out.println("Exit Task Performed");
-				if(!mainGUIPanel.getLogout()) {
-					logoutTask();
-				}
-			}
-		});
 	}
 	
 	@SuppressWarnings("unchecked")

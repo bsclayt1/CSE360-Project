@@ -46,20 +46,26 @@ public class MainGUI extends JPanel {
 	private boolean logout;
 	private JSONArray carLogsJSON;
 	private JSONArray routesJSON;
+	private JSONArray radioLogsJSON;
 	private ArrayList<String> carLogs;
 	private ArrayList<Route> routes;
+	private ArrayList<String> radioLogs;
 	
-	public MainGUI(CarController car, User user, JSONArray carLogsJSON, JSONArray routesJSON) {
+	public MainGUI(CarController car, User user, JSONArray carLogsJSON, JSONArray routesJSON, JSONArray radioLogsJSON) {
 		this.user = user;
 		carState = car.getState();
 		this.carLogsJSON = carLogsJSON;
 		this.routesJSON = routesJSON;
+		this.radioLogsJSON =radioLogsJSON; 
 		carLogs = new ArrayList<String>();
 		routes = new ArrayList<Route>();
+		radioLogs = new ArrayList<String>();
 		fillCarLogs();
 		fillRoutes();
+		fillRadioLogs();
 		Phone phone = new Phone(user);
 		Radio radio = new Radio(user, car);
+		logout = false;
 		
 		setPreferredSize(new Dimension(750, 600));
 		setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
@@ -89,7 +95,6 @@ public class MainGUI extends JPanel {
 		exitbuttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 5));
 		
 		JButton logoutButton = new JButton("Logout");
-		logout = false;
 		logoutButton.setMargin(new Insets(2, 5, 2, 5));
 		logoutButton.setPreferredSize(new Dimension(65, 25));
 		logoutButton.addActionListener(new ActionListener() {
@@ -181,7 +186,7 @@ public class MainGUI extends JPanel {
 		phonePanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
 		mapPanel = new MapGUI(car, routes);
 		mapPanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
-		statsPanel = new StatsGUI(user, carLogs);
+		statsPanel = new StatsGUI(user, carLogs, radioLogs);
 		statsPanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
 		
 		centerPanel.add(manualPanel, "Manual");
@@ -478,6 +483,17 @@ public class MainGUI extends JPanel {
 			double traveled = new Double((String) route.get("traveled"));
 			Route routeList = new Route(name, location, distance, traveled);
 			routes.add(routeList);
+		}
+	}
+	
+	public void fillRadioLogs() {
+		for(int i = 0; i < radioLogsJSON.size(); i++) {
+			JSONObject radioLog = (JSONObject) routesJSON.get(i);
+			String user = (String) radioLog.get("user");
+			String date = (String) radioLog.get("date");
+			String durration = (String) radioLog.get("durration");
+			String radioLogString = "User: " + user + " started radio on " + date + " for " + durration;
+			radioLogs.add(radioLogString);
 		}
 	}
 	
