@@ -1,5 +1,11 @@
 package car;
 
+import java.io.File;
+import java.io.FileReader;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 import map.Route;
 
 public class CarController {
@@ -13,16 +19,28 @@ public class CarController {
    private double maxspeed;
    private Route currentRoute;
 
-   public CarController(double tanksize, double fuel, double distance) {
-      updateNumb = 0;
-      this.distance = distance;
-      engine = new Engine();
-      fuelTank = new FuelTank(tanksize, fuel);
-      state = "Park";
-      accuspeed = 0;
-      avgspeed = 0;
-      maxspeed = 0;
-      currentRoute = null;
+   public CarController() {
+	   double tanksize = 0;
+	   double fuellevel = 0;
+	   try {
+			File fin = new File("./cardata.txt");
+			JSONParser parse = new JSONParser();
+			JSONObject cardata = (JSONObject) parse.parse(new FileReader(fin));
+			tanksize = new Double((String) cardata.get("tanksize"));
+			fuellevel = new Double((String) cardata.get("fuellevel"));
+			distance = new Double((String) cardata.get("distance"));
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	   	updateNumb = 0;
+		engine = new Engine();
+		fuelTank = new FuelTank(tanksize, fuellevel);
+		state = "Park";
+		accuspeed = 0;
+		avgspeed = 0;
+		maxspeed = 0;
+		currentRoute = null;
    }
 
    public double getSpeed() {

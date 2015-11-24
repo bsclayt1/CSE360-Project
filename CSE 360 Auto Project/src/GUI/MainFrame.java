@@ -124,7 +124,7 @@ public class MainFrame extends JFrame {
 	
 	private void parseCarData() {
 		try {
-			File fin = new File("src/cardata.txt");
+			File fin = new File("./cardata.txt");
 			JSONParser parse = new JSONParser();
 			cardata = (JSONObject) parse.parse(new FileReader(fin));
 			carLogs = (JSONArray) cardata.get("carlogs");

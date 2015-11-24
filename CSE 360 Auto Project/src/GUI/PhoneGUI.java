@@ -196,7 +196,7 @@ public class PhoneGUI extends JPanel {
 		BufferedImage phoneicon = null;
 		ImageIcon icon = null;
 		JLabel iconLabel;
-		File picin = new File("src/phone_icon.png");
+		File picin = new File("./phone_icon.png");
 		if(picin.exists()) {
 			try {
 				phoneicon = ImageIO.read(picin);

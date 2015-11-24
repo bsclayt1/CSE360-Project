@@ -104,7 +104,7 @@ public class Radio {
 	
 	private void populateStations() {
 		try {
-			File fin = new File("src/stationdata.txt");
+			File fin = new File("./stationdata.txt");
 			JSONParser parse = new JSONParser();
 			JSONArray stations = (JSONArray) parse.parse(new FileReader(fin));
 			for(int i = 0; i < stations.size(); i++) {
