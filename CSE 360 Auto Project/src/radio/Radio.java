@@ -5,8 +5,6 @@ import user.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.File;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -26,18 +24,16 @@ public class Radio {
 	private Station currentStation;
 	private ArrayList<Station> availableStationList;
 	private ArrayList<Station> favStationList;
-	private ArrayList<String> radioLogs;
 	private CarController car;
 	private String band;
 	private int location;
-	private JSONObject cardata;
 	private Date startDate;
 	private long radioStartTime;
 	private Date stationStartDate;
 	private long stationStartTime;
 	private User user;
 	
-	public Radio(User user, CarController car, ArrayList<String> radioLogs,  JSONObject cardata) {
+	public Radio(User user, CarController car) {
 		radioOn = false;
 		speakerVol = MAX_VOL / 2;
 		isSpeakerMute = false;
@@ -45,10 +41,8 @@ public class Radio {
 		band = "FM";
 		favStationList = user.getStations();
 		availableStationList = new ArrayList<Station>();
-		this.radioLogs = radioLogs;
 		location = 0;
 		populateStations();
-		this.cardata = cardata;
 		this.car = car;
 		this.user = user;
 		startDate = null;
@@ -169,12 +163,13 @@ public class Radio {
 	}
 	
 	public void updateLocation() {
-		location = car.getRoute().getLocation();
+		location = car.getCurrentRoute().getLocation();
 	}
 	
 	public void setStation(Station station) {
-		if(currentStation != station)
+		if(currentStation != station) {
 			makeStationLog();
+		}
 		if(isValidStation(station)) {
 			currentStation = station;
 			stationStartDate = new Date();
@@ -194,44 +189,37 @@ public class Radio {
 	}
 	
 	public void setPower(boolean power) {
-		if(power) { 
-			if(currentStation == null)
-				setNextStation();
-			startDate = new Date();
-			radioStartTime = System.currentTimeMillis();
+		if(!car.getPhone().getOnCall()) {
+			if(power) {
+				if(currentStation == null)
+					setNextStation();
+				startDate = new Date();
+				radioStartTime = System.currentTimeMillis();
+			} 
+			else {
+				makeStationLog();
+				car.addRadioLog(new RadioLog(user.getUserName(), startDate, radioStartTime));
+				currentStation = null;
+				startDate = null;
+				radioStartTime = 0;
+			}
+			radioOn = power;
 		}
 		else {
-			makeStationLog();
-			long durration = System.currentTimeMillis() - radioStartTime;
-			addRadioLog(new RadioLog(user.getUserName(), startDate, durration));
-			startDate = null;
-			radioStartTime = 0;
-		}
-		radioOn = power;
-	}
-	
-	@SuppressWarnings("unchecked")
-	private void addRadioLog(RadioLog radioLog) {
-		JSONArray radioLogsJSON = (JSONArray) cardata.get("radiologs");
-		radioLogsJSON.add(radioLog.getJSONRadioLog());
-		radioLogs.add(radioLog.toString());
-		updateRadioLogs();
-	}
-	
-	private void updateRadioLogs() {
-		try {
-			FileWriter fout = new FileWriter("./cardata.txt");
-			fout.write(cardata.toString());
-			fout.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+			if(radioOn) {
+				makeStationLog();
+				car.addRadioLog(new RadioLog(user.getUserName(), startDate, radioStartTime));
+				currentStation = null;
+				startDate = null;
+				radioStartTime = 0;
+			}
+			radioOn = false;
 		}
 	}
 	
 	private void makeStationLog() {
 		if(currentStation != null) {
-			long durration = System.currentTimeMillis() - stationStartTime;
-			user.addStationLog(new StationLog(currentStation, stationStartDate, durration));
+			user.addStationLog(new StationLog(currentStation, stationStartDate, stationStartTime));
 			stationStartDate = null;
 			stationStartTime = 0;
 		}

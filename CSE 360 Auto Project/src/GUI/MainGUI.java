@@ -4,7 +4,6 @@ import car.CarController;
 import user.*;
 import phone.*;
 import radio.*;
-import map.*;
 
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
@@ -15,9 +14,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.JToggleButton;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 import java.awt.event.ActionEvent;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -33,9 +30,6 @@ import java.awt.Color;
 import javax.swing.border.CompoundBorder;
 import java.awt.Font;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
 @SuppressWarnings("serial")
 public class MainGUI extends JPanel {
 	private User user;
@@ -46,27 +40,14 @@ public class MainGUI extends JPanel {
 	private StatsGUI statsPanel;
 	private MapGUI mapPanel;
 	private boolean logout;
-	private JSONArray carLogsJSON;
-	private JSONArray routesJSON;
-	private JSONArray radioLogsJSON;
-	private ArrayList<String> carLogs;
-	private ArrayList<Route> routes;
-	private ArrayList<String> radioLogs;
 	
-	public MainGUI(CarController car, User user, JSONArray carLogsJSON, JSONArray routesJSON, JSONArray radioLogsJSON, JSONObject cardata) {
+	public MainGUI(CarController car, User user) {
 		this.user = user;
 		carState = car.getState();
-		this.carLogsJSON = carLogsJSON;
-		this.routesJSON = routesJSON;
-		this.radioLogsJSON = radioLogsJSON;
-		carLogs = new ArrayList<String>();
-		routes = new ArrayList<Route>();
-		radioLogs = new ArrayList<String>();
-		fillCarLogs();
-		fillRoutes();
-		fillRadioLogs();
-		Phone phone = new Phone(user);
-		Radio radio = new Radio(user, car, radioLogs, cardata);
+		Phone phone = new Phone(user, car);
+		Radio radio = new Radio(user, car);
+		car.setRadio(radio);
+		car.setPhone(phone);
 		
 		setPreferredSize(new Dimension(750, 600));
 		setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
@@ -88,10 +69,12 @@ public class MainGUI extends JPanel {
 		emptyPanel.add(statswindowToggleButton);
 		
 		JLabel userLabel = new JLabel(capitalize(user.getUserName()));
+		userLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
 		userLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		userPanel.add(userLabel);
 		
 		JLabel clockLabel = new JLabel("00:00:00");
+		clockLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
 		clockLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		userPanel.add(clockLabel);
 		
@@ -190,9 +173,9 @@ public class MainGUI extends JPanel {
 		radioPanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
 		phonePanel = new PhoneGUI(phone);
 		phonePanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
-		mapPanel = new MapGUI(car, routes);
+		mapPanel = new MapGUI(car);
 		mapPanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
-		statsPanel = new StatsGUI(user, carLogs, radioLogs);
+		statsPanel = new StatsGUI(user, car);
 		statsPanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
 		
 		centerPanel.add(manualPanel, "Manual");
@@ -328,6 +311,7 @@ public class MainGUI extends JPanel {
 					park.getModel().setSelected(true);
 					park.getModel().setEnabled(true);
 					drive.getModel().setSelected(false);
+					drive.getModel().setEnabled(true);
 				}
 			}
 		});
@@ -437,18 +421,14 @@ public class MainGUI extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				car.setPark();
 				drive.getModel().setSelected(false);
-				
-				//drive.getModel().setEnabled(true);
-				
-				//park.getModel().setEnabled(false);
+				drive.getModel().setEnabled(true);
 			}
 		});
 		drive.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				car.setDrive();
 				park.getModel().setSelected(false);
-				
-				//park.getModel().setEnabled(true);
+				drive.getModel().setEnabled(false);
 			}
 		});
 	}
@@ -465,47 +445,6 @@ public class MainGUI extends JPanel {
 		if(carState.equals("Drive"))
 				logout = false;
 		return logout;
-	}
-	
-	private void fillCarLogs() {
-		for(int i = 0; i < carLogsJSON.size(); i++) {
-			JSONObject carlog = (JSONObject) carLogsJSON.get(i);
-			String user = (String) carlog.get("user");
-			String maxspeed = (String) carlog.get("maxspeed");
-			String avgspeed = (String) carlog.get("avgspeed");
-			String date = (String) carlog.get("date");
-			String durration = (String) carlog.get("durration");
-			String carlogString = "User: " + user + ", Start Time: " + date + " for " + durration
-			+ ", Max Speed: " + maxspeed + ", Average Speed: " + avgspeed;
-			carLogs.add(carlogString);
-		}
-	}
-	
-	private void fillRoutes() {
-		for(int i = 0; i < routesJSON.size(); i++) {
-			JSONObject route = (JSONObject) routesJSON.get(i);
-			String name = (String) route.get("name");
-			int location = new Integer((String) route.get("location"));
-			double distance = new Double((String) route.get("distance"));
-			double traveled = new Double((String) route.get("traveled"));
-			Route routeList = new Route(name, location, distance, traveled);
-			routes.add(routeList);
-		}
-	}
-	
-	private void fillRadioLogs() {
-		for(int i = 0; i < radioLogsJSON.size(); i++) {
-			JSONObject radioLog = (JSONObject) radioLogsJSON.get(i);
-			String user = (String) radioLog.get("user");
-			String date = (String) radioLog.get("date");
-			String durration = (String) radioLog.get("durration");
-			String radioLogString = "User: " + user + " turned on radio at " + date + " for " + durration;
-			radioLogs.add(radioLogString);
-		}
-	}
-	
-	public JSONArray getRoutesJSON() {
-		return mapPanel.getRoutesJSON();
 	}
 	
 	private void updateClock(JLabel clock) {

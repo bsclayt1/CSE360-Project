@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import car.CarController;
 import logging.CallLog;
 
 public class Phone {
@@ -13,6 +14,7 @@ public class Phone {
 	private final float MIN_VOL = 0;
 	
 	private User user;
+	private CarController car;
 	private String phoneNumber;
 	private String numberCalled;
 	private boolean onCall;
@@ -23,9 +25,11 @@ public class Phone {
 	private ArrayList<Contact> contactList;
 	private Date startDate;
 	private long callStartTime;
+	private boolean lastRadioState;
 	
-	public Phone(User user) {
+	public Phone(User user, CarController car) {
 		this.user = user;
+		this.car = car;
 		phoneNumber = user.getPhoneNumber();
 		numberCalled = "";
 		onCall = false;
@@ -36,6 +40,7 @@ public class Phone {
 		contactList = user.getContacts();
 		startDate = null;
 		callStartTime = 0;
+		lastRadioState = false;
 	}
 	
 	public String getPhoneNum() {
@@ -119,6 +124,8 @@ public class Phone {
 		startDate = new Date();
 		callStartTime = System.currentTimeMillis();
 		onCall = true;
+		lastRadioState = car.getRadio().isOn();
+		car.getRadio().setPower(false);
 	}
 	
 	public String getCallDuration() {
@@ -135,12 +142,13 @@ public class Phone {
 	
 	public void endCall() {
 		if(onCall) {
-			long durration = System.currentTimeMillis() - callStartTime;
-			user.addCallLog(new CallLog(numberCalled, startDate, durration));
+			user.addCallLog(new CallLog(numberCalled, startDate, callStartTime));
 			numberCalled = "";
 			onCall = false;
 			startDate = null;
 			callStartTime = 0;
+			if(lastRadioState)
+				car.getRadio().setPower(true);
 		}
 	}
 }	
