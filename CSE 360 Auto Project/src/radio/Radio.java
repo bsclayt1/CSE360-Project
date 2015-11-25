@@ -14,6 +14,7 @@ import org.json.simple.parser.JSONParser;
 
 import car.CarController;
 import logging.RadioLog;
+import logging.StationLog;
 
 public class Radio {
 	private final float MAX_VOL = 10;
@@ -32,9 +33,11 @@ public class Radio {
 	private JSONObject cardata;
 	private Date startDate;
 	private long radioStartTime;
+	private Date stationStartDate;
+	private long stationStartTime;
 	private User user;
 	
-	public Radio(User user, CarController car, ArrayList<String> radioLogs, JSONObject cardata) {
+	public Radio(User user, CarController car, ArrayList<String> radioLogs,  JSONObject cardata) {
 		radioOn = false;
 		speakerVol = MAX_VOL / 2;
 		isSpeakerMute = false;
@@ -50,6 +53,8 @@ public class Radio {
 		this.user = user;
 		startDate = null;
 		radioStartTime = 0;
+		stationStartDate = null;
+		stationStartTime = 0;
 	}
 	
 	public String getSpeakerVol() {
@@ -134,7 +139,7 @@ public class Radio {
 			loc = 0;		
 		for(int i = 1; i <= availableStationList.size(); i++) {
 			if(isValidStation(availableStationList.get((loc + i) % availableStationList.size()))) {
-				currentStation = availableStationList.get((loc + i) % availableStationList.size());
+				setStation(availableStationList.get((loc + i) % availableStationList.size()));
 				return;
 			}
 		}
@@ -149,7 +154,7 @@ public class Radio {
 			loc = 0 + availableStationList.size();
 		for(int i = 1; i <= availableStationList.size(); i++) {
 			if(isValidStation(availableStationList.get((loc - i) % availableStationList.size()))) {
-				currentStation = availableStationList.get((loc - i) % availableStationList.size());
+				setStation(availableStationList.get((loc - i) % availableStationList.size()));
 				return;
 			}
 		}
@@ -168,8 +173,13 @@ public class Radio {
 	}
 	
 	public void setStation(Station station) {
-		if(isValidStation(station))
+		if(currentStation != station)
+			makeStationLog();
+		if(isValidStation(station)) {
 			currentStation = station;
+			stationStartDate = new Date();
+			stationStartTime = System.currentTimeMillis();
+		}
 		else
 			currentStation = null;
 	}
@@ -191,6 +201,7 @@ public class Radio {
 			radioStartTime = System.currentTimeMillis();
 		}
 		else {
+			makeStationLog();
 			long durration = System.currentTimeMillis() - radioStartTime;
 			addRadioLog(new RadioLog(user.getUserName(), startDate, durration));
 			startDate = null;
@@ -214,6 +225,15 @@ public class Radio {
 			fout.close();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	private void makeStationLog() {
+		if(currentStation != null) {
+			long durration = System.currentTimeMillis() - stationStartTime;
+			user.addStationLog(new StationLog(currentStation, stationStartDate, durration));
+			stationStartDate = null;
+			stationStartTime = 0;
 		}
 	}
 }

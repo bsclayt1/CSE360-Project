@@ -14,13 +14,15 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import logging.CallLog;
+import logging.StationLog;
 
 public class User {
 	private String username;
 	private String phoneNumber;
 	private ArrayList<Contact> contacts;
-	private ArrayList<Station> stations;
+	private ArrayList<Station> favstations;
 	private ArrayList<String> callLogs;
+	private ArrayList<String> stationLogs;
 	private int userloc;
 	private JSONArray users;
 	private JSONObject userdata;
@@ -50,7 +52,7 @@ public class User {
 						this.contacts.add(contact);
 					}
 					
-					this.stations = new ArrayList<Station>();
+					this.favstations = new ArrayList<Station>();
 					JSONArray stations = (JSONArray) userdata.get("stations");
 					for(int j = 0; j < stations.size(); j++) {
 						JSONObject stationdata = (JSONObject) stations.get(j);
@@ -59,7 +61,7 @@ public class User {
 						String stationband = (String) stationdata.get("band");
 						int stationloc = new Integer((String) stationdata.get("location"));
 						Station station = new Station(stationname, stationfreq, stationband, stationloc);
-						this.stations.add(station);
+						this.favstations.add(station);
 					}
 					
 					this.callLogs = new ArrayList<String>();
@@ -72,6 +74,18 @@ public class User {
 						String durration = (String) callLogData.get("durration");
 						String callLog = "Called Number: " + number + " on " + date + " for " + durration;
 						this.callLogs.add(callLog);
+					}
+					
+					this.stationLogs = new ArrayList<String>();
+					JSONArray stationLogs = (JSONArray) userdata.get("stationlogs");
+					//stationLogs.clear();
+					for(int j = 0; j < stationLogs.size(); j++) {
+						JSONObject stationLogData = (JSONObject) stationLogs.get(j);
+						String name = (String) stationLogData.get("name");
+						String date = (String) stationLogData.get("date");
+						String durration = (String) stationLogData.get("durration");
+						String stationLog = "Listened to " + name + " on " + date + " for " + durration;
+						this.stationLogs.add(stationLog);
 					}
 				}
 				userloc++;
@@ -95,11 +109,15 @@ public class User {
 	}
 	
 	public ArrayList<Station> getStations() {
-		return stations;
+		return favstations;
 	}
 	
 	public ArrayList<String> getCallLogs() {
 		return callLogs;
+	}
+	
+	public ArrayList<String> getStationLogs() {
+		return stationLogs;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -107,6 +125,14 @@ public class User {
 		JSONArray callLogsJSON = (JSONArray) userdata.get("calllogs");
 		callLogsJSON.add(callLog.getJSONCallLog());
 		callLogs.add(callLog.toString());
+		updateUserData();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void addStationLog(StationLog stationLog) {
+		JSONArray stationLogsJSON = (JSONArray) userdata.get("stationlogs");
+		stationLogsJSON.add(stationLog.getJSONStationLog());
+		stationLogs.add(stationLog.toString());
 		updateUserData();
 	}
 	
@@ -125,7 +151,7 @@ public class User {
 		s += "User: " + username + '\n';
 		s += "Phone Number: " + phoneNumber + '\n';
 		s += "Contacts: " + contacts.size() + '\n';
-		s += "Stations: " + stations.size() + '\n';
+		s += "Stations: " + favstations.size() + '\n';
 		return s;
 	}
 }

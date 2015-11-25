@@ -16,27 +16,34 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.GridLayout;
+import javax.swing.JButton;
+import java.awt.Insets;
 
 @SuppressWarnings("serial")
 public class StatsGUI extends JPanel {
 	private ArrayList<String> callLogs;
 	private ArrayList<String> carLogs;
 	private ArrayList<String> radioLogs;
+	private ArrayList<String> stationLogs;
 	
 	private DefaultListModel<String> callLogList;
 	private DefaultListModel<String> carLogList;
 	private DefaultListModel<String> radioLogList;
+	private DefaultListModel<String> stationLogList;
 	private JList<String> callLogJList;
 	private JList<String> carLogJList;
 	private JList<String> radioLogJList;
+	private JList<String> stationLogJList;
 	
 	public StatsGUI(User user, ArrayList<String> carLogs, ArrayList<String> radioLogs) {
 		callLogs = user.getCallLogs();
+		stationLogs = user.getStationLogs();
 		this.carLogs = carLogs;
 		this.radioLogs = radioLogs;
 		callLogList = new DefaultListModel<String>();
 		carLogList = new DefaultListModel<String>();
 		radioLogList = new DefaultListModel<String>();
+		stationLogList = new DefaultListModel<String>();
 		for(String callLog : callLogs) {
 			callLogList.addElement(callLog);
 		}
@@ -45,6 +52,9 @@ public class StatsGUI extends JPanel {
 		}
 		for(String radioLog : this.radioLogs) {
 			radioLogList.addElement(radioLog);
+		}
+		for(String stationLog : this.stationLogs) {
+			stationLogList.addElement(stationLog);
 		}
 		
 		setPreferredSize(new Dimension(605, 467));
@@ -55,9 +65,18 @@ public class StatsGUI extends JPanel {
 		add(carLogPanel);
 		carLogPanel.setLayout(new BorderLayout(0, 0));
 		
+		JPanel carLogHeaderPanel = new JPanel();
+		carLogPanel.add(carLogHeaderPanel, BorderLayout.NORTH);
+		carLogHeaderPanel.setLayout(new BorderLayout(0, 0));
+		
 		JLabel lblCarLogs = new JLabel("Car Logs");
+		carLogHeaderPanel.add(lblCarLogs, BorderLayout.CENTER);
 		lblCarLogs.setHorizontalAlignment(SwingConstants.CENTER);
-		carLogPanel.add(lblCarLogs, BorderLayout.NORTH);
+		
+		JButton btnNewButton = new JButton("");
+		btnNewButton.setPreferredSize(new Dimension(16, 16));
+		btnNewButton.setMargin(new Insets(0, 0, 0, 0));
+		carLogHeaderPanel.add(btnNewButton, BorderLayout.EAST);
 		
 		JScrollPane carLogScrollPane = new JScrollPane();
 		carLogScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -65,6 +84,7 @@ public class StatsGUI extends JPanel {
 		
 		carLogJList = new JList<String>();
 		carLogScrollPane.setViewportView(carLogJList);
+		carLogJList.setModel(carLogList);
 		
 		JPanel radioLogPanel = new JPanel();
 		add(radioLogPanel);
@@ -97,7 +117,7 @@ public class StatsGUI extends JPanel {
 		
 		callLogJList = new JList<String>(callLogList);
 		callLogScrollPane.setViewportView(callLogJList);
-		carLogJList.setModel(carLogList);
+		callLogJList.setModel(callLogList);
 		
 		JPanel stationLogPanel = new JPanel();
 		add(stationLogPanel);
@@ -107,9 +127,13 @@ public class StatsGUI extends JPanel {
 		stationLogsLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		stationLogPanel.add(stationLogsLabel, BorderLayout.NORTH);
 		
-		JScrollPane stationLogsScrollPanel = new JScrollPane();
-		stationLogsScrollPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		stationLogPanel.add(stationLogsScrollPanel);
+		JScrollPane stationLogsScrollPane = new JScrollPane();
+		stationLogsScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		stationLogPanel.add(stationLogsScrollPane);
+		
+		stationLogJList = new JList<String>(stationLogList);
+		stationLogsScrollPane.setViewportView(stationLogJList);
+		stationLogJList.setModel(stationLogList);
 		
 		updtateLogs();
 	}
@@ -129,6 +153,12 @@ public class StatsGUI extends JPanel {
 						radioLogJList.setModel(radioLogList);
 					}
 				}
+				for(String stationLog : stationLogs) {
+					if(!stationLogList.contains(stationLog)) {
+						stationLogList.addElement(stationLog);
+						stationLogJList.setModel(stationLogList);
+					}
+				}
 			}
 		});
 		interval.start();
@@ -136,5 +166,13 @@ public class StatsGUI extends JPanel {
 	
 	private String capitalize(String name) {
 		return Character.toUpperCase(name.charAt(0)) + name.substring(1);
+	}
+	
+	private void clearLogsHandler(JButton carLogsClear) {
+		carLogsClear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 	}
 }

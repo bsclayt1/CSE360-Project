@@ -21,6 +21,8 @@ import java.io.IOException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
@@ -130,7 +132,6 @@ public class MainFrame extends JFrame {
 			carLogs = (JSONArray) cardata.get("carlogs");
 			routes = (JSONArray) cardata.get("routes");
 			radioLogs = (JSONArray) cardata.get("radiologs");
-			//clearLogs();
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -138,9 +139,11 @@ public class MainFrame extends JFrame {
 		
 	}
 	
-	@SuppressWarnings("unused")
-	private void clearLogs() {
+	public void clearCarLogs() {
 		carLogs.clear();
+	}
+	
+	public void clearRadioLogs() {
 		radioLogs.clear();
 	}
 }

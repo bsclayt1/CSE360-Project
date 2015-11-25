@@ -16,6 +16,8 @@ import javax.swing.JButton;
 import javax.swing.JToggleButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 import java.awt.event.ActionEvent;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -72,7 +74,7 @@ public class MainGUI extends JPanel {
 		JPanel userPanel = new JPanel();
 		userPanel.setPreferredSize(new Dimension(750, 35));
 		add(userPanel);
-		userPanel.setLayout(new GridLayout(0, 3, 0, 0));
+		userPanel.setLayout(new GridLayout(0, 4, 0, 0));
 		
 		JPanel emptyPanel = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) emptyPanel.getLayout();
@@ -88,6 +90,10 @@ public class MainGUI extends JPanel {
 		JLabel userLabel = new JLabel(capitalize(user.getUserName()));
 		userLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		userPanel.add(userLabel);
+		
+		JLabel clockLabel = new JLabel("00:00:00");
+		clockLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		userPanel.add(clockLabel);
 		
 		JPanel exitbuttonPanel = new JPanel();
 		userPanel.add(exitbuttonPanel);
@@ -236,6 +242,7 @@ public class MainGUI extends JPanel {
 		buttonToggler(radiowindowToggleButton, phonewindowToggleButton, usermanualwindowToggleButton, mapwindowToggleButton, statswindowToggleButton, centerPanel, cards);
 		stateHandler(car, parkRadioButton, driveRadioButton);
 		logoutHandler(logoutButton);
+		updateClock(clockLabel);
 	}
 	
 	public String getUser() {
@@ -499,5 +506,16 @@ public class MainGUI extends JPanel {
 	
 	public JSONArray getRoutesJSON() {
 		return mapPanel.getRoutesJSON();
+	}
+	
+	private void updateClock(JLabel clock) {
+		Timer interval = new Timer(1000, new ActionListener() {
+			@SuppressWarnings("deprecation")
+			public void actionPerformed(ActionEvent e) {
+				Date date = new Date();
+				clock.setText(String.format("%02d:%02d:%02d", date.getHours(), date.getMinutes(), date.getSeconds()));
+			}
+		});
+		interval.start();
 	}
 }
