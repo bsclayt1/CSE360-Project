@@ -35,11 +35,10 @@ public class MapGUI extends JPanel {
 	private JList<Route> routesJList;
 	private JButton selectButton;
 	
-	public MapGUI(CarController car, ArrayList<Route> routes) {
-		this.routes = routes;
+	public MapGUI(CarController car) {
 		this.car = car;
-		currentRoute = this.routes.get(0);
-		this.car.setRoute(currentRoute);
+		routes = car.getRoutes();
+		currentRoute = car.getCurrentRoute();
 		setPreferredSize(new Dimension(605, 467));
 		setLayout(new BorderLayout(0, 0));
 		
@@ -122,11 +121,11 @@ public class MapGUI extends JPanel {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public JSONArray getRoutesJSON() {
+	public void getRoutesJSON() {
 		JSONArray routesJSON = new JSONArray();
 		for(Route route : routes) {
 			routesJSON.add(route.getJSONRoute());
 		}
-		return routesJSON;
+		car.setRoutesJSON(routesJSON);
 	}
 }

@@ -42,6 +42,7 @@ public class RadioGUI extends JPanel {
 		radioPanel.setLayout(new BorderLayout(0, 0));
 		
 		JPanel powerPanel = new JPanel();
+		powerPanel.setBorder(new EmptyBorder(30, 0, 0, 0));
 		radioPanel.add(powerPanel, BorderLayout.NORTH);
 		
 		JToggleButton powerToggleButton = new JToggleButton("Power");
@@ -79,7 +80,7 @@ public class RadioGUI extends JPanel {
 		seekPanel.add(seekUpButton);
 		
 		JPanel bandSwitchPanel = new JPanel();
-		bandSwitchPanel.setBorder(new EmptyBorder(0, 0, 50, 0));
+		bandSwitchPanel.setBorder(new EmptyBorder(0, 0, 20, 0));
 		FlowLayout flowLayout_4 = (FlowLayout) bandSwitchPanel.getLayout();
 		flowLayout_4.setHgap(20);
 		displayPanel.add(bandSwitchPanel, BorderLayout.SOUTH);

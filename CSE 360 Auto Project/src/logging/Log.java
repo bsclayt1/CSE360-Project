@@ -9,7 +9,7 @@ public abstract class Log {
 	
 	public Log(Date date, long durration) {
 		this.date = date;
-		this.durration = durration;
+		this.durration = System.currentTimeMillis() - durration;
 	}
 	
 	@SuppressWarnings("deprecation")

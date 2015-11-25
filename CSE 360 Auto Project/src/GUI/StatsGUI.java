@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+
+import car.CarController;
+
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import java.awt.BorderLayout;
@@ -21,6 +24,9 @@ import java.awt.Insets;
 
 @SuppressWarnings("serial")
 public class StatsGUI extends JPanel {
+	private User user;
+	private CarController car;
+	
 	private ArrayList<String> callLogs;
 	private ArrayList<String> carLogs;
 	private ArrayList<String> radioLogs;
@@ -35,11 +41,13 @@ public class StatsGUI extends JPanel {
 	private JList<String> radioLogJList;
 	private JList<String> stationLogJList;
 	
-	public StatsGUI(User user, ArrayList<String> carLogs, ArrayList<String> radioLogs) {
+	public StatsGUI(User user, CarController car) {
+		this.user = user;
+		this.car = car;
 		callLogs = user.getCallLogs();
 		stationLogs = user.getStationLogs();
-		this.carLogs = carLogs;
-		this.radioLogs = radioLogs;
+		carLogs = car.getCarLogs();
+		radioLogs = car.getRadioLogs();
 		callLogList = new DefaultListModel<String>();
 		carLogList = new DefaultListModel<String>();
 		radioLogList = new DefaultListModel<String>();
@@ -73,10 +81,14 @@ public class StatsGUI extends JPanel {
 		carLogHeaderPanel.add(lblCarLogs, BorderLayout.CENTER);
 		lblCarLogs.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		JButton btnNewButton = new JButton("");
-		btnNewButton.setPreferredSize(new Dimension(16, 16));
-		btnNewButton.setMargin(new Insets(0, 0, 0, 0));
-		carLogHeaderPanel.add(btnNewButton, BorderLayout.EAST);
+		JButton clearCarLogsButton = new JButton("");
+		clearCarLogsButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		clearCarLogsButton.setPreferredSize(new Dimension(16, 16));
+		clearCarLogsButton.setMargin(new Insets(0, 0, 0, 0));
+		carLogHeaderPanel.add(clearCarLogsButton, BorderLayout.EAST);
 		
 		JScrollPane carLogScrollPane = new JScrollPane();
 		carLogScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -90,9 +102,18 @@ public class StatsGUI extends JPanel {
 		add(radioLogPanel);
 		radioLogPanel.setLayout(new BorderLayout(0, 0));
 		
+		JPanel radioLogHeaderPanel = new JPanel();
+		radioLogPanel.add(radioLogHeaderPanel, BorderLayout.NORTH);
+		radioLogHeaderPanel.setLayout(new BorderLayout(0, 0));
+		
 		JLabel radioLogLabel = new JLabel("Radio Logs");
+		radioLogHeaderPanel.add(radioLogLabel, BorderLayout.CENTER);
 		radioLogLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		radioLogPanel.add(radioLogLabel, BorderLayout.NORTH);
+		
+		JButton radioClearLogsButton = new JButton("");
+		radioClearLogsButton.setMargin(new Insets(0, 0, 0, 0));
+		radioClearLogsButton.setPreferredSize(new Dimension(16, 16));
+		radioLogHeaderPanel.add(radioClearLogsButton, BorderLayout.EAST);
 		
 		JScrollPane radioLogScrollPane = new JScrollPane();
 		radioLogScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -107,10 +128,6 @@ public class StatsGUI extends JPanel {
 		add(callLogPanel);
 		callLogPanel.setLayout(new BorderLayout(0, 0));
 		
-		JLabel CallLogLabel = new JLabel(capitalize(user.getUserName()) + "'s Call Logs");
-		CallLogLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		callLogPanel.add(CallLogLabel, BorderLayout.NORTH);
-		
 		JScrollPane callLogScrollPane = new JScrollPane();
 		callLogScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		callLogPanel.add(callLogScrollPane);
@@ -119,13 +136,22 @@ public class StatsGUI extends JPanel {
 		callLogScrollPane.setViewportView(callLogJList);
 		callLogJList.setModel(callLogList);
 		
+		JPanel callLogHeaderPanel = new JPanel();
+		callLogPanel.add(callLogHeaderPanel, BorderLayout.NORTH);
+		callLogHeaderPanel.setLayout(new BorderLayout(0, 0));
+		
+		JLabel CallLogLabel = new JLabel(capitalize(user.getUserName()) + "'s Call Logs");
+		callLogHeaderPanel.add(CallLogLabel, BorderLayout.CENTER);
+		CallLogLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JButton callClearLogsButton = new JButton("");
+		callClearLogsButton.setMargin(new Insets(0, 0, 0, 0));
+		callClearLogsButton.setPreferredSize(new Dimension(16, 16));
+		callLogHeaderPanel.add(callClearLogsButton, BorderLayout.EAST);
+		
 		JPanel stationLogPanel = new JPanel();
 		add(stationLogPanel);
 		stationLogPanel.setLayout(new BorderLayout(0, 0));
-		
-		JLabel stationLogsLabel = new JLabel(capitalize(user.getUserName()) + "'s Station Logs");
-		stationLogsLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		stationLogPanel.add(stationLogsLabel, BorderLayout.NORTH);
 		
 		JScrollPane stationLogsScrollPane = new JScrollPane();
 		stationLogsScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -135,12 +161,32 @@ public class StatsGUI extends JPanel {
 		stationLogsScrollPane.setViewportView(stationLogJList);
 		stationLogJList.setModel(stationLogList);
 		
+		JPanel stationLogHeaderPanel = new JPanel();
+		stationLogPanel.add(stationLogHeaderPanel, BorderLayout.NORTH);
+		stationLogHeaderPanel.setLayout(new BorderLayout(0, 0));
+		
+		JLabel stationLogsLabel = new JLabel(capitalize(user.getUserName()) + "'s Station Logs");
+		stationLogHeaderPanel.add(stationLogsLabel, BorderLayout.CENTER);
+		stationLogsLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JButton stationClearLogsButton = new JButton("");
+		stationClearLogsButton.setMargin(new Insets(0, 0, 0, 0));
+		stationClearLogsButton.setPreferredSize(new Dimension(16, 16));
+		stationLogHeaderPanel.add(stationClearLogsButton, BorderLayout.EAST);
+		
 		updtateLogs();
+		clearLogsHandler(clearCarLogsButton, radioClearLogsButton, callClearLogsButton, stationClearLogsButton);
 	}
 
 	private void updtateLogs() {
 		Timer interval = new Timer(1000, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				for(String carLog : carLogs) {
+					if(!carLogList.contains(carLog)) {
+						carLogList.addElement(carLog);
+						carLogJList.setModel(carLogList);
+					}
+				}
 				for(String callLog : callLogs) {
 					if(!callLogList.contains(callLog)) {
 						callLogList.addElement(callLog);
@@ -168,10 +214,33 @@ public class StatsGUI extends JPanel {
 		return Character.toUpperCase(name.charAt(0)) + name.substring(1);
 	}
 	
-	private void clearLogsHandler(JButton carLogsClear) {
+	private void clearLogsHandler(JButton carLogsClear, JButton radioLogClear, JButton callLogClear, JButton stationLogClear) {
 		carLogsClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				carLogs.clear();
+				carLogList.clear();
+				car.clearCarLogs();
+			}
+		});
+		radioLogClear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				radioLogs.clear();
+				radioLogList.clear();
+				car.clearRadioLogs();
+			}
+		});
+		callLogClear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				callLogs.clear();
+				callLogList.clear();
+				user.clearCallLogs();
+			}
+		});
+		stationLogClear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				stationLogs.clear();
+				stationLogList.clear();
+				user.clearStationLogs();
 			}
 		});
 	}
