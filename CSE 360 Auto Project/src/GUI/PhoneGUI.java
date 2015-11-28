@@ -2,6 +2,7 @@ package GUI;
 
 import phone.*;
 
+
 import javax.swing.JPanel;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -29,7 +30,8 @@ import java.awt.CardLayout;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.InputStream;
+
 import javax.imageio.ImageIO;
 
 @SuppressWarnings("serial")
@@ -196,19 +198,17 @@ public class PhoneGUI extends JPanel {
 		BufferedImage phoneicon = null;
 		ImageIcon icon = null;
 		JLabel iconLabel;
-		File picin = new File("./phone_icon.png");
-		if(picin.exists()) {
-			try {
-				phoneicon = ImageIO.read(picin);
-				icon = new ImageIcon(phoneicon.getScaledInstance(200, 200, Image.SCALE_SMOOTH));
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
+		InputStream is = this.getClass().getClassLoader().getResourceAsStream("images/phone_icon.png");
+		try {
+			phoneicon = ImageIO.read(is);
+			icon = new ImageIcon(phoneicon.getScaledInstance(200, 200, Image.SCALE_SMOOTH));
 			iconLabel = new JLabel(icon);
 		}
-		else
+		catch(Exception e) {
+			e.printStackTrace();
 			iconLabel = new JLabel("");
+			
+		}
 		
 		iconLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		imagePanel.add(iconLabel, BorderLayout.CENTER);

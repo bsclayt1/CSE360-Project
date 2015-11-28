@@ -10,10 +10,16 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.GridLayout;
+import java.awt.Image;
+
 import javax.swing.SwingConstants;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JToggleButton;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.InputStream;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 import javax.swing.event.ChangeEvent;
@@ -64,6 +70,7 @@ public class MainGUI extends JPanel {
 		userPanel.add(emptyPanel);
 		
 		JToggleButton statswindowToggleButton = new JToggleButton("Stats");
+		statswindowToggleButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 		statswindowToggleButton.setMargin(new Insets(2, 5, 2, 5));
 		statswindowToggleButton.setPreferredSize(new Dimension(65, 25));
 		emptyPanel.add(statswindowToggleButton);
@@ -83,6 +90,7 @@ public class MainGUI extends JPanel {
 		exitbuttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 5));
 		
 		JButton logoutButton = new JButton("Logout");
+		logoutButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 		logout = false;
 		logoutButton.setMargin(new Insets(2, 5, 2, 5));
 		logoutButton.setPreferredSize(new Dimension(65, 25));
@@ -130,18 +138,30 @@ public class MainGUI extends JPanel {
 		mainPanel.add(controlsPanel, BorderLayout.SOUTH);
 		controlsPanel.setLayout(new GridLayout(1, 0, 5, 0));
 		
-		JButton stopButton = new JButton("STOP");
-		stopButton.setForeground(Color.RED);
-		stopButton.setFont(new Font("Tahoma", Font.BOLD, 16));
+		//Radio Button Image Import
+		BufferedImage stopImage = null;
+		ImageIcon stopIcon = null;
+		JButton stopButton;
+		InputStream stopIS = this.getClass().getClassLoader().getResourceAsStream("images/stopsign_icon.png");
+		try {
+			stopImage = ImageIO.read(stopIS);
+			stopIcon = new ImageIcon(stopImage.getScaledInstance(40,40, Image.SCALE_SMOOTH));
+			stopButton = new JButton(stopIcon);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			stopButton = new JButton("STOP");
+			stopButton.setForeground(Color.RED);
+			stopButton.setFont(new Font("Tahoma", Font.BOLD, 16));
+		}
+		
 		stopButton.setPreferredSize(new Dimension(70, 25));
 		stopButton.setHorizontalTextPosition(SwingConstants.CENTER);
 		stopButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		controlsPanel.add(stopButton);
-		
-		JButton gasButton = new JButton("Accelerate");
-		controlsPanel.add(gasButton);
 				
 		JButton brakeButton = new JButton("Brake");
+		brakeButton.setFont(new Font("Tahoma", Font.BOLD, 16));
 		controlsPanel.add(brakeButton);
 		
 		JPanel windowselectleftPanel = new JPanel();
@@ -149,11 +169,41 @@ public class MainGUI extends JPanel {
 		mainPanel.add(windowselectleftPanel, BorderLayout.WEST);
 		windowselectleftPanel.setLayout(new GridLayout(0, 1, 0, 5));
 		
-		JToggleButton radiowindowToggleButton = new JToggleButton("Radio");
+		//Radio Button Image Import
+		BufferedImage radioImage = null;
+		ImageIcon radioIcon = null;
+		JToggleButton radiowindowToggleButton;
+		InputStream radioIS = this.getClass().getClassLoader().getResourceAsStream("images/radio_icon.png");
+		try {
+			radioImage = ImageIO.read(radioIS);
+			radioIcon = new ImageIcon(radioImage.getScaledInstance(40,40, Image.SCALE_SMOOTH));
+			radiowindowToggleButton = new JToggleButton(radioIcon);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			radiowindowToggleButton = new JToggleButton("Radio");
+			
+		}
+		
 		radiowindowToggleButton.setMargin(new Insets(2, 5, 2, 5));
 		windowselectleftPanel.add(radiowindowToggleButton);
 		
-		JToggleButton phonewindowToggleButton = new JToggleButton("Phone");
+		//Phone Button Image Import
+		BufferedImage phoneImage = null;
+		ImageIcon phoneIcon = null;
+		JToggleButton phonewindowToggleButton;
+		InputStream phoneIS = this.getClass().getClassLoader().getResourceAsStream("images/phone_icon.png");
+		try {
+			phoneImage = ImageIO.read(phoneIS);
+			phoneIcon = new ImageIcon(phoneImage.getScaledInstance(40, 40, Image.SCALE_SMOOTH));
+			phonewindowToggleButton = new JToggleButton(phoneIcon);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			phonewindowToggleButton = new JToggleButton("Phone");
+			
+		}
+		
 		phonewindowToggleButton.setMinimumSize(new Dimension(65, 25));
 		phonewindowToggleButton.setMargin(new Insets(2, 5, 2, 5));
 		phonewindowToggleButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -189,18 +239,54 @@ public class MainGUI extends JPanel {
 		mainPanel.add(windowselectrightPanel, BorderLayout.EAST);
 		windowselectrightPanel.setLayout(new GridLayout(0, 1, 0, 5));
 		
-		JToggleButton usermanualwindowToggleButton = new JToggleButton("Manual");
+		//Manual Button Image Import
+		BufferedImage manualImage = null;
+		ImageIcon manualIcon = null;
+		JToggleButton usermanualwindowToggleButton;
+		InputStream manualIS = this.getClass().getClassLoader().getResourceAsStream("images/manual_icon.png");
+		try {
+			manualImage = ImageIO.read(manualIS);
+			manualIcon = new ImageIcon(manualImage.getScaledInstance(40, 40, Image.SCALE_SMOOTH));
+			usermanualwindowToggleButton = new JToggleButton(manualIcon);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			usermanualwindowToggleButton = new JToggleButton("Manual");
+			
+		}
+		
 		usermanualwindowToggleButton.setMargin(new Insets(2, 5, 2, 5));
 		usermanualwindowToggleButton.setPreferredSize(new Dimension(65, 25));
 		windowselectrightPanel.add(usermanualwindowToggleButton);
 		
-		JToggleButton mapwindowToggleButton = new JToggleButton("Map");
+		//Map Button Image Import
+		BufferedImage mapImage = null;
+		ImageIcon mapIcon = null;
+		JToggleButton mapwindowToggleButton;
+		InputStream mapIS = this.getClass().getClassLoader().getResourceAsStream("images/map_icon.png");
+		try {
+			mapImage = ImageIO.read(mapIS);
+			mapIcon = new ImageIcon(mapImage.getScaledInstance(40, 40, Image.SCALE_SMOOTH));
+			mapwindowToggleButton = new JToggleButton(mapIcon);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			mapwindowToggleButton = new JToggleButton("Map");
+			
+		}
+		
 		mapwindowToggleButton.setMargin(new Insets(2, 5, 2, 5));
 		mapwindowToggleButton.setPreferredSize(new Dimension(65, 25));
 		windowselectrightPanel.add(mapwindowToggleButton);
 		
 		radiowindowToggleButton.getModel().setSelected(true);
 		cards.show(centerPanel, "Radio");
+		
+		JButton gasButton = new JButton("Accelerate");
+		gasButton.setFont(new Font("Tahoma", Font.BOLD, 16));
+		controlsPanel.add(gasButton);
+		
+		speedhandler(car, gasButton, brakeButton, speedLabel);
 		
 		JPanel statePanel = new JPanel();
 		controlsPanel.add(statePanel);
@@ -218,8 +304,6 @@ public class MainGUI extends JPanel {
 		driveRadioButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 		statePanel.add(driveRadioButton, BorderLayout.SOUTH);
 		driveRadioButton.setHorizontalAlignment(SwingConstants.CENTER);
-		
-		speedhandler(car, gasButton, brakeButton, speedLabel);
 		labelupdater(car, speedLabel, odometerLabel, fuelpercLabel, drivestateLabel, parkRadioButton, driveRadioButton);
 		stophandler(car, stopButton, parkRadioButton, driveRadioButton);
 		buttonToggler(radiowindowToggleButton, phonewindowToggleButton, usermanualwindowToggleButton, mapwindowToggleButton, statswindowToggleButton, centerPanel, cards);
