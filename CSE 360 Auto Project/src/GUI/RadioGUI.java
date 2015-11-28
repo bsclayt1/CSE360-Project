@@ -14,6 +14,9 @@ import javax.swing.JList;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
+
+import car.CarController;
+
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Insets;
@@ -25,8 +28,10 @@ import javax.swing.DefaultListModel;
 public class RadioGUI extends JPanel {
 	
 	private Radio radio;
+	private CarController car;
 
-	public RadioGUI(Radio radio) {
+	public RadioGUI(CarController car, Radio radio) {
+		this.car = car;
 		this.radio = radio;
 		setPreferredSize(new Dimension(605, 467));
 		setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
@@ -294,10 +299,16 @@ public class RadioGUI extends JPanel {
 	private void powerHandler(JToggleButton power) {
 		power.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(power.isSelected())
-					radio.setPower(true);
-				else
+				if(!car.getPhone().getOnCall()) {
+					if(power.isSelected())
+						radio.setPower(true);
+					else
+						radio.setPower(false);
+				}
+				else {
 					radio.setPower(false);
+					power.getModel().setSelected(false);
+				}
 			}
 		});
 	}
