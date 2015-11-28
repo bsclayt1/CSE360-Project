@@ -2,10 +2,7 @@ package GUI;
 
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
-
-import java.io.File;
 import java.io.FileReader;
-
 import javax.swing.BoxLayout;
 
 @SuppressWarnings("serial")

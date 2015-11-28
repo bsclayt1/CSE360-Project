@@ -608,10 +608,12 @@ public class PhoneGUI extends JPanel {
 		call.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(!phone.getOnCall()) {
-					String number = contacts.getSelectedValue().getNumber();
-					phone.makeCall(number);
-					callingNumber.setText("Calling: " + phone.getNumberCalled());
-					cards.show(dialer, "OnCall");
+					if(contacts.getSelectedValue() != null) {
+						String number = contacts.getSelectedValue().getNumber();
+						phone.makeCall(number);
+						callingNumber.setText("Calling: " + phone.getNumberCalled());
+						cards.show(dialer, "OnCall");
+					}
 				}
 			}
 		});

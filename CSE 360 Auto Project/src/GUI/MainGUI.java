@@ -169,7 +169,7 @@ public class MainGUI extends JPanel {
 		manualPanel = new UserManualGUI();
 		manualPanel.setPreferredSize(new Dimension(0, 0));
 		manualPanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
-		radioPanel = new RadioGUI(radio);
+		radioPanel = new RadioGUI(car, radio);
 		radioPanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
 		phonePanel = new PhoneGUI(phone);
 		phonePanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 2), new LineBorder(new Color(0, 0, 0), 2)));
