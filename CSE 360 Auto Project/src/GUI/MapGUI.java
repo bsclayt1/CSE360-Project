@@ -106,6 +106,7 @@ public class MapGUI extends JPanel {
 				routeNameLabel.setText(currentRoute.getName());
 				routeDistLabel.setText(String.format("%.0fmiles", currentRoute.getDistance()));
 				routeTraveledLabel.setText(String.format("%.1fmiles", currentRoute.getTraveled()));
+				getRoutesJSON();
 			}
 		});
 		interval.start();
@@ -121,7 +122,7 @@ public class MapGUI extends JPanel {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void getRoutesJSON() {
+	private void getRoutesJSON() {
 		JSONArray routesJSON = new JSONArray();
 		for(Route route : routes) {
 			routesJSON.add(route.getJSONRoute());
