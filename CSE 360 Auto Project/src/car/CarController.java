@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -90,10 +91,6 @@ public class CarController {
 	   	return fuelTank.getTankSize();
    	}
 
-   	public double getDuration() {
-	   	return updateNumb*.1;  //assumes .1s updates
-   	}
-   
    	public String getState() {
 	   	return state;
    	}

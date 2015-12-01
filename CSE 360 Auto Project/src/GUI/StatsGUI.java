@@ -21,6 +21,8 @@ import javax.swing.SwingConstants;
 import java.awt.GridLayout;
 import javax.swing.JButton;
 import java.awt.Insets;
+import java.awt.Font;
+import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
 public class StatsGUI extends JPanel {
@@ -66,11 +68,32 @@ public class StatsGUI extends JPanel {
 		}
 		
 		setPreferredSize(new Dimension(605, 467));
-		setLayout(new GridLayout(2, 2, 0, 0));
+		
+		updtateLogs();
+		setLayout(new BorderLayout(0, 0));
+		
+		JPanel currentsPanel = new JPanel();
+		currentsPanel.setBorder(new EmptyBorder(5, 0, 5, 0));
+		add(currentsPanel, BorderLayout.NORTH);
+		currentsPanel.setLayout(new GridLayout(0, 2, 0, 5));
+		
+		JLabel avgSpeedLabel = new JLabel("Avg. Speed:");
+		avgSpeedLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+		avgSpeedLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		currentsPanel.add(avgSpeedLabel);
+		
+		JLabel maxSpeedLabel = new JLabel("Max Speed:");
+		maxSpeedLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+		maxSpeedLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		currentsPanel.add(maxSpeedLabel);
+		
+		JPanel logsPanel = new JPanel();
+		add(logsPanel);
+		logsPanel.setLayout(new GridLayout(2, 2, 0, 0));
 		
 		JPanel carLogPanel = new JPanel();
+		logsPanel.add(carLogPanel);
 		carLogPanel.setPreferredSize(new Dimension(300, 150));
-		add(carLogPanel);
 		carLogPanel.setLayout(new BorderLayout(0, 0));
 		
 		JPanel carLogHeaderPanel = new JPanel();
@@ -99,7 +122,7 @@ public class StatsGUI extends JPanel {
 		carLogJList.setModel(carLogList);
 		
 		JPanel radioLogPanel = new JPanel();
-		add(radioLogPanel);
+		logsPanel.add(radioLogPanel);
 		radioLogPanel.setLayout(new BorderLayout(0, 0));
 		
 		JPanel radioLogHeaderPanel = new JPanel();
@@ -124,8 +147,8 @@ public class StatsGUI extends JPanel {
 		radioLogJList.setModel(radioLogList);
 		
 		JPanel callLogPanel = new JPanel();
+		logsPanel.add(callLogPanel);
 		callLogPanel.setPreferredSize(new Dimension(300, 150));
-		add(callLogPanel);
 		callLogPanel.setLayout(new BorderLayout(0, 0));
 		
 		JScrollPane callLogScrollPane = new JScrollPane();
@@ -150,7 +173,7 @@ public class StatsGUI extends JPanel {
 		callLogHeaderPanel.add(callClearLogsButton, BorderLayout.EAST);
 		
 		JPanel stationLogPanel = new JPanel();
-		add(stationLogPanel);
+		logsPanel.add(stationLogPanel);
 		stationLogPanel.setLayout(new BorderLayout(0, 0));
 		
 		JScrollPane stationLogsScrollPane = new JScrollPane();
@@ -174,8 +197,18 @@ public class StatsGUI extends JPanel {
 		stationClearLogsButton.setPreferredSize(new Dimension(16, 16));
 		stationLogHeaderPanel.add(stationClearLogsButton, BorderLayout.EAST);
 		
-		updtateLogs();
 		clearLogsHandler(clearCarLogsButton, radioClearLogsButton, callClearLogsButton, stationClearLogsButton);
+		labelUpdater(avgSpeedLabel, maxSpeedLabel);
+	}
+	
+	private void labelUpdater(JLabel avgspeed, JLabel maxspeed) {
+		Timer interval = new Timer(100, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				avgspeed.setText("Avg. Speed: " + String.format("%.02f", car.getAvgSpeed()));
+				maxspeed.setText("Max Speed: " + car.getMaxSpeed());
+			}
+		});
+		interval.start();
 	}
 
 	private void updtateLogs() {
