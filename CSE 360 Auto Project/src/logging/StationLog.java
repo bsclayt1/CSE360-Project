@@ -15,7 +15,7 @@ public class StationLog extends Log {
 	
 	public LinkedHashMap<String, String> getJSONStationLog() {
 		LinkedHashMap<String, String> stationlog = new LinkedHashMap<String, String>();
-		stationlog.put("station", station.getName());
+		stationlog.put("name", station.getName());
 		stationlog.put("date", getDate());
 		stationlog.put("durration", getDurration());
 		return stationlog;

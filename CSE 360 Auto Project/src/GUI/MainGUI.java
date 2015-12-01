@@ -279,8 +279,9 @@ public class MainGUI extends JPanel {
 		mapwindowToggleButton.setPreferredSize(new Dimension(65, 25));
 		windowselectrightPanel.add(mapwindowToggleButton);
 		
-		radiowindowToggleButton.getModel().setSelected(true);
-		cards.show(centerPanel, "Radio");
+		usermanualwindowToggleButton.getModel().setSelected(true);
+		usermanualwindowToggleButton.getModel().setEnabled(false);
+		cards.show(centerPanel, "Manual");
 		
 		JButton gasButton = new JButton("Accelerate");
 		gasButton.setFont(new Font("Tahoma", Font.BOLD, 16));

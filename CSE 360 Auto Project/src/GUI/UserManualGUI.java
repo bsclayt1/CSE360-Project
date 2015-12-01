@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import java.io.FileReader;
 import javax.swing.BoxLayout;
+import javax.swing.JScrollPane;
 
 @SuppressWarnings("serial")
 public class UserManualGUI extends JPanel {
@@ -25,10 +26,16 @@ public class UserManualGUI extends JPanel {
 		}
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
+		JScrollPane scrollPane = new JScrollPane();
+		add(scrollPane);
+		
 		JTextPane manualTextPanel = new JTextPane();
+		manualTextPanel.setAutoscrolls(false);
 		manualTextPanel.setEditable(false);
 		manualTextPanel.setText(manualText);
-		add(manualTextPanel);
+		manualTextPanel.setCaretPosition(0);
+		scrollPane.setViewportView(manualTextPanel);
+		//add(manualTextPanel);
 
 	}
 

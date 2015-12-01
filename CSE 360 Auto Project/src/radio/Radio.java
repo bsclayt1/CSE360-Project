@@ -218,7 +218,7 @@ public class Radio {
 	}
 	
 	private void makeStationLog() {
-		if(currentStation != null) {
+		if(currentStation != null && radioOn) {
 			user.addStationLog(new StationLog(currentStation, stationStartDate, stationStartTime));
 			stationStartDate = null;
 			stationStartTime = 0;
