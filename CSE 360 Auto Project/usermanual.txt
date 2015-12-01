@@ -1,19 +1,67 @@
 User's Guide
 
-Car Operation:
-The top panel displays the speed, fuel level, car state, odometer, and session duration.
+Getting Started: 
+To start the system, the user must input their username and password. The system will directly go to the user manual screen but the system will 
+display the speed, username, driving state, and fuel level at all times.
 
-The bottom panel lets you control the movement of the car. Your car needs to be in drive mode to accelerate. 
+Speed: 
+The speed will initially be zero upon starting the car (it has to be stationary when it’s off) and when accelerating, the speed increases at the 
+rate of the .5 miles per hour per button press. The speed is always displayed in the upper left in miles per hour.
 
-Radio Operation:
-You may select a station from a list of stations that vary depending on your region from both AM and FM bands, or from your favorites list. 
+Fuel Level:
+Fuel level is always displayed in the upper left middle of the display (to the right of the speed). The fuel level is obtained by taking the 
+distance traveled and multiplying that by the gas mileage of the car. After the car starts moving and the amount of fuel starts decreasing, 
+the current fuel level is updated and displayed. 
 
-To add the current station to your favorites list, click the + button next to the favorites list. To remove a station from your favorites list, select it and click the - button.
+Odometer:
+Always shown on the top-right corner, the odometer displays the current trip distance traveled, and is calculated by taking the 
+current speed and multiplying the time that, that speed being obtained.
 
-Phone Operation:
-You may make a call by typing in a number or by selecting a contact from your contacts list. 
+State (Park/Drive:) 
+Always displayed on the top-right of the screen (to the left of the odometer,) the state is shown to be either “Drive,” which 
+means the car is currently in driving mode (speed can be greater than zero) or “Park,” which is when the car’s in parking mode, 
+and speed cannot exceed zero.
 
-Add a new contact (up to 10) by clicking on the + button next to the contact list. You can remove a contact by selecting it and clicking the - button.
+Stop Button: 
+One of the persistent functionalities on the display, the stop button always shows on the bottom-left corner of the display. 
+When pressed, the stop button initiates deceleration until the car reaches a speed of zero and then puts the car in park.
 
-Map Operation:
-Your car is displayed as a dot on the road. 
+Control Panel: 
+Includes buttons for accelerating, selecting either park or drive, and  braking. The control panel is a bar across the lower 
+section of the display. The accelerate and brake buttons increase and decrease the speed by .5 miles per hour for each press respectively. 
+The stop, accelerate, and brake buttons are only usable when the car is in “Drive” mode.
+
+Stats button:
+The Stats button opens the stats page where all of the user’s stats are displayed. 	including a call log
+section, driving log, and radio log. 
+
+Logout button:
+The logout button logs the user out if the speed is zero and the car is in park but before logging out the the system saves 
+the user's statistical data for that session.
+
+After the user enters the correct username and password the manual screen pops up but the user has the option to select a 
+different screen from this screen : 
+
+Driving: 
+This mode is persistent across the other modes. Driving mode allows the user to set a speed by using the accelerate and brake
+buttons on the GUI. The stop button is available for use no matter the screen up. The current speed, fuel level, driving state,
+distance traveled, logout button and stats button are also always visible no matter what screen the user is on.
+
+Phone Screen: 
+This mode is accessed by selecting the phone button on the side of the screen and lasts until another side-mode is selected. 
+This mode modifies the center panel to display the information and controls. The controls allow the user to: Select a contact from a pre-made list; 
+Initiate, and end a call; Increase or decrease the speaker volume using the + or - buttons respectively; Increase or decrease the microphone using 
+the + or  - respectively; Mute either the speaker volume or the microphone volume using their own mute buttons. Input the phone number on the keypad 
+to dial a number; select an existing contact from the list; button to initiate call; button to end call; button to clear the number entered in the 
+phone number text field; button to call a selected contact; both phone volume and microphone can be modified via their own +, -, or mute buttons.
+
+Radio Screen:
+This mode is accessed by selecting the radio button on the side of the display and lasts until another side-mode is selected. 
+This mode modifies the center panel to display the information and controls. This mode allows the user to: select an available station 
+using left and right arrows; select from a list of favorite accessible stations; select AM or FM via a set of radio button; and modify 
+the volume via + or - buttons; the radio can be turned on or off using the power button.
+
+Map Screen:
+This mode is accessed by selecting the map button on the side of the display and lasts until another side-mode is selected. 
+This mode allows the user to select a route via a set of radio buttons.  This mode also displays a map of the set of routes and 
+the car’s current location. 
