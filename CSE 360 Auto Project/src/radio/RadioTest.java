@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import car.CarController;
+//import map.Route;
 import phone.Phone;
 import user.User;
 
@@ -34,6 +35,15 @@ public class RadioTest {
 		
 		r1.speakerUnmute();
 		assertFalse(r1.getSpeakerVol() == "MUTE");
+		
+		Station s1 = new Station("station1", (float) 99.1, "FM", 1);
+		//Route R1 = new Route("route name 1", 10, 20, 30);
+		r1.changeStation(s1);
+		//c1.setRoute(R1);
+		//r1.setStation(s1);
+		assertEquals(r1.getCurrentStation().getName(), "station1");
+		
+		
 	}
 
 }
